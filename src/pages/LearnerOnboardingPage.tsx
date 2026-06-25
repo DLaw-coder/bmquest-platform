@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
-import { createLearner } from '../services/firestore/learnerRepository'
+import { createLearner } from '../repositories/learner/learnerRepository'
 import type { FormLevel } from '../domain'
 
 type LearnerOnboardingPageProps = {

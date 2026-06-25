@@ -11,7 +11,7 @@ import type { Achievement } from '../domain/achievement'
 import type { LessonProgress } from '../domain/progress'
 import type { Learner } from '../domain'
 import { useAuth } from '../hooks/useAuth'
-import { getLearnersForAccount } from '../services/firestore/learnerRepository'
+import { getLearnersForAccount } from '../repositories/learner/learnerRepository'
 import { subscribeToProgressForLearner } from '../repositories/progress/progressRepository'
 import { subscribeToAchievementsForLearner } from '../repositories/achievements/achievementRepository'
 

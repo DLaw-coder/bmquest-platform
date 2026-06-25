@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { appInfo } from '../config/appInfo'
 import { useAuth } from '../hooks/useAuth'
-import { getLearnersForAccount } from '../services/firestore/learnerRepository'
+import { getLearnersForAccount } from '../repositories/learner/learnerRepository'
 import { getDeveloperStats } from '../services/developer/developerService'
 
 function DeveloperPage() {

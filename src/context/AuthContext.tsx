@@ -5,7 +5,7 @@ import {
   signInWithGoogle as firebaseSignInWithGoogle,
   signOutUser,
 } from '../services/auth/authService'
-import { upsertAccount } from '../services/firestore/accountRepository'
+import { upsertAccount } from '../repositories/account/accountRepository'
 import type { BMQuestUser } from '../types/User'
 
 type AuthContextValue = {
