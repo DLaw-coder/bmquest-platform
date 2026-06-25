@@ -485,3 +485,23 @@ h1 {
   color: white;
   font-weight: 900;
 }
+
+/* =========================================================
+   App Footer
+   ========================================================= */
+
+.app-footer {
+  margin-top: 28px;
+  padding: 0 20px 88px;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+@media (min-width: 768px) {
+  .app-footer {
+    font-size: 13px;
+  }
+}
