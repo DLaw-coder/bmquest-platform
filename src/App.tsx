@@ -2,6 +2,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import './App.css'
 import AuthProvider from './contexts/AuthContext'
+import { AppStateProvider } from './context/AppStateContext'
 import { useAuth } from './hooks/useAuth'
 import AppLayout from './layouts/AppLayout'
 import WelcomePage from './pages/WelcomePage'
@@ -69,7 +70,9 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppContent />
+        <AppStateProvider>
+          <AppContent />
+        </AppStateProvider>
       </AuthProvider>
     </BrowserRouter>
   )
