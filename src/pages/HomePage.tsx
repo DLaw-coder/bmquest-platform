@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 function HomePage() {
@@ -21,9 +22,11 @@ function HomePage() {
       <div className="dashboard-grid">
         <article className="dashboard-card primary-card">
           <span>Today&apos;s Mission</span>
-          <h2>Reading Practice</h2>
-          <p>Form 1 · Kemahiran Membaca</p>
-          <button>Start Mission</button>
+          <h2>Idea Utama</h2>
+          <p>Form 1 · Kemahiran Membaca · 10 min</p>
+          <Link className="mission-button" to="/lesson/idea-utama-001">
+            Start Mission
+          </Link>
         </article>
 
         <article className="dashboard-card">
@@ -45,7 +48,7 @@ function HomePage() {
         </article>
       </div>
 
-      <p className="footer-text">Sprint 3.0 · Student Dashboard</p>
+      <p className="footer-text">Sprint 4.2 · Interactive Curriculum Browser</p>
     </section>
   )
 }

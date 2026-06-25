@@ -505,3 +505,30 @@ h1 {
     font-size: 13px;
   }
 }
+
+.lesson-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lesson-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(29, 78, 216, 0.12);
+}
+
+.locked-lesson {
+  opacity: 0.72;
+}
+
+.mission-button {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 18px;
+  border-radius: 18px;
+  background: white;
+  color: var(--color-primary);
+  font-weight: 900;
+  text-decoration: none;
+}

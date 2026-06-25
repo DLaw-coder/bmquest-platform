@@ -9,10 +9,10 @@ export const curriculum = {
       description: 'Idea utama, isi tersurat, isi tersirat and inferens.',
       lessons: [
         {
-          id: 'idea-utama-1',
+          id: 'idea-utama-001',
           title: 'Idea Utama',
           duration: '10 min',
-          status: 'Coming soon',
+          status: 'Available',
         },
         {
           id: 'isi-tersurat-1',
