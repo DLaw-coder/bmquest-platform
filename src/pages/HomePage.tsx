@@ -91,7 +91,6 @@ function HomePage() {
         </article>
       </div>
 
-      <p className="footer-text">{appInfo.name} {appInfo.version}</p>
     </section>
   )
 }

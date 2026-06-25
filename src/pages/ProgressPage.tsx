@@ -110,7 +110,6 @@ function ProgressPage() {
         </div>
       </article>
 
-      <p className="footer-text">BM Quest v0.9.2-alpha</p>
     </section>
   )
 }
