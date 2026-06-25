@@ -21,10 +21,15 @@ function HomePage() {
 
   return (
     <section className="dashboard">
-      <div className="dashboard-hero">
-        <div>
+      <div className="dashboard-hero dashboard-welcome-hero">
+        <div className="dashboard-welcome-copy">
           <p className="eyebrow">Student Dashboard</p>
-          <h1>Welcome back, {user?.displayName ?? 'Learner'}</h1>
+          <h1>
+            Welcome back,
+            <span className="dashboard-user-name">
+              {user?.displayName ?? 'Learner'}
+            </span>
+          </h1>
           <p className="subtitle">
             {isGuest
               ? 'Guest mode is active. Sign in later to sync progress.'
