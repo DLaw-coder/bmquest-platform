@@ -1,4 +1,12 @@
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+  type Unsubscribe,
+} from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import type { Achievement } from '../../domain/achievement'
 
@@ -38,4 +46,27 @@ export async function saveNewAchievements(achievements: Achievement[]) {
       await addDoc(collection(db, 'achievements'), achievement)
     }
   }
+}
+
+export function subscribeToAchievementsForLearner(
+  learnerId: string,
+  onChange: (achievements: Achievement[]) => void,
+): Unsubscribe {
+  if (!db) {
+    throw new Error('Firestore is not configured yet.')
+  }
+
+  const achievementsQuery = query(
+    collection(db, 'achievements'),
+    where('learnerId', '==', learnerId),
+  )
+
+  return onSnapshot(achievementsQuery, (snapshot) => {
+    onChange(
+      snapshot.docs.map((doc) => ({
+        achievementId: doc.id,
+        ...(doc.data() as Achievement),
+      })),
+    )
+  })
 }
