@@ -399,3 +399,36 @@ h1 {
     grid-column: span 2;
   }
 }
+
+.lesson-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.lesson-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 18px;
+  background: #f8fafc;
+}
+
+.lesson-row strong {
+  display: block;
+  color: var(--color-text);
+}
+
+.lesson-row small {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-muted);
+}
+
+.lesson-row > span {
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 900;
+}
