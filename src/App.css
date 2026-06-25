@@ -432,3 +432,56 @@ h1 {
   font-size: 12px;
   font-weight: 900;
 }
+
+.lesson {
+  width: 100%;
+  max-width: 620px;
+  display: grid;
+  gap: 16px;
+}
+
+.passage-text {
+  line-height: 1.75;
+  font-size: 17px;
+}
+
+.vocab-list,
+.question-list,
+.answer-list {
+  display: grid;
+  gap: 12px;
+}
+
+.question-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 20px;
+  background: #f8fafc;
+}
+
+.answer-list label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--color-text);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.feedback {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.lesson-submit {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 16px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--color-primary);
+  color: white;
+  font-weight: 900;
+}

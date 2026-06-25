@@ -5,6 +5,7 @@ import ParentPage from '../pages/ParentPage'
 import ProgressPage from '../pages/ProgressPage'
 import SettingsPage from '../pages/SettingsPage'
 import CurriculumPage from '../pages/CurriculumPage'
+import LessonPage from '../pages/LessonPage'
 import NotFoundPage from '../pages/NotFoundPage'
 
 function AppRoutes() {
@@ -13,6 +14,7 @@ function AppRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/student" element={<StudentPage />} />
       <Route path="/curriculum" element={<CurriculumPage />} />
+      <Route path="/lesson/idea-utama-001" element={<LessonPage />} />
       <Route path="/parent" element={<ParentPage />} />
       <Route path="/progress" element={<ProgressPage />} />
       <Route path="/settings" element={<SettingsPage />} />
