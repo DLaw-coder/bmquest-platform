@@ -1,7 +1,7 @@
 import { useAuth } from '../hooks/useAuth'
 
 function WelcomePage() {
-  const { continueAsGuest, signInWithGooglePlaceholder } = useAuth()
+  const { continueAsGuest, signInWithGoogle } = useAuth()
 
   return (
     <section className="hero-card">
@@ -14,7 +14,7 @@ function WelcomePage() {
       </p>
 
       <div className="menu-grid">
-        <button className="menu-button student" onClick={signInWithGooglePlaceholder}>
+        <button className="menu-button student" onClick={signInWithGoogle}>
           🔐 Continue with Google
         </button>
 
@@ -23,7 +23,7 @@ function WelcomePage() {
         </button>
       </div>
 
-      <p className="footer-text">Sprint 2.0B · Identity Foundation</p>
+      <p className="footer-text">Sprint 2.0C · Real Google Sign-In</p>
     </section>
   )
 }

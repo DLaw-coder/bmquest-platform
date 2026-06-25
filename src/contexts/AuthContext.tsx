@@ -1,12 +1,19 @@
-import { createContext, useMemo, useState } from 'react'
+import { createContext, useEffect, useMemo, useState } from 'react'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../config/firebase'
+import {
+  signInWithGoogle as firebaseSignInWithGoogle,
+  signOutUser,
+} from '../services/auth/authService'
 import type { BMQuestUser } from '../types/User'
 
 type AuthContextValue = {
   user: BMQuestUser | null
   isGuest: boolean
+  isLoading: boolean
   continueAsGuest: () => void
-  signInWithGooglePlaceholder: () => void
-  signOut: () => void
+  signInWithGoogle: () => Promise<void>
+  signOut: () => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
@@ -17,11 +24,38 @@ type AuthProviderProps = {
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<BMQuestUser | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    if (!auth) {
+      setIsLoading(false)
+      return
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setUser({
+          uid: firebaseUser.uid,
+          displayName: firebaseUser.displayName ?? 'BM Quest User',
+          email: firebaseUser.email ?? undefined,
+          role: 'parent',
+          createdAt: new Date().toISOString(),
+        })
+      } else {
+        setUser(null)
+      }
+
+      setIsLoading(false)
+    })
+
+    return unsubscribe
+  }, [])
 
   const value = useMemo<AuthContextValue>(
     () => ({
       user,
       isGuest: user?.role === 'guest',
+      isLoading,
       continueAsGuest: () => {
         setUser({
           uid: 'guest',
@@ -30,14 +64,15 @@ function AuthProvider({ children }: AuthProviderProps) {
           createdAt: new Date().toISOString(),
         })
       },
-      signInWithGooglePlaceholder: () => {
-        alert('Google Sign-In will be enabled in the next sprint.')
+      signInWithGoogle: async () => {
+        await firebaseSignInWithGoogle()
       },
-      signOut: () => {
+      signOut: async () => {
+        await signOutUser()
         setUser(null)
       },
     }),
-    [user],
+    [user, isLoading],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

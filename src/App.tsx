@@ -7,13 +7,21 @@ import WelcomePage from './pages/WelcomePage'
 import AppRoutes from './router/AppRoutes'
 
 function AppContent() {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
 
-  return (
-    <AppLayout>
-      {user ? <AppRoutes /> : <WelcomePage />}
-    </AppLayout>
-  )
+  if (isLoading) {
+    return (
+      <AppLayout>
+        <section className="hero-card">
+          <div className="brand-icon">📘</div>
+          <h1>Loading</h1>
+          <p className="subtitle">Preparing BM Quest...</p>
+        </section>
+      </AppLayout>
+    )
+  }
+
+  return <AppLayout>{user ? <AppRoutes /> : <WelcomePage />}</AppLayout>
 }
 
 function App() {
