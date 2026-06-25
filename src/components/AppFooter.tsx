@@ -1,7 +1,10 @@
+import { Link } from 'react-router-dom'
+import { appInfo } from '../config/appInfo'
+
 function AppFooter() {
   return (
     <footer className="app-footer">
-      BM Quest © Danny Law, Effectuate Biz Productions
+      <Link to="/about">{appInfo.copyright}</Link>
     </footer>
   )
 }
