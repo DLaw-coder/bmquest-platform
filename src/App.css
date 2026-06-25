@@ -684,3 +684,41 @@ h1 {
 .learning-tip {
   margin-top: 10px;
 }
+
+.unit-progress{
+  display:grid;
+  gap:14px;
+  margin-top:20px;
+}
+
+.unit-step{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:18px;
+  border-radius:18px;
+  text-decoration:none;
+  background:#f8fafc;
+  color:var(--color-text);
+  transition:.2s;
+}
+
+.unit-step:hover{
+  transform:translateY(-2px);
+}
+
+.unit-icon{
+  font-size:24px;
+}
+
+.unit-step.completed{
+  border-left:6px solid #22c55e;
+}
+
+.unit-step.current{
+  border-left:6px solid var(--color-primary);
+}
+
+.unit-step.locked{
+  opacity:.55;
+}

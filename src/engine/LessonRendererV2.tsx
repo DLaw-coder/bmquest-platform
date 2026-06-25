@@ -8,12 +8,22 @@ import PassageCard from '../components/lesson/PassageCard'
 import VocabularyCard from '../components/lesson/VocabularyCard'
 import QuestionsCard from '../components/lesson/QuestionsCard'
 import LessonResultCard from '../components/lesson/LessonResultCard'
+import UnitProgress from '../components/progress/UnitProgress'
 import { useAuth } from '../hooks/useAuth'
+import { getLearnersForAccount } from '../services/firestore/learnerRepository'
 import { getLessonNavigation } from '../repositories/curriculum/lessonRepository'
 import { completeLessonSession } from '../services/lesson/lessonSessionService'
+import { getLessonProgressState } from '../services/progress/progressService'
 
 type LessonRendererProps = {
   lesson: Lesson
+}
+
+type UnitLesson = {
+  id: string
+  title: string
+  completed: boolean
+  current: boolean
 }
 
 function LessonRendererV2({ lesson }: LessonRendererProps) {
@@ -24,6 +34,31 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
   const [saveMessage, setSaveMessage] = useState('')
   const [achievementMessage, setAchievementMessage] = useState('')
   const [nextLessonId, setNextLessonId] = useState<string | undefined>()
+  const [unitLessons, setUnitLessons] = useState<UnitLesson[]>([])
+
+  async function loadUnitProgress() {
+    if (!user || isGuest) {
+      setUnitLessons([
+        {
+          id: lesson.id,
+          title: lesson.title,
+          completed: Boolean(result),
+          current: true,
+        },
+      ])
+      return
+    }
+
+    const learners = await getLearnersForAccount(user.uid)
+    const activeLearner = learners[0]
+
+    if (!activeLearner) {
+      return
+    }
+
+    const progressState = await getLessonProgressState(activeLearner.learnerId, lesson.id)
+    setUnitLessons(progressState)
+  }
 
   useEffect(() => {
     async function loadNavigation() {
@@ -32,7 +67,8 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     }
 
     loadNavigation()
-  }, [lesson.id])
+    loadUnitProgress()
+  }, [lesson.id, user?.uid, isGuest])
 
   function handleAnswer(questionId: string, optionId: string) {
     setAnswers((current) => ({
@@ -55,11 +91,16 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     setSaveMessage(session.saveMessage)
     setAchievementMessage(session.achievementMessage)
     setIsSaving(false)
+
+    await loadUnitProgress()
   }
 
   return (
     <section className="lesson">
       <LessonHero lesson={lesson} />
+
+      <UnitProgress lessons={unitLessons} />
+
       <LessonMetaCard lesson={lesson} />
       <ReadingTipCard lesson={lesson} />
       <PassageCard lesson={lesson} />
