@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import type { Lesson } from '../domain'
+import { useAuth } from '../hooks/useAuth'
+import { getLearnersForAccount } from '../services/firestore/learnerRepository'
+import { saveLessonProgress } from '../repositories/progress/progressRepository'
 import { calculateSessionResult, type SessionResult } from './session/sessionEngine'
 
 type LessonRendererProps = {
@@ -7,11 +10,44 @@ type LessonRendererProps = {
 }
 
 function LessonRenderer({ lesson }: LessonRendererProps) {
+  const { user, isGuest } = useAuth()
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [result, setResult] = useState<SessionResult | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState('')
 
-  function handleSubmit() {
-    setResult(calculateSessionResult(lesson, answers))
+  async function handleSubmit() {
+    const sessionResult = calculateSessionResult(lesson, answers)
+    setResult(sessionResult)
+
+    if (!user || isGuest) {
+      setSaveMessage('Guest mode: progress is not saved.')
+      return
+    }
+
+    setIsSaving(true)
+    setSaveMessage('Saving progress...')
+
+    const learners = await getLearnersForAccount(user.uid)
+    const activeLearner = learners[0]
+
+    if (!activeLearner) {
+      setSaveMessage('No learner profile found.')
+      setIsSaving(false)
+      return
+    }
+
+    await saveLessonProgress({
+      learnerId: activeLearner.learnerId,
+      lessonId: lesson.id,
+      correctAnswers: sessionResult.correctAnswers,
+      totalQuestions: sessionResult.totalQuestions,
+      scorePercent: sessionResult.scorePercent,
+      completedAt: sessionResult.completedAt,
+    })
+
+    setSaveMessage('Progress saved.')
+    setIsSaving(false)
   }
 
   return (
@@ -85,16 +121,17 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
           ))}
         </div>
 
-        <button className="lesson-submit" onClick={handleSubmit}>
-          Semak Jawapan
+        <button className="lesson-submit" onClick={handleSubmit} disabled={isSaving}>
+          {isSaving ? 'Saving...' : 'Semak Jawapan'}
         </button>
 
         {result && (
           <div className="result-card">
-            <strong>Keputusan</strong>
+            <strong>🎉 Lesson Complete</strong>
             <p>
               Skor: {result.correctAnswers}/{result.totalQuestions} · {result.scorePercent}%
             </p>
+            <small>{saveMessage}</small>
           </div>
         )}
       </article>

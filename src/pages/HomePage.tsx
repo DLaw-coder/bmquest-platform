@@ -1,8 +1,37 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { lessons } from '../data/lessons'
 import { useAuth } from '../hooks/useAuth'
+import { getLearnersForAccount } from '../services/firestore/learnerRepository'
+import { getProgressForLearner } from '../repositories/progress/progressRepository'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
+  const [readingProgress, setReadingProgress] = useState(0)
+  const [completedLessons, setCompletedLessons] = useState(0)
+
+  useEffect(() => {
+    async function loadProgress() {
+      if (!user || isGuest) {
+        setReadingProgress(0)
+        setCompletedLessons(0)
+        return
+      }
+
+      const learners = await getLearnersForAccount(user.uid)
+      const activeLearner = learners[0]
+
+      if (!activeLearner) return
+
+      const progress = await getProgressForLearner(activeLearner.learnerId)
+      const uniqueCompletedLessons = new Set(progress.map((item) => item.lessonId))
+
+      setCompletedLessons(uniqueCompletedLessons.size)
+      setReadingProgress(Math.round((uniqueCompletedLessons.size / lessons.length) * 100))
+    }
+
+    loadProgress()
+  }, [user, isGuest])
 
   return (
     <section className="dashboard">
@@ -37,18 +66,18 @@ function HomePage() {
 
         <article className="dashboard-card">
           <span>Reading Progress</span>
-          <h2>0%</h2>
-          <p>Progress tracking begins soon.</p>
+          <h2>{readingProgress}%</h2>
+          <p>{completedLessons} lesson completed.</p>
         </article>
 
         <article className="dashboard-card">
           <span>Learning Streak</span>
-          <h2>0 days</h2>
+          <h2>{completedLessons > 0 ? '1 day' : '0 days'}</h2>
           <p>Complete missions to build consistency.</p>
         </article>
       </div>
 
-      <p className="footer-text">Sprint 4.2 · Interactive Curriculum Browser</p>
+      <p className="footer-text">Sprint 4.3 · Progress Engine</p>
     </section>
   )
 }
