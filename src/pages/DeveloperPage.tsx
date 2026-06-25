@@ -1,40 +1,14 @@
-import { useEffect, useState } from 'react'
 import { appInfo } from '../config/appInfo'
+import { useAppData } from '../context/AppStateContext'
+import { lessons } from '../data/lessons'
 import { useAuth } from '../hooks/useAuth'
-import { getLearnersForAccount } from '../repositories/learner/learnerRepository'
-import { getDeveloperStats } from '../services/developer/developerService'
 
 function DeveloperPage() {
   const { user, isGuest } = useAuth()
-
-  const [learnerName, setLearnerName] = useState('-')
-  const [stats, setStats] = useState({
-    lessonCount: 0,
-    progressCount: 0,
-    achievementCount: 0,
-  })
-
-  useEffect(() => {
-    async function load() {
-      if (!user || isGuest) {
-        return
-      }
-
-      const learners = await getLearnersForAccount(user.uid)
-
-      if (learners.length > 0) {
-        setLearnerName(learners[0].displayName)
-
-        const developerStats = await getDeveloperStats(
-          learners[0].learnerId,
-        )
-
-        setStats(developerStats)
-      }
-    }
-
-    load()
-  }, [user, isGuest])
+  const { learner, progress, achievements } = useAppData()
+  const lessonCount = isGuest ? 0 : lessons.length
+  const progressCount = isGuest ? 0 : progress.length
+  const achievementCount = isGuest ? 0 : achievements.length
 
   return (
     <section className="hero-card">
@@ -58,22 +32,22 @@ function DeveloperPage() {
 
       <div className="version-card">
         <span>Learner</span>
-        <strong>{learnerName}</strong>
+        <strong>{learner?.displayName ?? '-'}</strong>
       </div>
 
       <div className="version-card">
         <span>Lessons</span>
-        <strong>{stats.lessonCount}</strong>
+        <strong>{lessonCount}</strong>
       </div>
 
       <div className="version-card">
         <span>Progress Records</span>
-        <strong>{stats.progressCount}</strong>
+        <strong>{progressCount}</strong>
       </div>
 
       <div className="version-card">
         <span>Achievements</span>
-        <strong>{stats.achievementCount}</strong>
+        <strong>{achievementCount}</strong>
       </div>
 
       <div className="version-card">
