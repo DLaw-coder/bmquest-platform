@@ -1,12 +1,15 @@
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
 import AppLayout from './layouts/AppLayout'
-import HomePage from './pages/HomePage'
+import AppRoutes from './router/AppRoutes'
 
 function App() {
   return (
-    <AppLayout>
-      <HomePage />
-    </AppLayout>
+    <BrowserRouter>
+      <AppLayout>
+        <AppRoutes />
+      </AppLayout>
+    </BrowserRouter>
   )
 }
 

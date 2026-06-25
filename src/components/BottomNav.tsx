@@ -1,18 +1,20 @@
+import { NavLink } from 'react-router-dom'
+
 const navItems = [
-  { label: 'Student', icon: '📖' },
-  { label: 'Parent', icon: '👨‍👩‍👦' },
-  { label: 'Progress', icon: '📊' },
-  { label: 'Settings', icon: '⚙️' },
+  { label: 'Home', icon: '🏠', path: '/' },
+  { label: 'Student', icon: '📖', path: '/student' },
+  { label: 'Progress', icon: '📊', path: '/progress' },
+  { label: 'Settings', icon: '⚙️', path: '/settings' },
 ]
 
 function BottomNav() {
   return (
     <nav className="bottom-nav">
       {navItems.map((item) => (
-        <button key={item.label}>
+        <NavLink key={item.path} to={item.path}>
           <span>{item.icon}</span>
           {item.label}
-        </button>
+        </NavLink>
       ))}
     </nav>
   )
