@@ -557,3 +557,25 @@ h1 {
   color: var(--color-muted);
   font-weight: 700;
 }
+
+.result-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.result-action {
+  display: grid;
+  place-items: center;
+  min-height: 46px;
+  border-radius: 16px;
+  background: white;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 900;
+}
+
+.primary-action {
+  background: var(--color-primary);
+  color: white;
+}

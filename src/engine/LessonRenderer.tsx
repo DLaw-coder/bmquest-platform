@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import type { Lesson } from '../domain'
 import { useAuth } from '../hooks/useAuth'
 import { evaluateLessonAchievements } from './achievements/achievementEngine'
@@ -54,13 +55,9 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
     await saveNewAchievements(achievements)
 
     setSaveMessage('Progress saved.')
-
-    if (achievements.length > 0) {
-      setAchievementMessage(
-        `Achievement checked: ${achievements.map((item) => item.icon + ' ' + item.title).join(', ')}`,
-      )
-    }
-
+    setAchievementMessage(
+      achievements.map((item) => `${item.icon} ${item.title}`).join(', '),
+    )
     setIsSaving(false)
   }
 
@@ -147,6 +144,15 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
             </p>
             <small>{saveMessage}</small>
             {achievementMessage && <small>{achievementMessage}</small>}
+
+            <div className="result-actions">
+              <Link to="/" className="result-action primary-action">
+                Return Dashboard
+              </Link>
+              <Link to="/curriculum" className="result-action">
+                Browse Curriculum
+              </Link>
+            </div>
           </div>
         )}
       </article>
