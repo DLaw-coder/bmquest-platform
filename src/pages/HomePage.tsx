@@ -1,36 +1,51 @@
-import Badge from '../components/Badge'
-import MenuButton from '../components/MenuButton'
-import VersionCard from '../components/VersionCard'
-import { primaryNavigation } from '../config/navigation'
+import { useAuth } from '../hooks/useAuth'
 
 function HomePage() {
+  const { user, isGuest } = useAuth()
+
   return (
-    <section className="hero-card">
-      <div className="brand-icon">📘</div>
-
-      <Badge>Developer Edition</Badge>
-
-      <h1>BM Quest</h1>
-
-      <p className="subtitle">
-        Growing with every Malaysian student, one learning milestone at a time.
-      </p>
-
-      <VersionCard label="Development Build" version="v0.1.0 Alpha" />
-
-      <div className="menu-grid">
-        {primaryNavigation.map((item) => (
-          <MenuButton
-            key={item.path}
-            emoji={item.icon}
-            label={item.label}
-            variant={item.variant}
-            to={item.path}
-          />
-        ))}
+    <section className="dashboard">
+      <div className="dashboard-hero">
+        <div>
+          <p className="eyebrow">Student Dashboard</p>
+          <h1>Welcome back, {user?.displayName ?? 'Learner'}</h1>
+          <p className="subtitle">
+            {isGuest
+              ? 'Guest mode is active. Sign in later to sync progress.'
+              : 'Your BM Quest learning space is ready.'}
+          </p>
+        </div>
+        <div className="dashboard-icon">📘</div>
       </div>
 
-      <p className="footer-text">Sprint 1.7 · Navigation Framework</p>
+      <div className="dashboard-grid">
+        <article className="dashboard-card primary-card">
+          <span>Today&apos;s Mission</span>
+          <h2>Reading Practice</h2>
+          <p>Form 1 · Kemahiran Membaca</p>
+          <button>Start Mission</button>
+        </article>
+
+        <article className="dashboard-card">
+          <span>Current Level</span>
+          <h2>Form 1</h2>
+          <p>KSSM Bahasa Melayu</p>
+        </article>
+
+        <article className="dashboard-card">
+          <span>Reading Progress</span>
+          <h2>0%</h2>
+          <p>Progress tracking begins soon.</p>
+        </article>
+
+        <article className="dashboard-card">
+          <span>Learning Streak</span>
+          <h2>0 days</h2>
+          <p>Complete missions to build consistency.</p>
+        </article>
+      </div>
+
+      <p className="footer-text">Sprint 3.0 · Student Dashboard</p>
     </section>
   )
 }
