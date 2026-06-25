@@ -228,3 +228,36 @@ h1 {
     font-size: 16px;
   }
 }
+
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.bottom-nav a {
+  min-height: 54px;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  display: grid;
+  place-items: center;
+}
+
+.bottom-nav a.active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.bottom-nav a span {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 2px;
+}

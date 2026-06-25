@@ -1,6 +1,7 @@
 import Badge from '../components/Badge'
 import MenuButton from '../components/MenuButton'
 import VersionCard from '../components/VersionCard'
+import { primaryNavigation } from '../config/navigation'
 
 function HomePage() {
   return (
@@ -18,13 +19,18 @@ function HomePage() {
       <VersionCard label="Development Build" version="v0.1.0 Alpha" />
 
       <div className="menu-grid">
-        <MenuButton emoji="📖" label="Student" variant="student" />
-        <MenuButton emoji="👨‍👩‍👦" label="Parent" variant="parent" />
-        <MenuButton emoji="📊" label="Progress" variant="progress" />
-        <MenuButton emoji="⚙️" label="Settings" variant="settings" />
+        {primaryNavigation.map((item) => (
+          <MenuButton
+            key={item.path}
+            emoji={item.icon}
+            label={item.label}
+            variant={item.variant}
+            to={item.path}
+          />
+        ))}
       </div>
 
-      <p className="footer-text">Sprint 1.5 · Layout System</p>
+      <p className="footer-text">Sprint 1.7 · Navigation Framework</p>
     </section>
   )
 }
