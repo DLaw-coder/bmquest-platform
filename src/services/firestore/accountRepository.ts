@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
-import type { Account } from '../../types/Account'
+import type { Account } from '../../domain/account'
 
 export async function upsertAccount(account: Account) {
   if (!db) {
