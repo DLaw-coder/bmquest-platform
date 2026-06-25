@@ -8,6 +8,7 @@ type LessonResultCardProps = {
   result: SessionResult
   saveMessage: string
   achievementMessage: string
+  nextLessonId?: string
 }
 
 function LessonResultCard({
@@ -15,6 +16,7 @@ function LessonResultCard({
   result,
   saveMessage,
   achievementMessage,
+  nextLessonId,
 }: LessonResultCardProps) {
   return (
     <div className="result-card">
@@ -36,9 +38,16 @@ function LessonResultCard({
       </ul>
 
       <div className="result-actions">
-        <Link to="/" className="result-action primary-action">
-          Return Dashboard
-        </Link>
+        {nextLessonId ? (
+          <Link to={`/lesson/${nextLessonId}`} className="result-action primary-action">
+            Continue Next Lesson
+          </Link>
+        ) : (
+          <Link to="/" className="result-action primary-action">
+            Return Dashboard
+          </Link>
+        )}
+
         <Link to="/curriculum" className="result-action">
           Browse Curriculum
         </Link>

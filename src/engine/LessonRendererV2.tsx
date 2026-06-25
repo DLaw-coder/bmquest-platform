@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Lesson } from '../domain'
 import type { SessionResult } from './session/sessionEngine'
 import LessonHero from '../components/lesson/LessonHero'
@@ -9,6 +9,7 @@ import VocabularyCard from '../components/lesson/VocabularyCard'
 import QuestionsCard from '../components/lesson/QuestionsCard'
 import LessonResultCard from '../components/lesson/LessonResultCard'
 import { useAuth } from '../hooks/useAuth'
+import { getLessonNavigation } from '../repositories/curriculum/lessonRepository'
 import { completeLessonSession } from '../services/lesson/lessonSessionService'
 
 type LessonRendererProps = {
@@ -22,6 +23,16 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
   const [isSaving, setIsSaving] = useState(false)
   const [saveMessage, setSaveMessage] = useState('')
   const [achievementMessage, setAchievementMessage] = useState('')
+  const [nextLessonId, setNextLessonId] = useState<string | undefined>()
+
+  useEffect(() => {
+    async function loadNavigation() {
+      const navigation = await getLessonNavigation(lesson.id)
+      setNextLessonId(navigation.nextLesson?.id)
+    }
+
+    loadNavigation()
+  }, [lesson.id])
 
   function handleAnswer(questionId: string, optionId: string) {
     setAnswers((current) => ({
@@ -72,6 +83,7 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
             result={result}
             saveMessage={saveMessage}
             achievementMessage={achievementMessage}
+            nextLessonId={nextLessonId}
           />
         )}
       </article>
