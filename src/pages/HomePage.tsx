@@ -2,19 +2,22 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { lessons } from '../data/lessons'
 import { useAuth } from '../hooks/useAuth'
-import { getLearnersForAccount } from '../services/firestore/learnerRepository'
+import { getAchievementsForLearner } from '../repositories/achievements/achievementRepository'
 import { getProgressForLearner } from '../repositories/progress/progressRepository'
+import { getLearnersForAccount } from '../services/firestore/learnerRepository'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
   const [readingProgress, setReadingProgress] = useState(0)
   const [completedLessons, setCompletedLessons] = useState(0)
+  const [achievementCount, setAchievementCount] = useState(0)
 
   useEffect(() => {
     async function loadProgress() {
       if (!user || isGuest) {
         setReadingProgress(0)
         setCompletedLessons(0)
+        setAchievementCount(0)
         return
       }
 
@@ -24,10 +27,12 @@ function HomePage() {
       if (!activeLearner) return
 
       const progress = await getProgressForLearner(activeLearner.learnerId)
+      const achievements = await getAchievementsForLearner(activeLearner.learnerId)
       const uniqueCompletedLessons = new Set(progress.map((item) => item.lessonId))
 
       setCompletedLessons(uniqueCompletedLessons.size)
       setReadingProgress(Math.round((uniqueCompletedLessons.size / lessons.length) * 100))
+      setAchievementCount(achievements.length)
     }
 
     loadProgress()
@@ -71,13 +76,13 @@ function HomePage() {
         </article>
 
         <article className="dashboard-card">
-          <span>Learning Streak</span>
-          <h2>{completedLessons > 0 ? '1 day' : '0 days'}</h2>
-          <p>Complete missions to build consistency.</p>
+          <span>Achievements</span>
+          <h2>{achievementCount}</h2>
+          <p>Unlocked learning achievements.</p>
         </article>
       </div>
 
-      <p className="footer-text">Sprint 4.3 · Progress Engine</p>
+      <p className="footer-text">Sprint 4.4 · Achievement Engine</p>
     </section>
   )
 }

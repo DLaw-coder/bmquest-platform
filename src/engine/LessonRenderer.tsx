@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import type { Lesson } from '../domain'
 import { useAuth } from '../hooks/useAuth'
+import { evaluateLessonAchievements } from './achievements/achievementEngine'
 import { getLearnersForAccount } from '../services/firestore/learnerRepository'
+import { saveNewAchievements } from '../repositories/achievements/achievementRepository'
 import { saveLessonProgress } from '../repositories/progress/progressRepository'
 import { calculateSessionResult, type SessionResult } from './session/sessionEngine'
 
@@ -15,6 +17,7 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
   const [result, setResult] = useState<SessionResult | null>(null)
   const [isSaving, setIsSaving] = useState(false)
   const [saveMessage, setSaveMessage] = useState('')
+  const [achievementMessage, setAchievementMessage] = useState('')
 
   async function handleSubmit() {
     const sessionResult = calculateSessionResult(lesson, answers)
@@ -27,6 +30,7 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
 
     setIsSaving(true)
     setSaveMessage('Saving progress...')
+    setAchievementMessage('')
 
     const learners = await getLearnersForAccount(user.uid)
     const activeLearner = learners[0]
@@ -46,7 +50,17 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
       completedAt: sessionResult.completedAt,
     })
 
+    const achievements = evaluateLessonAchievements(activeLearner.learnerId, sessionResult)
+    await saveNewAchievements(achievements)
+
     setSaveMessage('Progress saved.')
+
+    if (achievements.length > 0) {
+      setAchievementMessage(
+        `Achievement checked: ${achievements.map((item) => item.icon + ' ' + item.title).join(', ')}`,
+      )
+    }
+
     setIsSaving(false)
   }
 
@@ -132,6 +146,7 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
               Skor: {result.correctAnswers}/{result.totalQuestions} · {result.scorePercent}%
             </p>
             <small>{saveMessage}</small>
+            {achievementMessage && <small>{achievementMessage}</small>}
           </div>
         )}
       </article>
