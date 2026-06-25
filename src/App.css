@@ -1,7 +1,9 @@
+@import './styles/theme.css';
+
 :root {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #172033;
-  background: #f3f6ff;
+  color: var(--color-text);
+  background: var(--color-background);
 }
 
 body {
@@ -91,7 +93,7 @@ h1 {
   gap: 13px;
 }
 
-.menu-grid button {
+.menu-button {
   min-height: 60px;
   border: 0;
   border-radius: 21px;
