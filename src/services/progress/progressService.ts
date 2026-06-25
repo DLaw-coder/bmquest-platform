@@ -14,3 +14,10 @@ export async function getLessonProgressState(learnerId: string, currentLessonId:
     current: lesson.id === currentLessonId || lesson.id === firstIncompleteLesson?.id,
   }))
 }
+
+export async function getNextRecommendedLesson(learnerId: string) {
+  const progress = await getProgressForLearner(learnerId)
+  const completedLessonIds = new Set(progress.map((item) => item.lessonId))
+
+  return lessons.find((lesson) => !completedLessonIds.has(lesson.id)) ?? lessons[0]
+}

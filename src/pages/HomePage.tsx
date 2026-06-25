@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { lessons } from '../data/lessons'
 import { appInfo } from '../config/appInfo'
+import type { Lesson } from '../domain'
 import { useAuth } from '../hooks/useAuth'
 import { getAchievementsForLearner } from '../repositories/achievements/achievementRepository'
 import { getProgressForLearner } from '../repositories/progress/progressRepository'
 import { getLearnersForAccount } from '../services/firestore/learnerRepository'
+import { getNextRecommendedLesson } from '../services/progress/progressService'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
@@ -13,6 +15,7 @@ function HomePage() {
   const [completedLessons, setCompletedLessons] = useState(0)
   const [achievementCount, setAchievementCount] = useState(0)
   const [latestAchievement, setLatestAchievement] = useState('None yet')
+  const [recommendedLesson, setRecommendedLesson] = useState<Lesson | null>(lessons[0])
 
   useEffect(() => {
     async function loadProgress() {
@@ -24,19 +27,25 @@ function HomePage() {
 
       const progress = await getProgressForLearner(activeLearner.learnerId)
       const achievements = await getAchievementsForLearner(activeLearner.learnerId)
+      const nextLesson = await getNextRecommendedLesson(activeLearner.learnerId)
       const uniqueCompletedLessons = new Set(progress.map((item) => item.lessonId))
 
       setCompletedLessons(uniqueCompletedLessons.size)
       setReadingProgress(Math.round((uniqueCompletedLessons.size / lessons.length) * 100))
       setAchievementCount(achievements.length)
+      setRecommendedLesson(nextLesson)
 
       if (achievements.length > 0) {
-        setLatestAchievement(`${achievements[achievements.length - 1].icon} ${achievements[achievements.length - 1].title}`)
+        const latest = achievements[achievements.length - 1]
+        setLatestAchievement(`${latest.icon} ${latest.title}`)
       }
     }
 
     loadProgress()
   }, [user, isGuest])
+
+  const missionTitle = recommendedLesson?.title ?? 'Idea Utama'
+  const missionLink = recommendedLesson ? `/lesson/${recommendedLesson.id}` : '/lesson/idea-utama-001'
 
   return (
     <section className="dashboard">
@@ -56,10 +65,10 @@ function HomePage() {
       <div className="dashboard-grid">
         <article className="dashboard-card primary-card">
           <span>Continue Learning</span>
-          <h2>Idea Utama</h2>
-          <p>Form 1 · Kemahiran Membaca · 10 min</p>
-          <Link className="mission-button" to="/lesson/idea-utama-001">
-            Continue Lesson
+          <h2>{missionTitle}</h2>
+          <p>Next recommended lesson</p>
+          <Link className="mission-button" to={missionLink}>
+            Continue
           </Link>
         </article>
 
