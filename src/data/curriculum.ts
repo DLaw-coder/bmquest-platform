@@ -15,10 +15,10 @@ export const curriculum = {
           status: 'Available',
         },
         {
-          id: 'isi-tersurat-1',
+          id: 'isi-tersurat-001',
           title: 'Isi Tersurat',
           duration: '10 min',
-          status: 'Coming soon',
+          status: 'Available',
         },
         {
           id: 'inferens-1',
