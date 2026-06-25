@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Lesson } from '../domain'
+import { calculateSessionResult, type SessionResult } from './session/sessionEngine'
 
 type LessonRendererProps = {
   lesson: Lesson
@@ -7,14 +8,10 @@ type LessonRendererProps = {
 
 function LessonRenderer({ lesson }: LessonRendererProps) {
   const [answers, setAnswers] = useState<Record<string, string>>({})
-  const [isCompleted, setIsCompleted] = useState(false)
-
-  const score = lesson.questions.filter(
-    (question) => answers[question.id] === question.correctOptionId,
-  ).length
+  const [result, setResult] = useState<SessionResult | null>(null)
 
   function handleSubmit() {
-    setIsCompleted(true)
+    setResult(calculateSessionResult(lesson, answers))
   }
 
   return (
@@ -78,7 +75,7 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
                 ))}
               </div>
 
-              {isCompleted && (
+              {result && (
                 <p className="feedback">
                   {answers[question.id] === question.correctOptionId ? '✅ Betul. ' : '❌ Cuba lagi. '}
                   {question.explanation}
@@ -92,10 +89,13 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
           Semak Jawapan
         </button>
 
-        {isCompleted && (
-          <p className="footer-text">
-            Skor: {score}/{lesson.questions.length}
-          </p>
+        {result && (
+          <div className="result-card">
+            <strong>Keputusan</strong>
+            <p>
+              Skor: {result.correctAnswers}/{result.totalQuestions} · {result.scorePercent}%
+            </p>
+          </div>
         )}
       </article>
     </section>
