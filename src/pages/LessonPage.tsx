@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import LessonRenderer from '../engine/LessonRenderer'
+import LessonRenderer from '../engine/LessonRendererV2'
 import { getLessonById } from '../repositories/curriculum/lessonRepository'
 import type { Lesson } from '../domain'
 

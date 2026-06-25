@@ -644,3 +644,43 @@ h1 {
   color:#94a3b8;
   font-weight:600;
 }
+
+.lesson-hero {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 10px;
+  background: var(--color-card);
+  border-radius: var(--radius-xl);
+  padding: 34px 28px;
+  box-shadow: var(--shadow-card);
+}
+
+.lesson-hero-icon {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 26px;
+  background: var(--color-primary-soft);
+  font-size: 38px;
+}
+
+.lesson-hero h1 {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.05;
+}
+
+.lesson-section {
+  text-align: center;
+}
+
+.section-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.learning-tip {
+  margin-top: 10px;
+}
