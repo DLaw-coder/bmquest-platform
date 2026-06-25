@@ -64,11 +64,11 @@ function HomePage() {
 
       <div className="dashboard-grid">
         <article className="dashboard-card primary-card">
-          <span>Continue Learning</span>
+          <span>📖 Continue Learning</span>
           <h2>{missionTitle}</h2>
-          <p>Next recommended lesson</p>
+          <p>Form 1 · Reading Comprehension · 10 min</p>
           <Link className="mission-button" to={missionLink}>
-            Continue
+            Continue →
           </Link>
         </article>
 
