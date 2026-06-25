@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Lesson } from '../domain'
+import type { SessionResult } from './session/sessionEngine'
 import LessonHero from '../components/lesson/LessonHero'
 import LessonMetaCard from '../components/lesson/LessonMetaCard'
 import ReadingTipCard from '../components/lesson/ReadingTipCard'
@@ -8,11 +9,7 @@ import VocabularyCard from '../components/lesson/VocabularyCard'
 import QuestionsCard from '../components/lesson/QuestionsCard'
 import LessonResultCard from '../components/lesson/LessonResultCard'
 import { useAuth } from '../hooks/useAuth'
-import { evaluateLessonAchievements } from './achievements/achievementEngine'
-import { getLearnersForAccount } from '../services/firestore/learnerRepository'
-import { saveNewAchievements } from '../repositories/achievements/achievementRepository'
-import { saveLessonProgress } from '../repositories/progress/progressRepository'
-import { calculateSessionResult, type SessionResult } from './session/sessionEngine'
+import { completeLessonSession } from '../services/lesson/lessonSessionService'
 
 type LessonRendererProps = {
   lesson: Lesson
@@ -34,43 +31,18 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
   }
 
   async function handleSubmit() {
-    const sessionResult = calculateSessionResult(lesson, answers)
-    setResult(sessionResult)
-
-    if (!user || isGuest) {
-      setSaveMessage('Guest mode: progress is not saved.')
-      return
-    }
-
     setIsSaving(true)
-    setSaveMessage('Saving progress...')
-    setAchievementMessage('')
 
-    const learners = await getLearnersForAccount(user.uid)
-    const activeLearner = learners[0]
-
-    if (!activeLearner) {
-      setSaveMessage('No learner profile found.')
-      setIsSaving(false)
-      return
-    }
-
-    await saveLessonProgress({
-      learnerId: activeLearner.learnerId,
-      lessonId: lesson.id,
-      correctAnswers: sessionResult.correctAnswers,
-      totalQuestions: sessionResult.totalQuestions,
-      scorePercent: sessionResult.scorePercent,
-      completedAt: sessionResult.completedAt,
+    const session = await completeLessonSession({
+      userId: user?.uid,
+      isGuest,
+      lesson,
+      answers,
     })
 
-    const achievements = evaluateLessonAchievements(activeLearner.learnerId, sessionResult)
-    await saveNewAchievements(achievements)
-
-    setSaveMessage('Progress saved.')
-    setAchievementMessage(
-      achievements.map((item) => `${item.icon} ${item.title}`).join(', '),
-    )
+    setResult(session.result)
+    setSaveMessage(session.saveMessage)
+    setAchievementMessage(session.achievementMessage)
     setIsSaving(false)
   }
 
