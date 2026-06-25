@@ -7,6 +7,7 @@ import SettingsPage from '../pages/SettingsPage'
 import CurriculumPage from '../pages/CurriculumPage'
 import LessonPage from '../pages/LessonPage'
 import AboutPage from '../pages/AboutPage'
+import DeveloperPage from '../pages/DeveloperPage'
 import NotFoundPage from '../pages/NotFoundPage'
 
 function AppRoutes() {
@@ -20,6 +21,7 @@ function AppRoutes() {
       <Route path="/progress" element={<ProgressPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/developer" element={<DeveloperPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
