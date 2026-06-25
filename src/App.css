@@ -758,3 +758,22 @@ h1 {
   font-weight: 900;
   text-decoration: none;
 }
+
+.action-link {
+  display: grid;
+  place-items: center;
+  min-height: 52px;
+  border-radius: 18px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.action-link.primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.action-link.secondary {
+  background: #f8fafc;
+  color: var(--color-primary);
+}
