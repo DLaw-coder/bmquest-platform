@@ -88,6 +88,7 @@ function ProgressPage() {
           <span>Achievements</span>
           <h2>{achievementCount}</h2>
           <p>Unlocked learning badges.</p>
+          <a className="inline-link" href="/achievements">View Gallery →</a>
         </article>
       </div>
 

@@ -8,6 +8,7 @@ import CurriculumPage from '../pages/CurriculumPage'
 import LessonPage from '../pages/LessonPage'
 import AboutPage from '../pages/AboutPage'
 import DeveloperPage from '../pages/DeveloperPage'
+import AchievementsPage from '../pages/AchievementsPage'
 import NotFoundPage from '../pages/NotFoundPage'
 
 function AppRoutes() {
@@ -19,6 +20,7 @@ function AppRoutes() {
       <Route path="/lesson/:lessonId" element={<LessonPage />} />
       <Route path="/parent" element={<ParentPage />} />
       <Route path="/progress" element={<ProgressPage />} />
+      <Route path="/achievements" element={<AchievementsPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/developer" element={<DeveloperPage />} />
