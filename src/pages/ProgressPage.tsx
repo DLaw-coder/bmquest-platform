@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import { getAchievementsForLearner } from '../repositories/achievements/achievementRepository'
 import { getProgressForLearner } from '../repositories/progress/progressRepository'
 import { getLearnersForAccount } from '../services/firestore/learnerRepository'
+import type { LessonProgress } from '../domain/progress'
 
 function ProgressPage() {
   const { user, isGuest } = useAuth()
@@ -12,6 +13,7 @@ function ProgressPage() {
   const [averageScore, setAverageScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
   const [achievementCount, setAchievementCount] = useState(0)
+  const [recentActivity, setRecentActivity] = useState<LessonProgress[]>([])
 
   useEffect(() => {
     async function loadProgress() {
@@ -35,6 +37,12 @@ function ProgressPage() {
           ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
           : 0,
       )
+
+      setRecentActivity(
+        [...progress]
+          .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
+          .slice(0, 5),
+      )
     }
 
     loadProgress()
@@ -42,15 +50,17 @@ function ProgressPage() {
 
   const progressPercent = Math.round((completedLessons / lessons.length) * 100)
 
+  function getLessonTitle(lessonId: string) {
+    return lessons.find((lesson) => lesson.id === lessonId)?.title ?? lessonId
+  }
+
   return (
     <section className="dashboard">
       <div className="dashboard-hero">
         <div>
           <p className="eyebrow">Learning Passport</p>
           <h1>My Progress</h1>
-          <p className="subtitle">
-            Track your Bahasa Melayu learning journey.
-          </p>
+          <p className="subtitle">Track your Bahasa Melayu learning journey.</p>
         </div>
         <div className="dashboard-icon">📈</div>
       </div>
@@ -79,21 +89,28 @@ function ProgressPage() {
           <h2>{achievementCount}</h2>
           <p>Unlocked learning badges.</p>
         </article>
-
-        <article className="dashboard-card">
-          <span>Current Level</span>
-          <h2>Form 1</h2>
-          <p>KSSM Bahasa Melayu</p>
-        </article>
-
-        <article className="dashboard-card">
-          <span>Learning Streak</span>
-          <h2>{completedLessons > 0 ? '1 day' : '0 days'}</h2>
-          <p>Streak logic will expand later.</p>
-        </article>
       </div>
 
-      <p className="footer-text">BM Quest v0.9.0-alpha</p>
+      <article className="dashboard-card">
+        <span>Recent Activity</span>
+        <div className="lesson-list">
+          {recentActivity.length === 0 ? (
+            <p>No lesson attempts yet.</p>
+          ) : (
+            recentActivity.map((item) => (
+              <div className="lesson-row" key={item.progressId ?? `${item.lessonId}-${item.completedAt}`}>
+                <div>
+                  <strong>{getLessonTitle(item.lessonId)}</strong>
+                  <small>{new Date(item.completedAt).toLocaleString()}</small>
+                </div>
+                <span>{item.scorePercent}%</span>
+              </div>
+            ))
+          )}
+        </div>
+      </article>
+
+      <p className="footer-text">BM Quest v0.9.2-alpha</p>
     </section>
   )
 }
