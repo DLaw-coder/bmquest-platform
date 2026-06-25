@@ -21,3 +21,7 @@ export async function getNextRecommendedLesson(learnerId: string) {
 
   return lessons.find((lesson) => !completedLessonIds.has(lesson.id)) ?? lessons[0]
 }
+
+export function getNextRecommendedLessonFromProgress(completedLessonIds: Set<string>) {
+  return lessons.find((lesson) => !completedLessonIds.has(lesson.id)) ?? lessons[0]
+}
