@@ -7,6 +7,22 @@ export const ideaUtama001: Lesson = {
   strand: 'Membaca',
   skill: 'Mengenal pasti idea utama',
   estimatedMinutes: 10,
+  curriculumMeta: {
+    subject: 'Bahasa Melayu',
+    curriculum: 'KSSM',
+    form: 1,
+    theme: 'Amalan Baik Dalam Kehidupan',
+    unit: 'Kemahiran Membaca Foundation',
+    learningArea: 'Membaca',
+    contentStandard: {
+      code: '2.1',
+      description: 'Membaca secara mekanis pelbagai bahan prosa dan puisi.',
+    },
+    learningStandard: {
+      code: '2.1.1',
+      description: 'Membaca untuk memahami maksud perkataan, rangkai kata, istilah, ungkapan dan ayat dalam pelbagai bahan.',
+    },
+  },
   passageTitle: 'Amalan Membaca',
   passage:
     'Membaca ialah amalan yang sangat bermanfaat kepada murid. Melalui membaca, murid dapat menambah ilmu pengetahuan, memperluas kosa kata dan memperbaik kemahiran berbahasa. Amalan ini juga membantu murid memahami pelbagai perkara yang berlaku di sekeliling mereka. Oleh itu, murid digalakkan membaca sekurang-kurangnya beberapa minit setiap hari.',

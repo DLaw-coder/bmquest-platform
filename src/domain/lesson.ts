@@ -1,3 +1,5 @@
+import type { CurriculumLessonMeta } from './curriculum'
+
 export type QuestionOption = {
   id: string
   text: string
@@ -23,6 +25,7 @@ export type Lesson = {
   strand: 'Membaca'
   skill: string
   estimatedMinutes: number
+  curriculumMeta: CurriculumLessonMeta
   passageTitle: string
   passage: string
   vocabulary: VocabularyItem[]
