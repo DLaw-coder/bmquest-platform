@@ -3,22 +3,21 @@ import { evaluateLessonAchievements } from '../../engine/achievements/achievemen
 import { calculateSessionResult } from '../../engine/session/sessionEngine'
 import { saveNewAchievements } from '../../repositories/achievements/achievementRepository'
 import { saveLessonProgress } from '../../repositories/progress/progressRepository'
-import { getLearnersForAccount } from '../firestore/learnerRepository'
 
 export async function completeLessonSession({
-  userId,
+  learnerId,
   isGuest,
   lesson,
   answers,
 }: {
-  userId?: string
+  learnerId?: string
   isGuest: boolean
   lesson: Lesson
   answers: Record<string, string>
 }) {
   const result = calculateSessionResult(lesson, answers)
 
-  if (!userId || isGuest) {
+  if (isGuest) {
     return {
       result,
       saveMessage: 'Guest mode: progress is not saved.',
@@ -26,10 +25,7 @@ export async function completeLessonSession({
     }
   }
 
-  const learners = await getLearnersForAccount(userId)
-  const activeLearner = learners[0]
-
-  if (!activeLearner) {
+  if (!learnerId) {
     return {
       result,
       saveMessage: 'No learner profile found.',
@@ -38,7 +34,7 @@ export async function completeLessonSession({
   }
 
   await saveLessonProgress({
-    learnerId: activeLearner.learnerId,
+    learnerId,
     lessonId: lesson.id,
     correctAnswers: result.correctAnswers,
     totalQuestions: result.totalQuestions,
@@ -46,7 +42,7 @@ export async function completeLessonSession({
     completedAt: result.completedAt,
   })
 
-  const achievements = evaluateLessonAchievements(activeLearner.learnerId, result)
+  const achievements = evaluateLessonAchievements(learnerId, result)
   await saveNewAchievements(achievements)
 
   return {

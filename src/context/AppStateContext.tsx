@@ -1,4 +1,5 @@
 import {
+  useCallback,
   createContext,
   useContext,
   useEffect,
@@ -19,6 +20,7 @@ type AppData = {
   progress: LessonProgress[]
   achievements: Achievement[]
   isAppDataLoading: boolean
+  refreshAppData: () => void
 }
 
 const AppDataContext = createContext<AppData | null>(null)
@@ -29,6 +31,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [progress, setProgress] = useState<LessonProgress[]>([])
   const [achievements, setAchievements] = useState<Achievement[]>([])
   const [isAppDataLoading, setIsAppDataLoading] = useState(false)
+  const [refreshVersion, setRefreshVersion] = useState(0)
+  const refreshAppData = useCallback(() => {
+    setRefreshVersion((current) => current + 1)
+  }, [])
 
   useEffect(() => {
     if (!user || isGuest) {
@@ -40,11 +46,12 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
     let unsubscribeProgress: (() => void) | undefined
     let unsubscribeAchievements: (() => void) | undefined
+    const accountId = user.uid
 
     async function loadAppData() {
       setIsAppDataLoading(true)
 
-      const learners = await getLearnersForAccount(user.uid)
+      const learners = await getLearnersForAccount(accountId)
       const activeLearner = learners[0] ?? null
       setLearner(activeLearner)
 
@@ -69,7 +76,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       unsubscribeProgress?.()
       unsubscribeAchievements?.()
     }
-  }, [user, isGuest])
+  }, [user, isGuest, refreshVersion])
 
   const value = useMemo(
     () => ({
@@ -77,8 +84,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       progress,
       achievements,
       isAppDataLoading,
+      refreshAppData,
     }),
-    [learner, progress, achievements, isAppDataLoading],
+    [learner, progress, achievements, isAppDataLoading, refreshAppData],
   )
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>

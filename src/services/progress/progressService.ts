@@ -1,9 +1,15 @@
 import { lessons } from '../../data/lessons'
-import { getProgressForLearner } from '../../repositories/progress/progressRepository'
+import type { LessonProgress } from '../../domain/progress'
 
-export async function getLessonProgressState(learnerId: string, currentLessonId: string) {
-  const progress = await getProgressForLearner(learnerId)
+export function getLessonProgressStateFromProgress(
+  progress: LessonProgress[],
+  currentLessonId: string,
+  completedLessonId?: string,
+) {
   const completedLessonIds = new Set(progress.map((item) => item.lessonId))
+  if (completedLessonId) {
+    completedLessonIds.add(completedLessonId)
+  }
 
   const firstIncompleteLesson = lessons.find((lesson) => !completedLessonIds.has(lesson.id))
 
@@ -13,13 +19,6 @@ export async function getLessonProgressState(learnerId: string, currentLessonId:
     completed: completedLessonIds.has(lesson.id),
     current: lesson.id === currentLessonId || lesson.id === firstIncompleteLesson?.id,
   }))
-}
-
-export async function getNextRecommendedLesson(learnerId: string) {
-  const progress = await getProgressForLearner(learnerId)
-  const completedLessonIds = new Set(progress.map((item) => item.lessonId))
-
-  return lessons.find((lesson) => !completedLessonIds.has(lesson.id)) ?? lessons[0]
 }
 
 export function getNextRecommendedLessonFromProgress(completedLessonIds: Set<string>) {

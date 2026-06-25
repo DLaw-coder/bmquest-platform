@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react'
-import { useAuth } from '../hooks/useAuth'
-import { getAchievementsForLearner } from '../repositories/achievements/achievementRepository'
-import { getLearnersForAccount } from '../services/firestore/learnerRepository'
-import type { Achievement } from '../domain/achievement'
+import { useAppData } from '../context/AppStateContext'
 
 const plannedAchievements = [
   {
@@ -32,25 +28,8 @@ const plannedAchievements = [
 ]
 
 function AchievementsPage() {
-  const { user, isGuest } = useAuth()
-  const [unlockedAchievements, setUnlockedAchievements] = useState<Achievement[]>([])
-
-  useEffect(() => {
-    async function loadAchievements() {
-      if (!user || isGuest) return
-
-      const learners = await getLearnersForAccount(user.uid)
-      const activeLearner = learners[0]
-      if (!activeLearner) return
-
-      const achievements = await getAchievementsForLearner(activeLearner.learnerId)
-      setUnlockedAchievements(achievements)
-    }
-
-    loadAchievements()
-  }, [user, isGuest])
-
-  const unlockedCodes = new Set(unlockedAchievements.map((achievement) => achievement.code))
+  const { achievements } = useAppData()
+  const unlockedCodes = new Set(achievements.map((achievement) => achievement.code))
 
   return (
     <section className="dashboard">

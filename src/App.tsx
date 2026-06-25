@@ -1,37 +1,18 @@
 import { BrowserRouter } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 import './App.css'
 import AuthProvider from './contexts/AuthContext'
-import { AppStateProvider } from './context/AppStateContext'
+import { AppStateProvider, useAppData } from './context/AppStateContext'
 import { useAuth } from './hooks/useAuth'
 import AppLayout from './layouts/AppLayout'
 import WelcomePage from './pages/WelcomePage'
 import LearnerOnboardingPage from './pages/LearnerOnboardingPage'
 import AppRoutes from './router/AppRoutes'
-import { getLearnersForAccount } from './services/firestore/learnerRepository'
 
 function AppContent() {
   const { user, isGuest, isLoading } = useAuth()
-  const [hasLearner, setHasLearner] = useState(false)
-  const [isCheckingLearner, setIsCheckingLearner] = useState(false)
+  const { learner, isAppDataLoading, refreshAppData } = useAppData()
 
-  async function checkLearners() {
-    if (!user || isGuest) {
-      setHasLearner(false)
-      return
-    }
-
-    setIsCheckingLearner(true)
-    const learners = await getLearnersForAccount(user.uid)
-    setHasLearner(learners.length > 0)
-    setIsCheckingLearner(false)
-  }
-
-  useEffect(() => {
-    checkLearners()
-  }, [user?.uid, isGuest])
-
-  if (isLoading || isCheckingLearner) {
+  if (isLoading || (user && !isGuest && isAppDataLoading)) {
     return (
       <AppLayout>
         <section className="hero-card">
@@ -51,10 +32,10 @@ function AppContent() {
     )
   }
 
-  if (!isGuest && !hasLearner) {
+  if (!isGuest && !learner) {
     return (
       <AppLayout>
-        <LearnerOnboardingPage onCreated={checkLearners} />
+        <LearnerOnboardingPage onCreated={refreshAppData} />
       </AppLayout>
     )
   }

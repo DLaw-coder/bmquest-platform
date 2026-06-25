@@ -1,53 +1,18 @@
-import { useEffect, useState } from 'react'
 import { lessons } from '../data/lessons'
-import { useAuth } from '../hooks/useAuth'
-import { getAchievementsForLearner } from '../repositories/achievements/achievementRepository'
-import { getProgressForLearner } from '../repositories/progress/progressRepository'
-import { getLearnersForAccount } from '../services/firestore/learnerRepository'
-import type { LessonProgress } from '../domain/progress'
+import { useAppData } from '../context/AppStateContext'
 
 function ProgressPage() {
-  const { user, isGuest } = useAuth()
-
-  const [completedLessons, setCompletedLessons] = useState(0)
-  const [averageScore, setAverageScore] = useState(0)
-  const [bestScore, setBestScore] = useState(0)
-  const [achievementCount, setAchievementCount] = useState(0)
-  const [recentActivity, setRecentActivity] = useState<LessonProgress[]>([])
-
-  useEffect(() => {
-    async function loadProgress() {
-      if (!user || isGuest) return
-
-      const learners = await getLearnersForAccount(user.uid)
-      const activeLearner = learners[0]
-      if (!activeLearner) return
-
-      const progress = await getProgressForLearner(activeLearner.learnerId)
-      const achievements = await getAchievementsForLearner(activeLearner.learnerId)
-
-      const completedLessonIds = new Set(progress.map((item) => item.lessonId))
-      const scores = progress.map((item) => item.scorePercent)
-
-      setCompletedLessons(completedLessonIds.size)
-      setAchievementCount(achievements.length)
-      setBestScore(scores.length > 0 ? Math.max(...scores) : 0)
-      setAverageScore(
-        scores.length > 0
-          ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
-          : 0,
-      )
-
-      setRecentActivity(
-        [...progress]
-          .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
-          .slice(0, 5),
-      )
-    }
-
-    loadProgress()
-  }, [user, isGuest])
-
+  const { progress, achievements } = useAppData()
+  const completedLessons = new Set(progress.map((item) => item.lessonId)).size
+  const scores = progress.map((item) => item.scorePercent)
+  const bestScore = scores.length > 0 ? Math.max(...scores) : 0
+  const averageScore =
+    scores.length > 0
+      ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
+      : 0
+  const recentActivity = [...progress]
+    .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
+    .slice(0, 5)
   const progressPercent = Math.round((completedLessons / lessons.length) * 100)
 
   function getLessonTitle(lessonId: string) {
@@ -86,7 +51,7 @@ function ProgressPage() {
 
         <article className="dashboard-card">
           <span>Achievements</span>
-          <h2>{achievementCount}</h2>
+          <h2>{achievements.length}</h2>
           <p>Unlocked learning badges.</p>
           <a className="inline-link" href="/achievements">View Gallery →</a>
         </article>

@@ -1,48 +1,20 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { lessons } from '../data/lessons'
-import { appInfo } from '../config/appInfo'
-import type { Lesson } from '../domain'
 import { useAuth } from '../hooks/useAuth'
-import { getAchievementsForLearner } from '../repositories/achievements/achievementRepository'
-import { getProgressForLearner } from '../repositories/progress/progressRepository'
-import { getLearnersForAccount } from '../services/firestore/learnerRepository'
-import { getNextRecommendedLesson } from '../services/progress/progressService'
+import { useAppData } from '../context/AppStateContext'
+import { getNextRecommendedLessonFromProgress } from '../services/progress/progressService'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
-  const [readingProgress, setReadingProgress] = useState(0)
-  const [completedLessons, setCompletedLessons] = useState(0)
-  const [achievementCount, setAchievementCount] = useState(0)
-  const [latestAchievement, setLatestAchievement] = useState('None yet')
-  const [recommendedLesson, setRecommendedLesson] = useState<Lesson | null>(lessons[0])
-
-  useEffect(() => {
-    async function loadProgress() {
-      if (!user || isGuest) return
-
-      const learners = await getLearnersForAccount(user.uid)
-      const activeLearner = learners[0]
-      if (!activeLearner) return
-
-      const progress = await getProgressForLearner(activeLearner.learnerId)
-      const achievements = await getAchievementsForLearner(activeLearner.learnerId)
-      const nextLesson = await getNextRecommendedLesson(activeLearner.learnerId)
-      const uniqueCompletedLessons = new Set(progress.map((item) => item.lessonId))
-
-      setCompletedLessons(uniqueCompletedLessons.size)
-      setReadingProgress(Math.round((uniqueCompletedLessons.size / lessons.length) * 100))
-      setAchievementCount(achievements.length)
-      setRecommendedLesson(nextLesson)
-
-      if (achievements.length > 0) {
-        const latest = achievements[achievements.length - 1]
-        setLatestAchievement(`${latest.icon} ${latest.title}`)
-      }
-    }
-
-    loadProgress()
-  }, [user, isGuest])
+  const { progress, achievements } = useAppData()
+  const completedLessonIds = new Set(progress.map((item) => item.lessonId))
+  const completedLessons = completedLessonIds.size
+  const readingProgress = Math.round((completedLessons / lessons.length) * 100)
+  const recommendedLesson = getNextRecommendedLessonFromProgress(completedLessonIds)
+  const latestAchievement = achievements.at(-1)
+  const latestAchievementLabel = latestAchievement
+    ? `${latestAchievement.icon} ${latestAchievement.title}`
+    : 'None yet'
 
   const missionTitle = recommendedLesson?.title ?? 'Idea Utama'
   const missionLink = recommendedLesson ? `/lesson/${recommendedLesson.id}` : '/lesson/idea-utama-001'
@@ -86,8 +58,8 @@ function HomePage() {
 
         <article className="dashboard-card">
           <span>Achievements</span>
-          <h2>{achievementCount}</h2>
-          <p>{latestAchievement}</p>
+          <h2>{achievements.length}</h2>
+          <p>{latestAchievementLabel}</p>
         </article>
       </div>
 
