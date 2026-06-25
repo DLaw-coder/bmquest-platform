@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import './App.css'
-import AuthProvider from './contexts/AuthContext'
+import AuthProvider from './context/AuthContext'
 import { AppStateProvider, useAppData } from './context/AppStateContext'
 import { useAuth } from './hooks/useAuth'
 import AppLayout from './layouts/AppLayout'
