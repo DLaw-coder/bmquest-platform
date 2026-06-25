@@ -5,6 +5,7 @@ import {
   signInWithGoogle as firebaseSignInWithGoogle,
   signOutUser,
 } from '../services/auth/authService'
+import { upsertAccount } from '../services/firestore/accountRepository'
 import type { BMQuestUser } from '../types/User'
 
 type AuthContextValue = {
@@ -32,14 +33,27 @@ function AuthProvider({ children }: AuthProviderProps) {
       return
     }
 
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
+        const now = new Date().toISOString()
+
+        await upsertAccount({
+          uid: firebaseUser.uid,
+          displayName: firebaseUser.displayName ?? 'BM Quest User',
+          email: firebaseUser.email ?? undefined,
+          photoURL: firebaseUser.photoURL ?? undefined,
+          role: 'parent',
+          provider: 'google',
+          createdAt: now,
+          updatedAt: now,
+        })
+
         setUser({
           uid: firebaseUser.uid,
           displayName: firebaseUser.displayName ?? 'BM Quest User',
           email: firebaseUser.email ?? undefined,
           role: 'parent',
-          createdAt: new Date().toISOString(),
+          createdAt: now,
         })
       } else {
         setUser(null)
