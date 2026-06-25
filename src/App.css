@@ -579,3 +579,68 @@ h1 {
   background: var(--color-primary);
   color: white;
 }
+
+.lesson-meta {
+  display: grid;
+  gap: 12px;
+}
+
+.learning-tip {
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.summary-list {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.summary-list li {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f8fafc;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.vocab-list .lesson-row {
+  display: block;
+  text-align: center;
+}
+
+.vocab-list .lesson-row div {
+  display: grid;
+  gap: 8px;
+}
+
+.vocab-list .lesson-row small {
+  line-height: 1.45;
+}
+
+.section-header{
+  display:grid;
+  justify-items:center;
+  gap:4px;
+  margin-bottom:20px;
+}
+
+.section-title{
+  font-size:.92rem;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--color-muted);
+}
+
+.section-subtitle{
+  font-size:.82rem;
+  color:#94a3b8;
+  font-weight:600;
+}

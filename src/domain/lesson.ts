@@ -16,6 +16,7 @@ export type LessonQuestion = {
 export type VocabularyItem = {
   word: string
   meaning: string
+  example: string
 }
 
 export type Lesson = {
@@ -24,10 +25,13 @@ export type Lesson = {
   form: 1 | 2 | 3 | 4 | 5
   strand: 'Membaca'
   skill: string
+  learningObjective: string
+  readingTip: string
   estimatedMinutes: number
   curriculumMeta: CurriculumLessonMeta
   passageTitle: string
   passage: string
   vocabulary: VocabularyItem[]
   questions: LessonQuestion[]
+  summary: string[]
 }

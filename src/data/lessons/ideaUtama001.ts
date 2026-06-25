@@ -6,6 +6,10 @@ export const ideaUtama001: Lesson = {
   form: 1,
   strand: 'Membaca',
   skill: 'Mengenal pasti idea utama',
+  learningObjective:
+    'Murid dapat mengenal pasti idea utama dalam petikan pendek.',
+  readingTip:
+    'Semasa membaca, cari perkara utama yang dibincangkan dalam keseluruhan petikan, bukan hanya satu ayat.',
   estimatedMinutes: 10,
   curriculumMeta: {
     subject: 'Bahasa Melayu',
@@ -20,16 +24,29 @@ export const ideaUtama001: Lesson = {
     },
     learningStandard: {
       code: '2.1.1',
-      description: 'Membaca untuk memahami maksud perkataan, rangkai kata, istilah, ungkapan dan ayat dalam pelbagai bahan.',
+      description:
+        'Membaca untuk memahami maksud perkataan, rangkai kata, istilah, ungkapan dan ayat dalam pelbagai bahan.',
     },
   },
   passageTitle: 'Amalan Membaca',
   passage:
     'Membaca ialah amalan yang sangat bermanfaat kepada murid. Melalui membaca, murid dapat menambah ilmu pengetahuan, memperluas kosa kata dan memperbaik kemahiran berbahasa. Amalan ini juga membantu murid memahami pelbagai perkara yang berlaku di sekeliling mereka. Oleh itu, murid digalakkan membaca sekurang-kurangnya beberapa minit setiap hari.',
   vocabulary: [
-    { word: 'bermanfaat', meaning: 'memberi faedah atau kebaikan' },
-    { word: 'kosa kata', meaning: 'perbendaharaan kata' },
-    { word: 'digalakkan', meaning: 'dianjurkan atau disarankan' },
+    {
+      word: 'bermanfaat',
+      meaning: 'memberi faedah atau kebaikan',
+      example: 'Membaca buku sangat bermanfaat kepada murid.',
+    },
+    {
+      word: 'kosa kata',
+      meaning: 'perbendaharaan kata',
+      example: 'Murid dapat memperluas kosa kata melalui pembacaan.',
+    },
+    {
+      word: 'digalakkan',
+      meaning: 'dianjurkan atau disarankan',
+      example: 'Murid digalakkan membaca setiap hari.',
+    },
   ],
   questions: [
     {
@@ -63,7 +80,13 @@ export const ideaUtama001: Lesson = {
         { id: 'c', text: 'Hanya sebelum peperiksaan.' },
       ],
       correctOptionId: 'a',
-      explanation: 'Ayat terakhir menyebut bahawa murid digalakkan membaca beberapa minit setiap hari.',
+      explanation:
+        'Ayat terakhir menyebut bahawa murid digalakkan membaca beberapa minit setiap hari.',
     },
+  ],
+  summary: [
+    'Idea utama ialah perkara paling penting dalam petikan.',
+    'Petikan ini menerangkan manfaat membaca kepada murid.',
+    'Kata baharu: bermanfaat, kosa kata, digalakkan.',
   ],
 }

@@ -76,6 +76,16 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
         <div className="dashboard-icon">📖</div>
       </div>
 
+      <article className="dashboard-card lesson-meta">
+        <span>Learning Objective</span>
+        <h2>🎯 Objective</h2>
+        <p>{lesson.learningObjective}</p>
+
+        <div className="learning-tip">
+          💡 Reading Tip: {lesson.readingTip}
+        </div>
+      </article>
+
       <article className="dashboard-card">
         <span>Petikan</span>
         <h2>{lesson.passageTitle}</h2>
@@ -87,8 +97,11 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
         <div className="vocab-list">
           {lesson.vocabulary.map((item) => (
             <div className="lesson-row" key={item.word}>
-              <strong>{item.word}</strong>
-              <small>{item.meaning}</small>
+              <div>
+                <strong>{item.word}</strong>
+                <small>{item.meaning}</small>
+                <small>{item.example}</small>
+              </div>
             </div>
           ))}
         </div>
@@ -144,6 +157,12 @@ function LessonRenderer({ lesson }: LessonRendererProps) {
             </p>
             <small>{saveMessage}</small>
             {achievementMessage && <small>{achievementMessage}</small>}
+
+            <ul className="summary-list">
+              {lesson.summary.map((item) => (
+                <li key={item}>✓ {item}</li>
+              ))}
+            </ul>
 
             <div className="result-actions">
               <Link to="/" className="result-action primary-action">
