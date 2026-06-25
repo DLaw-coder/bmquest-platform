@@ -19,14 +19,18 @@ export const ideaUtama001: Lesson = {
     unit: 'Kemahiran Membaca Foundation',
     learningArea: 'Membaca',
     contentStandard: {
-      code: '2.1',
-      description: 'Membaca secara mekanis pelbagai bahan prosa dan puisi.',
+      code: '2.3',
+      description: 'Membaca untuk memproses maklumat daripada pelbagai bahan.',
     },
     learningStandard: {
-      code: '2.1.1',
+      code: '2.3.1',
       description:
-        'Membaca untuk memahami maksud perkataan, rangkai kata, istilah, ungkapan dan ayat dalam pelbagai bahan.',
+        'Membaca untuk menyaring dan mengenal pasti idea utama dan idea sampingan dengan betul dan tepat.',
     },
+  },
+  curriculumReferences: {
+    standardIds: ['kssm-bm-f1-2.3.1'],
+    textbookReferenceIds: ['kssm-bm-f1-2016-unit13-p75'],
   },
   passageTitle: 'Amalan Membaca',
   passage:

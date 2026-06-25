@@ -19,14 +19,18 @@ export const isiTersurat001: Lesson = {
     unit: 'Kemahiran Membaca Foundation',
     learningArea: 'Membaca',
     contentStandard: {
-      code: '2.1',
-      description: 'Membaca secara mekanis pelbagai bahan prosa dan puisi.',
+      code: '2.2',
+      description: 'Membaca untuk memahami makna perkataan, rangkai kata dan maklumat.',
     },
     learningStandard: {
-      code: '2.1.1',
+      code: '2.2.3',
       description:
-        'Membaca untuk memahami maksud perkataan, rangkai kata, istilah, ungkapan dan ayat dalam pelbagai bahan.',
+        'Membaca untuk memahami dan menjawab soalan pemahaman berdasarkan bahan prosa.',
     },
+  },
+  curriculumReferences: {
+    standardIds: ['kssm-bm-f1-2.2.3'],
+    textbookReferenceIds: ['kssm-bm-f1-2016-unit5-p27'],
   },
   passageTitle: 'Menjaga Kebersihan Kelas',
   passage:

@@ -2,6 +2,7 @@ import { appInfo } from '../config/appInfo'
 import { useAppData } from '../context/AppStateContext'
 import { lessons } from '../data/lessons'
 import { useAuth } from '../hooks/useAuth'
+import { getCurriculumReferenceDiagnostics } from '../services/curriculum/curriculumReferenceService'
 
 function DeveloperPage() {
   const { user, isGuest } = useAuth()
@@ -9,6 +10,7 @@ function DeveloperPage() {
   const lessonCount = isGuest ? 0 : lessons.length
   const progressCount = isGuest ? 0 : progress.length
   const achievementCount = isGuest ? 0 : achievements.length
+  const referenceDiagnostics = getCurriculumReferenceDiagnostics()
 
   return (
     <section className="hero-card">
@@ -48,6 +50,36 @@ function DeveloperPage() {
       <div className="version-card">
         <span>Achievements</span>
         <strong>{achievementCount}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Curriculum Standards</span>
+        <strong>{referenceDiagnostics.standardCount}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Textbook References</span>
+        <strong>{referenceDiagnostics.textbookReferenceCount}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Missing Reference Links</span>
+        <strong>{referenceDiagnostics.missingLinkCount}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Standard Metadata Mismatches</span>
+        <strong>{referenceDiagnostics.standardMetadataMismatchCount}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>References Needing Review</span>
+        <strong>{referenceDiagnostics.referencesNeedingReview}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Lessons Without Textbook Links</span>
+        <strong>{referenceDiagnostics.lessonsWithoutTextbookReferences}</strong>
       </div>
 
       <div className="version-card">

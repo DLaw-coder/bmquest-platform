@@ -1,4 +1,5 @@
 import type { CurriculumLessonMeta } from './curriculum'
+import type { LessonCurriculumReferences } from './curriculumReference'
 
 export type QuestionOption = {
   id: string
@@ -29,6 +30,7 @@ export type Lesson = {
   readingTip: string
   estimatedMinutes: number
   curriculumMeta: CurriculumLessonMeta
+  curriculumReferences: LessonCurriculumReferences
   passageTitle: string
   passage: string
   vocabulary: VocabularyItem[]
