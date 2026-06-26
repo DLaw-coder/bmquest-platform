@@ -31,7 +31,7 @@ export const keselamatanF3Expansion001: Lesson = {
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f3-2.2.3'],
-    textbookReferenceIds: [],
+    textbookReferenceIds: ['kssm-bm-f3-textbook-source'],
   },
   passageTitle: 'Infografik Keselamatan Siber',
   passage:

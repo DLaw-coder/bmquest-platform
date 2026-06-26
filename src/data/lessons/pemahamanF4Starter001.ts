@@ -30,7 +30,7 @@ export const pemahamanF4Starter001: Lesson = {
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f4-2.3.5'],
-    textbookReferenceIds: [],
+    textbookReferenceIds: ['kssm-bm-f4-textbook-source'],
   },
   passageTitle: 'Usahawan Muda di Sekolah',
   passage:

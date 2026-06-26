@@ -31,7 +31,7 @@ export const kerjayaF3Expansion001: Lesson = {
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f3-2.2.3'],
-    textbookReferenceIds: [],
+    textbookReferenceIds: ['kssm-bm-f3-textbook-source'],
   },
   passageTitle: 'Carta Minat Kerjaya Murid',
   passage:

@@ -181,4 +181,80 @@ export const textbookReferences: TextbookReference[] = [
       'https://drive.google.com/file/d/13uSE7O7drUOdIq9YTs9Wa1Wxd4A1oVmF/view',
     verificationStatus: 'verified',
   },
+  {
+    referenceId: 'kssm-bm-f2-textbook-source',
+    curriculum: 'KSSM',
+    subject: 'Bahasa Melayu',
+    form: 2,
+    title: 'Bahasa Melayu Tingkatan 2',
+    editionYear: 2017,
+    publisher: 'Kementerian Pendidikan Malaysia',
+    unit: 'Form 2 source-level textbook reference',
+    pageStart: 1,
+    pageEnd: 1,
+    alignmentNote:
+      'Source-level textbook reference for Tingkatan 2 launch lessons. Page-level unit mapping to be refined in a later content QA pass.',
+    catalogUrl:
+      'https://gurubesar.my/buku-teks-bahasa-melayu-tingkatan-2/',
+    sourceUrl:
+      'https://drive.google.com/file/d/1ilNGFcYagxdckPwyjXSZ6WpkXiOGHbs8/view',
+    verificationStatus: 'needs-review',
+  },
+  {
+    referenceId: 'kssm-bm-f3-textbook-source',
+    curriculum: 'KSSM',
+    subject: 'Bahasa Melayu',
+    form: 3,
+    title: 'Bahasa Melayu Tingkatan 3',
+    editionYear: 2018,
+    publisher: 'Kementerian Pendidikan Malaysia',
+    unit: 'Form 3 source-level textbook reference',
+    pageStart: 1,
+    pageEnd: 1,
+    alignmentNote:
+      'Source-level textbook reference for Tingkatan 3 launch lessons. Page-level unit mapping to be refined in a later content QA pass.',
+    catalogUrl:
+      'https://gurubesar.my/buku-teks-bahasa-melayu-tingkatan-3/',
+    sourceUrl:
+      'https://drive.google.com/file/d/13Pf2Re9nPw8VKcPj5DrRxyxgXsYRZCn9/view',
+    verificationStatus: 'needs-review',
+  },
+  {
+    referenceId: 'kssm-bm-f4-textbook-source',
+    curriculum: 'KSSM',
+    subject: 'Bahasa Melayu',
+    form: 4,
+    title: 'Bahasa Melayu Tingkatan 4',
+    editionYear: 2019,
+    publisher: 'Kementerian Pendidikan Malaysia',
+    unit: 'Form 4 source-level textbook reference',
+    pageStart: 1,
+    pageEnd: 1,
+    alignmentNote:
+      'Source-level textbook reference for Tingkatan 4 launch lessons. Page-level unit mapping to be refined in a later content QA pass.',
+    catalogUrl:
+      'https://gurubesar.my/buku-teks-bahasa-melayu-tingkatan-4/',
+    sourceUrl:
+      'https://drive.google.com/file/d/1YRXMgLtAh0mBqCft_SlHXU3VLOwOW7KU/view',
+    verificationStatus: 'needs-review',
+  },
+  {
+    referenceId: 'kssm-bm-f5-textbook-source',
+    curriculum: 'KSSM',
+    subject: 'Bahasa Melayu',
+    form: 5,
+    title: 'Bahasa Melayu Tingkatan 5',
+    editionYear: 2020,
+    publisher: 'Kementerian Pendidikan Malaysia',
+    unit: 'Form 5 source-level textbook reference',
+    pageStart: 1,
+    pageEnd: 1,
+    alignmentNote:
+      'Source-level textbook reference for Tingkatan 5 launch lessons. Page-level unit mapping to be refined in a later content QA pass.',
+    catalogUrl:
+      'https://gurubesar.my/buku-teks-bahasa-melayu-tingkatan-5/',
+    sourceUrl:
+      'https://drive.google.com/file/d/1ZUEAu8HBppqFbidMkVzeSEQYa7ApAeJF/view',
+    verificationStatus: 'needs-review',
+  },
 ]

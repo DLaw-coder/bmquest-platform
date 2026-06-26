@@ -31,7 +31,7 @@ export const pemahamanF5Starter001: Lesson = {
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f5-2.3.3'],
-    textbookReferenceIds: [],
+    textbookReferenceIds: ['kssm-bm-f5-textbook-source'],
   },
   passageTitle: 'Sukarelawan Komuniti',
   passage:

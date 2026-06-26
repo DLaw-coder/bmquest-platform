@@ -31,7 +31,7 @@ export const alamF4Expansion001: Lesson = {
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f4-2.3.5'],
-    textbookReferenceIds: [],
+    textbookReferenceIds: ['kssm-bm-f4-textbook-source'],
   },
   passageTitle: 'Pengangkutan Awam dan Alam Sekitar',
   passage:

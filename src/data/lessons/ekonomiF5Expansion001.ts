@@ -31,7 +31,7 @@ export const ekonomiF5Expansion001: Lesson = {
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f5-2.3.3'],
-    textbookReferenceIds: [],
+    textbookReferenceIds: ['kssm-bm-f5-textbook-source'],
   },
   passageTitle: 'Tabiat Menabung Remaja',
   passage:

@@ -31,7 +31,7 @@ export const komunitiF2Expansion001: Lesson = {
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f2-2.2.3'],
-    textbookReferenceIds: [],
+    textbookReferenceIds: ['kssm-bm-f2-textbook-source'],
   },
   passageTitle: 'Kempen Kebersihan Taman',
   passage:

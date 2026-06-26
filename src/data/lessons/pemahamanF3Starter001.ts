@@ -32,7 +32,7 @@ export const pemahamanF3Starter001: Lesson = {
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f3-2.2.3'],
-    textbookReferenceIds: [],
+    textbookReferenceIds: ['kssm-bm-f3-textbook-source'],
   },
   passageTitle: 'Infografik Aplikasi Perpustakaan',
   passage:
