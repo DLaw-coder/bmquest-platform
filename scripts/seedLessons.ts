@@ -11,6 +11,44 @@ import { isiTersurat001 } from '../src/data/lessons/isiTersurat001.ts'
 
 const lessons = [ideaUtama001, isiTersurat001]
 
+function validateLessonsForSeed() {
+  const lessonIds = new Set<string>()
+  const sortOrders = new Set<number>()
+  const errors: string[] = []
+
+  for (const lesson of lessons) {
+    if (lessonIds.has(lesson.id)) {
+      errors.push(`Duplicate lesson id: ${lesson.id}`)
+    }
+
+    lessonIds.add(lesson.id)
+
+    if (lesson.sortOrder === undefined) {
+      errors.push(`Missing sortOrder: ${lesson.id}`)
+    } else if (sortOrders.has(lesson.sortOrder)) {
+      errors.push(`Duplicate sortOrder ${lesson.sortOrder}: ${lesson.id}`)
+    } else {
+      sortOrders.add(lesson.sortOrder)
+    }
+
+    if (lesson.curriculumReferences.standardIds.length === 0) {
+      errors.push(`Missing curriculum standard reference: ${lesson.id}`)
+    }
+
+    if (lesson.curriculumReferences.textbookReferenceIds.length === 0) {
+      errors.push(`Missing textbook reference: ${lesson.id}`)
+    }
+
+    if (lesson.questions.length === 0) {
+      errors.push(`Missing questions: ${lesson.id}`)
+    }
+  }
+
+  if (errors.length > 0) {
+    throw new Error(`Lesson seed validation failed:\n${errors.join('\n')}`)
+  }
+}
+
 type FirebaseSeedConfig = {
   apiKey: string
   authDomain: string
@@ -84,6 +122,8 @@ async function seedLessons() {
   console.log('BM Quest lesson seed')
   console.log(`Project: ${process.env.VITE_FIREBASE_PROJECT_ID ?? 'unknown'}`)
   console.log(`Lessons: ${lessons.length}`)
+
+  validateLessonsForSeed()
 
   if (dryRun) {
     console.log('Dry run only. No Firestore writes were made.')

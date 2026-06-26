@@ -67,3 +67,7 @@ The seed writes:
 
 Each lesson includes a `sortOrder` so Firestore-loaded lessons keep the same
 navigation order as the local registry.
+
+The lesson seed validates the current lesson registry before writing. It blocks
+uploads when a lesson has duplicate IDs, duplicate or missing `sortOrder`, no
+curriculum standard links, no textbook links, or no questions.

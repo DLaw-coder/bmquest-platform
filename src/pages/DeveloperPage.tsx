@@ -67,6 +67,16 @@ function DeveloperPage() {
       </div>
 
       <div className="version-card">
+        <span>Duplicate Lesson IDs</span>
+        <strong>{referenceDiagnostics.duplicateLessonIdCount}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Duplicate Lesson Sort Orders</span>
+        <strong>{referenceDiagnostics.duplicateLessonSortOrderCount}</strong>
+      </div>
+
+      <div className="version-card">
         <span>Standard Metadata Mismatches</span>
         <strong>{referenceDiagnostics.standardMetadataMismatchCount}</strong>
       </div>
@@ -77,8 +87,23 @@ function DeveloperPage() {
       </div>
 
       <div className="version-card">
+        <span>Lessons Without Standards</span>
+        <strong>{referenceDiagnostics.lessonsWithoutCurriculumStandards}</strong>
+      </div>
+
+      <div className="version-card">
         <span>Lessons Without Textbook Links</span>
         <strong>{referenceDiagnostics.lessonsWithoutTextbookReferences}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Lessons Without Sort Order</span>
+        <strong>{referenceDiagnostics.lessonsWithoutSortOrder}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Lessons Without Questions</span>
+        <strong>{referenceDiagnostics.lessonsWithoutQuestions}</strong>
       </div>
 
       <div className="version-card">
