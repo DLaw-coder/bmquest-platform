@@ -13,6 +13,20 @@ export type LessonMasterySummary = {
   status: MasteryStatus
 }
 
+export type LessonRecommendationReason =
+  | 'start'
+  | 'review'
+  | 'challenge'
+  | 'new'
+  | 'mastery'
+
+export type LessonRecommendation = {
+  lesson: Lesson
+  reason: LessonRecommendationReason
+  title: string
+  description: string
+}
+
 export function getLessonProgressStateFromProgress(
   progress: LessonProgress[],
   lessons: Lesson[],
@@ -34,11 +48,68 @@ export function getLessonProgressStateFromProgress(
   }))
 }
 
-export function getNextRecommendedLessonFromProgress(
-  completedLessonIds: Set<string>,
+export function getRecommendedLesson(
   lessons: Lesson[],
-) {
-  return lessons.find((lesson) => !completedLessonIds.has(lesson.id)) ?? lessons[0]
+  progress: LessonProgress[],
+): LessonRecommendation | null {
+  if (lessons.length === 0) {
+    return null
+  }
+
+  const summaries = getLessonMasterySummaries(lessons, progress)
+  const weakLesson = summaries
+    .filter((item) => item.attemptCount > 0 && item.bestScore < 70)
+    .sort((first, second) => first.bestScore - second.bestScore)[0]
+
+  if (weakLesson) {
+    return {
+      lesson: weakLesson.lesson,
+      reason: 'review',
+      title: 'Review weak skill',
+      description:
+        `Best score ${weakLesson.bestScore}%. Review this lesson before moving on.`,
+    }
+  }
+
+  const challengeLesson = summaries
+    .filter((item) => item.attemptCount > 0 && item.status !== 'Mastered')
+    .sort((first, second) => first.latestScore - second.latestScore)[0]
+
+  if (challengeLesson) {
+    return {
+      lesson: challengeLesson.lesson,
+      reason: 'challenge',
+      title: 'Try next challenge',
+      description:
+        `${challengeLesson.status}. Complete another challenge to move toward mastery.`,
+    }
+  }
+
+  const newLesson = summaries.find((item) => item.attemptCount === 0)
+
+  if (newLesson) {
+    return {
+      lesson: newLesson.lesson,
+      reason: 'new',
+      title: 'Start a new lesson',
+      description: 'Continue building coverage with the next unread lesson.',
+    }
+  }
+
+  const masteryRefresh = summaries
+    .filter((item) => item.status === 'Mastered')
+    .sort((first, second) =>
+      first.attempts.at(-1)?.completedAt.localeCompare(
+        second.attempts.at(-1)?.completedAt ?? '',
+      ) ?? 0,
+    )[0] ?? summaries[0]
+
+  return {
+    lesson: masteryRefresh.lesson,
+    reason: 'mastery',
+    title: 'Mastery refresh',
+    description: 'All lessons are completed. Keep skills sharp with a fresh challenge.',
+  }
 }
 
 export function getLessonMasterySummaries(

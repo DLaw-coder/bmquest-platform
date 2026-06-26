@@ -1,25 +1,25 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
-import { getNextRecommendedLessonFromProgress } from '../services/progress/progressService'
+import { getRecommendedLesson } from '../services/progress/progressService'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
   const { learner, lessons, progress, achievements } = useAppData()
   const lessonIds = new Set(lessons.map((lesson) => lesson.id))
+  const formProgress = progress.filter((item) => lessonIds.has(item.lessonId))
   const completedLessonIds = new Set(
-    progress
-      .filter((item) => lessonIds.has(item.lessonId))
-      .map((item) => item.lessonId),
+    formProgress.map((item) => item.lessonId),
   )
   const completedLessons = completedLessonIds.size
   const readingProgress = lessons.length > 0
     ? Math.round((completedLessons / lessons.length) * 100)
     : 0
-  const recommendedLesson = getNextRecommendedLessonFromProgress(
-    completedLessonIds,
+  const recommendation = getRecommendedLesson(
     lessons,
+    formProgress,
   )
+  const recommendedLesson = recommendation?.lesson
   const latestAchievement = achievements.at(-1)
   const latestAchievementLabel = latestAchievement
     ? `${latestAchievement.icon} ${latestAchievement.title}`
@@ -50,16 +50,26 @@ function HomePage() {
 
       <div className="dashboard-grid">
         <article className="dashboard-card primary-card">
-          <span>📖 Continue Learning</span>
+          <span>📖 {recommendation?.title ?? 'Continue Learning'}</span>
           <h2>{recommendedLesson ? missionTitle : 'Coming Soon'}</h2>
           <p>
             {recommendedLesson
-              ? `Form ${recommendedLesson.form} · Reading Comprehension · ${recommendedLesson.estimatedMinutes} min`
+              ? recommendation?.description
               : `Form ${activeForm} lessons are being prepared.`}
           </p>
+          {recommendedLesson && (
+            <p>
+              Form {recommendedLesson.form} · Reading Comprehension ·{' '}
+              {recommendedLesson.estimatedMinutes} min
+            </p>
+          )}
           {recommendedLesson ? (
             <Link className="mission-button" to={`/lesson/${recommendedLesson.id}`}>
-              Continue →
+              {recommendation?.reason === 'review'
+                ? 'Review →'
+                : recommendation?.reason === 'challenge'
+                  ? 'Challenge →'
+                  : 'Continue →'}
             </Link>
           ) : (
             <p>No lessons available for this form yet.</p>

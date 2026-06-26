@@ -2,6 +2,7 @@ import { appInfo } from '../config/appInfo'
 import { useAppData } from '../context/AppStateContext'
 import { useAuth } from '../hooks/useAuth'
 import { getCurriculumReferenceDiagnostics } from '../services/curriculum/curriculumReferenceService'
+import { getRecommendedLesson } from '../services/progress/progressService'
 
 function DeveloperPage() {
   const { user, isGuest } = useAuth()
@@ -10,6 +11,9 @@ function DeveloperPage() {
   const progressCount = isGuest ? 0 : progress.length
   const achievementCount = isGuest ? 0 : achievements.length
   const referenceDiagnostics = getCurriculumReferenceDiagnostics(lessons)
+  const lessonIds = new Set(lessons.map((lesson) => lesson.id))
+  const formProgress = progress.filter((item) => lessonIds.has(item.lessonId))
+  const recommendation = getRecommendedLesson(lessons, formProgress)
 
   return (
     <section className="hero-card">
@@ -44,6 +48,15 @@ function DeveloperPage() {
       <div className="version-card">
         <span>Progress Records</span>
         <strong>{progressCount}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Recommendation</span>
+        <strong>
+          {recommendation
+            ? `${recommendation.reason}: ${recommendation.lesson.id}`
+            : '-'}
+        </strong>
       </div>
 
       <div className="version-card">
