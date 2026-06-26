@@ -529,6 +529,17 @@ h1 {
     linear-gradient(135deg, #7c2d12, #ea580c);
 }
 
+.arcade-sound-toggle {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 14px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 900;
+}
+
 .arcade-star {
   position: absolute;
   width: 72px;
