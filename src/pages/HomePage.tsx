@@ -1,16 +1,20 @@
 import { Link } from 'react-router-dom'
-import { lessons } from '../data/lessons'
 import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
 import { getNextRecommendedLessonFromProgress } from '../services/progress/progressService'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
-  const { progress, achievements } = useAppData()
+  const { lessons, progress, achievements } = useAppData()
   const completedLessonIds = new Set(progress.map((item) => item.lessonId))
   const completedLessons = completedLessonIds.size
-  const readingProgress = Math.round((completedLessons / lessons.length) * 100)
-  const recommendedLesson = getNextRecommendedLessonFromProgress(completedLessonIds)
+  const readingProgress = lessons.length > 0
+    ? Math.round((completedLessons / lessons.length) * 100)
+    : 0
+  const recommendedLesson = getNextRecommendedLessonFromProgress(
+    completedLessonIds,
+    lessons,
+  )
   const latestAchievement = achievements.at(-1)
   const latestAchievementLabel = latestAchievement
     ? `${latestAchievement.icon} ${latestAchievement.title}`

@@ -1,8 +1,7 @@
-import { lessons } from '../data/lessons'
 import { useAppData } from '../context/AppStateContext'
 
 function ProgressPage() {
-  const { progress, achievements } = useAppData()
+  const { lessons, progress, achievements } = useAppData()
   const completedLessons = new Set(progress.map((item) => item.lessonId)).size
   const scores = progress.map((item) => item.scorePercent)
   const bestScore = scores.length > 0 ? Math.max(...scores) : 0
@@ -13,7 +12,9 @@ function ProgressPage() {
   const recentActivity = [...progress]
     .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
     .slice(0, 5)
-  const progressPercent = Math.round((completedLessons / lessons.length) * 100)
+  const progressPercent = lessons.length > 0
+    ? Math.round((completedLessons / lessons.length) * 100)
+    : 0
 
   function getLessonTitle(lessonId: string) {
     return lessons.find((lesson) => lesson.id === lessonId)?.title ?? lessonId

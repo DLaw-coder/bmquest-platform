@@ -2,6 +2,7 @@ import type { Lesson } from '../../domain'
 
 export const ideaUtama001: Lesson = {
   id: 'idea-utama-001',
+  sortOrder: 1,
   title: 'Idea Utama',
   form: 1,
   strand: 'Membaca',

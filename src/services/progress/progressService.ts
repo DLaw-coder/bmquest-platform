@@ -1,8 +1,9 @@
-import { lessons } from '../../data/lessons'
+import type { Lesson } from '../../domain'
 import type { LessonProgress } from '../../domain/progress'
 
 export function getLessonProgressStateFromProgress(
   progress: LessonProgress[],
+  lessons: Lesson[],
   currentLessonId: string,
   completedLessonId?: string,
 ) {
@@ -21,6 +22,9 @@ export function getLessonProgressStateFromProgress(
   }))
 }
 
-export function getNextRecommendedLessonFromProgress(completedLessonIds: Set<string>) {
+export function getNextRecommendedLessonFromProgress(
+  completedLessonIds: Set<string>,
+  lessons: Lesson[],
+) {
   return lessons.find((lesson) => !completedLessonIds.has(lesson.id)) ?? lessons[0]
 }

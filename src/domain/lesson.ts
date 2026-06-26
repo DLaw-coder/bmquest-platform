@@ -22,6 +22,7 @@ export type VocabularyItem = {
 
 export type Lesson = {
   id: string
+  sortOrder?: number
   title: string
   form: 1 | 2 | 3 | 4 | 5
   strand: 'Membaca'

@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "seed:curriculum": "node --experimental-strip-types scripts/seedCurriculumReferences.ts"
+    "seed:curriculum": "node --experimental-strip-types scripts/seedCurriculumReferences.ts",
+    "seed:lessons": "node --experimental-strip-types scripts/seedLessons.ts"
   },
   "dependencies": {
     "firebase": "^12.15.0",

@@ -2,6 +2,7 @@ import type { Lesson } from '../../domain'
 
 export const isiTersurat001: Lesson = {
   id: 'isi-tersurat-001',
+  sortOrder: 2,
   title: 'Isi Tersurat',
   form: 1,
   strand: 'Membaca',

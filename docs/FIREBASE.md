@@ -43,3 +43,27 @@ The seed writes:
 
 Use this only after confirming `.env.local` points to the intended Firebase
 project.
+
+## Lesson Content Seeding
+
+Lesson content is loaded from Firestore first, with the checked-in lesson data
+as a fallback for local development and empty databases.
+
+Preview the lesson seed payload:
+
+```bash
+npm run seed:lessons -- --dry-run
+```
+
+Seed lessons to Firestore:
+
+```bash
+BMQUEST_ALLOW_FIRESTORE_SEED=true npm run seed:lessons
+```
+
+The seed writes:
+
+- `lessons/{lessonId}`
+
+Each lesson includes a `sortOrder` so Firestore-loaded lessons keep the same
+navigation order as the local registry.

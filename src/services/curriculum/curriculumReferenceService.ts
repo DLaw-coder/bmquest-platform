@@ -2,9 +2,9 @@ import {
   curriculumStandards,
   textbookReferences,
 } from '../../data/curriculumReferences'
-import { lessons } from '../../data/lessons'
+import type { Lesson } from '../../domain'
 
-export function getCurriculumReferenceDiagnostics() {
+export function getCurriculumReferenceDiagnostics(lessons: Lesson[]) {
   const standardIds = new Set(
     curriculumStandards.map((standard) => standard.standardId),
   )

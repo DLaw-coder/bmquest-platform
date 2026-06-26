@@ -28,7 +28,7 @@ type UnitLesson = {
 
 function LessonRendererV2({ lesson }: LessonRendererProps) {
   const { isGuest } = useAuth()
-  const { learner, progress } = useAppData()
+  const { learner, lessons, progress } = useAppData()
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [result, setResult] = useState<SessionResult | null>(null)
   const [isSaving, setIsSaving] = useState(false)
@@ -44,7 +44,12 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
           current: true,
         },
       ]
-    : getLessonProgressStateFromProgress(progress, lesson.id, result?.lessonId)
+    : getLessonProgressStateFromProgress(
+        progress,
+        lessons,
+        lesson.id,
+        result?.lessonId,
+      )
 
   useEffect(() => {
     async function loadNavigation() {

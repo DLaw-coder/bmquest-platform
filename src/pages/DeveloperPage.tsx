@@ -1,16 +1,15 @@
 import { appInfo } from '../config/appInfo'
 import { useAppData } from '../context/AppStateContext'
-import { lessons } from '../data/lessons'
 import { useAuth } from '../hooks/useAuth'
 import { getCurriculumReferenceDiagnostics } from '../services/curriculum/curriculumReferenceService'
 
 function DeveloperPage() {
   const { user, isGuest } = useAuth()
-  const { learner, progress, achievements } = useAppData()
+  const { learner, lessons, progress, achievements } = useAppData()
   const lessonCount = isGuest ? 0 : lessons.length
   const progressCount = isGuest ? 0 : progress.length
   const achievementCount = isGuest ? 0 : achievements.length
-  const referenceDiagnostics = getCurriculumReferenceDiagnostics()
+  const referenceDiagnostics = getCurriculumReferenceDiagnostics(lessons)
 
   return (
     <section className="hero-card">

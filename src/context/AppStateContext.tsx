@@ -9,14 +9,16 @@ import {
 } from 'react'
 import type { Achievement } from '../domain/achievement'
 import type { LessonProgress } from '../domain/progress'
-import type { Learner } from '../domain'
+import type { Learner, Lesson } from '../domain'
 import { useAuth } from '../hooks/useAuth'
 import { getLearnersForAccount } from '../repositories/learner/learnerRepository'
 import { subscribeToProgressForLearner } from '../repositories/progress/progressRepository'
 import { subscribeToAchievementsForLearner } from '../repositories/achievements/achievementRepository'
+import { getAllLessons } from '../repositories/curriculum/lessonRepository'
 
 type AppData = {
   learner: Learner | null
+  lessons: Lesson[]
   progress: LessonProgress[]
   achievements: Achievement[]
   isAppDataLoading: boolean
@@ -28,6 +30,7 @@ const AppDataContext = createContext<AppData | null>(null)
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const { user, isGuest } = useAuth()
   const [learner, setLearner] = useState<Learner | null>(null)
+  const [lessons, setLessons] = useState<Lesson[]>([])
   const [progress, setProgress] = useState<LessonProgress[]>([])
   const [achievements, setAchievements] = useState<Achievement[]>([])
   const [isAppDataLoading, setIsAppDataLoading] = useState(false)
@@ -41,6 +44,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setLearner(null)
       setProgress([])
       setAchievements([])
+      getAllLessons().then(setLessons)
       return
     }
 
@@ -50,6 +54,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
     async function loadAppData() {
       setIsAppDataLoading(true)
+
+      const availableLessons = await getAllLessons()
+      setLessons(availableLessons)
 
       const learners = await getLearnersForAccount(accountId)
       const activeLearner = learners[0] ?? null
@@ -81,12 +88,13 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const value = useMemo(
     () => ({
       learner,
+      lessons,
       progress,
       achievements,
       isAppDataLoading,
       refreshAppData,
     }),
-    [learner, progress, achievements, isAppDataLoading, refreshAppData],
+    [learner, lessons, progress, achievements, isAppDataLoading, refreshAppData],
   )
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>
