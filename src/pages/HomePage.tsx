@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
 import { getRecommendedLesson } from '../services/progress/progressService'
+import { getLearnerPublicName } from '../domain'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
@@ -27,6 +28,7 @@ function HomePage() {
 
   const missionTitle = recommendedLesson?.title ?? 'Idea Utama'
   const activeForm = learner?.currentForm ?? 1
+  const publicName = getLearnerPublicName(learner, user?.displayName)
 
   return (
     <section className="dashboard">
@@ -36,7 +38,7 @@ function HomePage() {
           <h1>
             Welcome back,
             <span className="dashboard-user-name">
-              {user?.displayName ?? 'Learner'}
+              {isGuest ? 'Guest Learner' : publicName}
             </span>
           </h1>
           <p className="subtitle">

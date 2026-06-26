@@ -4,6 +4,7 @@ export type Learner = {
   learnerId: string
   accountId: string
   displayName: string
+  nickname?: string
   currentForm: FormLevel
   schoolId?: string
   avatar?: string

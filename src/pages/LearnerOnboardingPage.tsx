@@ -9,7 +9,7 @@ type LearnerOnboardingPageProps = {
 
 function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
   const { user } = useAuth()
-  const [displayName, setDisplayName] = useState('')
+  const [nickname, setNickname] = useState('')
   const [currentForm, setCurrentForm] = useState<FormLevel>(1)
   const [preferredLanguage, setPreferredLanguage] = useState<'en' | 'ms'>('en')
   const [isSaving, setIsSaving] = useState(false)
@@ -20,13 +20,15 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
     if (!user) return
 
     const now = new Date().toISOString()
+    const publicName = nickname.trim()
 
     setIsSaving(true)
 
     await createLearner({
       learnerId: crypto.randomUUID(),
       accountId: user.uid,
-      displayName: displayName.trim() || user.displayName,
+      displayName: publicName || user.displayName,
+      nickname: publicName,
       currentForm,
       preferredLanguage,
       createdAt: now,
@@ -49,11 +51,11 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
 
       <form className="form-stack" onSubmit={handleSubmit}>
         <label>
-          Display name
+          BM Quest nickname
           <input
-            value={displayName}
-            onChange={(event) => setDisplayName(event.target.value)}
-            placeholder="e.g. Daniel"
+            value={nickname}
+            onChange={(event) => setNickname(event.target.value)}
+            placeholder="e.g. BM Hero"
           />
         </label>
 

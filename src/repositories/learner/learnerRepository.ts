@@ -1,4 +1,12 @@
-import { collection, getDocs, query, setDoc, where, doc } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import type { Learner } from '../../domain'
 
@@ -20,4 +28,15 @@ export async function createLearner(learner: Learner) {
   }
 
   await setDoc(doc(db, 'learners', learner.learnerId), learner)
+}
+
+export async function updateLearnerProfile(
+  learnerId: string,
+  updates: Pick<Learner, 'nickname' | 'updatedAt'>,
+) {
+  if (!db) {
+    throw new Error('Firestore is not configured yet.')
+  }
+
+  await updateDoc(doc(db, 'learners', learnerId), updates)
 }

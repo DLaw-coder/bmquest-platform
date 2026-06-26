@@ -1,5 +1,6 @@
 import { appInfo } from '../config/appInfo'
 import { useAppData } from '../context/AppStateContext'
+import { getLearnerPublicName } from '../domain'
 import { useAuth } from '../hooks/useAuth'
 import { getCurriculumReferenceDiagnostics } from '../services/curriculum/curriculumReferenceService'
 import { getRecommendedLesson } from '../services/progress/progressService'
@@ -14,6 +15,7 @@ function DeveloperPage() {
   const lessonIds = new Set(lessons.map((lesson) => lesson.id))
   const formProgress = progress.filter((item) => lessonIds.has(item.lessonId))
   const recommendation = getRecommendedLesson(lessons, formProgress)
+  const publicName = getLearnerPublicName(learner, user?.displayName)
 
   return (
     <section className="hero-card">
@@ -37,7 +39,12 @@ function DeveloperPage() {
 
       <div className="version-card">
         <span>Learner</span>
-        <strong>{learner?.displayName ?? '-'}</strong>
+        <strong>{learner ? publicName : '-'}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Nickname</span>
+        <strong>{learner?.nickname || '-'}</strong>
       </div>
 
       <div className="version-card">

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { useAppData } from '../context/AppStateContext'
 import { useAuth } from '../hooks/useAuth'
 import type { ArcadeGameMode, ArcadeScore } from '../domain/arcade'
+import { getLearnerPublicName } from '../domain'
 import {
   getTopArcadeScores,
   saveArcadeScore,
@@ -111,7 +112,7 @@ function ArcadeRewardPage() {
 
       await saveArcadeScore({
         learnerId: learner.learnerId,
-        displayName: learner.displayName || user?.displayName || 'Learner',
+        displayName: getLearnerPublicName(learner, user?.displayName),
         form: learner.currentForm,
         gameMode,
         rewardTier,

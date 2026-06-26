@@ -1,7 +1,11 @@
 import { useAuth } from '../hooks/useAuth'
+import { useAppData } from '../context/AppStateContext'
+import { getLearnerPublicName } from '../domain'
 
 function AppHeader() {
   const { user, signOut } = useAuth()
+  const { learner } = useAppData()
+  const publicName = getLearnerPublicName(learner, user?.displayName)
 
   return (
     <header className="app-header">
@@ -9,7 +13,7 @@ function AppHeader() {
         <div className="app-logo">📘</div>
         <div>
           <strong>BM Quest</strong>
-          <span>{user ? user.displayName : 'Platform'}</span>
+          <span>{user ? publicName : 'Platform'}</span>
         </div>
       </div>
 
