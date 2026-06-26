@@ -57,7 +57,6 @@ function HomePage() {
             {isGuest ? 'Guest Learner' : publicName}
           </p>
         </div>
-        <div className="quest-theme-pill" aria-label="Theme preview">◐</div>
       </div>
 
       <article className="focus-card">

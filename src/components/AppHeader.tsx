@@ -2,7 +2,12 @@ import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
 import { getLearnerPublicName } from '../domain'
 
-function AppHeader() {
+type AppHeaderProps = {
+  theme: 'light' | 'dark'
+  onThemeToggle: () => void
+}
+
+function AppHeader({ theme, onThemeToggle }: AppHeaderProps) {
   const { user, signOut } = useAuth()
   const { learner } = useAppData()
   const publicName = getLearnerPublicName(learner, user?.displayName)
@@ -17,13 +22,24 @@ function AppHeader() {
         </div>
       </div>
 
-      {user ? (
-        <button className="app-header-badge" onClick={signOut}>
-          Sign Out
+      <div className="app-header-actions">
+        <button
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+          className="theme-toggle"
+          onClick={onThemeToggle}
+          type="button"
+        >
+          <span>{theme === 'dark' ? '☀️' : '◐'}</span>
         </button>
-      ) : (
-        <div className="app-header-badge">Alpha</div>
-      )}
+
+        {user ? (
+          <button className="app-header-badge" onClick={signOut}>
+            Sign Out
+          </button>
+        ) : (
+          <div className="app-header-badge">Alpha</div>
+        )}
+      </div>
     </header>
   )
 }
