@@ -1092,6 +1092,11 @@ h1 {
   margin-top:20px;
 }
 
+.unit-progress-card > h2,
+.unit-progress-card > .subtitle {
+  text-align: center;
+}
+
 .unit-step{
   display:flex;
   align-items:center;

@@ -16,7 +16,7 @@ function UnitProgress({ lessons }: UnitProgressProps) {
   const { t } = useLanguage()
 
   return (
-    <article className="dashboard-card">
+    <article className="dashboard-card unit-progress-card">
       <h2>📍 {t('unit.progress')}</h2>
       <p className="subtitle">
         {t('unit.subtitle')}
