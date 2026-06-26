@@ -517,6 +517,18 @@ h1 {
   box-shadow: var(--shadow-card);
 }
 
+.arcade-board.word-burst {
+  background:
+    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.55), transparent 34%),
+    linear-gradient(135deg, #0891b2, #2563eb);
+}
+
+.arcade-board.book-dash {
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.5), transparent 30%),
+    linear-gradient(135deg, #7c2d12, #ea580c);
+}
+
 .arcade-star {
   position: absolute;
   width: 72px;
