@@ -6,14 +6,26 @@ import {
   getFirestore,
   setDoc,
 } from 'firebase/firestore'
+import { alamF3Expansion001 } from '../src/data/lessons/alamF3Expansion001.ts'
+import { alamF4Expansion001 } from '../src/data/lessons/alamF4Expansion001.ts'
+import { ekonomiF5Expansion001 } from '../src/data/lessons/ekonomiF5Expansion001.ts'
 import { ideaUtama001 } from '../src/data/lessons/ideaUtama001.ts'
 import { ideaSampingan001 } from '../src/data/lessons/ideaSampingan001.ts'
 import { isiTersurat001 } from '../src/data/lessons/isiTersurat001.ts'
+import { isuF5Expansion001 } from '../src/data/lessons/isuF5Expansion001.ts'
+import { kerjayaF3Expansion001 } from '../src/data/lessons/kerjayaF3Expansion001.ts'
+import { keselamatanF3Expansion001 } from '../src/data/lessons/keselamatanF3Expansion001.ts'
+import { kesihatanF2Expansion001 } from '../src/data/lessons/kesihatanF2Expansion001.ts'
+import { komunitiF2Expansion001 } from '../src/data/lessons/komunitiF2Expansion001.ts'
 import { luncuranImbasan001 } from '../src/data/lessons/luncuranImbasan001.ts'
+import { masyarakatF5Expansion001 } from '../src/data/lessons/masyarakatF5Expansion001.ts'
+import { mediaF4Expansion001 } from '../src/data/lessons/mediaF4Expansion001.ts'
 import { pemahamanF2Starter001 } from '../src/data/lessons/pemahamanF2Starter001.ts'
 import { pemahamanF3Starter001 } from '../src/data/lessons/pemahamanF3Starter001.ts'
 import { pemahamanF4Starter001 } from '../src/data/lessons/pemahamanF4Starter001.ts'
 import { pemahamanF5Starter001 } from '../src/data/lessons/pemahamanF5Starter001.ts'
+import { teknologiF2Expansion001 } from '../src/data/lessons/teknologiF2Expansion001.ts'
+import { warisanF4Expansion001 } from '../src/data/lessons/warisanF4Expansion001.ts'
 
 const lessons = [
   ideaUtama001,
@@ -21,9 +33,21 @@ const lessons = [
   ideaSampingan001,
   luncuranImbasan001,
   pemahamanF2Starter001,
+  komunitiF2Expansion001,
+  teknologiF2Expansion001,
+  kesihatanF2Expansion001,
   pemahamanF3Starter001,
+  alamF3Expansion001,
+  keselamatanF3Expansion001,
+  kerjayaF3Expansion001,
   pemahamanF4Starter001,
+  mediaF4Expansion001,
+  warisanF4Expansion001,
+  alamF4Expansion001,
   pemahamanF5Starter001,
+  isuF5Expansion001,
+  ekonomiF5Expansion001,
+  masyarakatF5Expansion001,
 ]
 
 function validateLessonsForSeed() {
