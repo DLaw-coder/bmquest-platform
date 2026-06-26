@@ -4,6 +4,7 @@ import { getLearnerPublicName } from '../domain'
 import { useAppData } from '../context/AppStateContext'
 import { useAuth } from '../hooks/useAuth'
 import { updateLearnerProfile } from '../repositories/learner/learnerRepository'
+import { prepareLearnerNicknameUpdate } from '../services/learner/nicknameService'
 
 function SettingsPage() {
   const { user, isGuest, signOut } = useAuth()
@@ -29,10 +30,10 @@ function SettingsPage() {
     setSaveMessage('')
 
     try {
-      await updateLearnerProfile(learner.learnerId, {
-        nickname: nickname.trim(),
-        updatedAt: new Date().toISOString(),
-      })
+      const now = new Date().toISOString()
+      const nicknameUpdates = await prepareLearnerNicknameUpdate(learner, nickname, now)
+
+      await updateLearnerProfile(learner.learnerId, nicknameUpdates)
 
       refreshAppData()
       setSaveMessage('Nickname saved.')
@@ -94,10 +95,16 @@ function SettingsPage() {
               Nickname
               <input
                 maxLength={32}
+                minLength={3}
+                required
                 value={nickname}
                 onChange={(event) => setNickname(event.target.value)}
                 placeholder="e.g. BM Hero"
               />
+              <small>
+                Use 3–32 characters. Nicknames must be unique, classroom-safe,
+                and can be changed once every 24 hours.
+              </small>
             </label>
 
             <button className="lesson-submit" disabled={isSaving}>

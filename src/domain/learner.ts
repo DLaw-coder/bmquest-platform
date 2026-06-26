@@ -5,6 +5,9 @@ export type Learner = {
   accountId: string
   displayName: string
   nickname?: string
+  nicknameKey?: string
+  nicknameUpdatedAt?: string
+  nicknameChangeCount?: number
   currentForm: FormLevel
   schoolId?: string
   avatar?: string

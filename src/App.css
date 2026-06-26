@@ -278,6 +278,13 @@ h1 {
   font-weight: 700;
 }
 
+.form-stack small {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .form-stack button {
   margin-top: 8px;
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { createLearner } from '../repositories/learner/learnerRepository'
 import type { FormLevel } from '../domain'
+import { prepareNewLearnerNickname } from '../services/learner/nicknameService'
 
 type LearnerOnboardingPageProps = {
   onCreated: () => void
@@ -13,6 +14,7 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
   const [currentForm, setCurrentForm] = useState<FormLevel>(1)
   const [preferredLanguage, setPreferredLanguage] = useState<'en' | 'ms'>('en')
   const [isSaving, setIsSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState('')
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -20,23 +22,32 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
     if (!user) return
 
     const now = new Date().toISOString()
-    const publicName = nickname.trim()
 
     setIsSaving(true)
+    setSaveMessage('')
 
-    await createLearner({
-      learnerId: crypto.randomUUID(),
-      accountId: user.uid,
-      displayName: publicName || user.displayName,
-      nickname: publicName,
-      currentForm,
-      preferredLanguage,
-      createdAt: now,
-      updatedAt: now,
-    })
+    try {
+      const nicknameProfile = await prepareNewLearnerNickname(nickname, now)
 
-    setIsSaving(false)
-    onCreated()
+      await createLearner({
+        learnerId: crypto.randomUUID(),
+        accountId: user.uid,
+        displayName: nicknameProfile.nickname || user.displayName,
+        ...nicknameProfile,
+        currentForm,
+        preferredLanguage,
+        createdAt: now,
+        updatedAt: now,
+      })
+
+      onCreated()
+    } catch (error) {
+      setSaveMessage(error instanceof Error
+        ? error.message
+        : 'Learner profile could not be created. Please try again.')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -53,10 +64,14 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
         <label>
           BM Quest nickname
           <input
+            maxLength={32}
+            minLength={3}
+            required
             value={nickname}
             onChange={(event) => setNickname(event.target.value)}
             placeholder="e.g. BM Hero"
           />
+          <small>Use 3–32 characters. Nicknames must be unique and classroom-safe.</small>
         </label>
 
         <label>
@@ -88,6 +103,8 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
           {isSaving ? 'Saving...' : 'Create Learner'}
         </button>
       </form>
+
+      {saveMessage && <p className="settings-message">{saveMessage}</p>}
 
       <p className="footer-text">Sprint 2.3 · Learner Onboarding</p>
     </section>
