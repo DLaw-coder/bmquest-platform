@@ -14,7 +14,7 @@ import { useAuth } from '../hooks/useAuth'
 import { getLearnersForAccount } from '../repositories/learner/learnerRepository'
 import { subscribeToProgressForLearner } from '../repositories/progress/progressRepository'
 import { subscribeToAchievementsForLearner } from '../repositories/achievements/achievementRepository'
-import { getAllLessons } from '../repositories/curriculum/lessonRepository'
+import { getLessonsForForm } from '../repositories/curriculum/lessonRepository'
 
 type AppData = {
   learner: Learner | null
@@ -44,7 +44,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setLearner(null)
       setProgress([])
       setAchievements([])
-      getAllLessons().then(setLessons)
+      getLessonsForForm(1).then(setLessons)
       return
     }
 
@@ -55,12 +55,14 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     async function loadAppData() {
       setIsAppDataLoading(true)
 
-      const availableLessons = await getAllLessons()
-      setLessons(availableLessons)
-
       const learners = await getLearnersForAccount(accountId)
       const activeLearner = learners[0] ?? null
       setLearner(activeLearner)
+
+      const availableLessons = activeLearner
+        ? await getLessonsForForm(activeLearner.currentForm)
+        : []
+      setLessons(availableLessons)
 
       if (activeLearner) {
         unsubscribeProgress = subscribeToProgressForLearner(

@@ -1,4 +1,5 @@
 import type { Lesson } from '../../domain'
+import type { FormLevel } from '../../domain/learner'
 import { lessons } from '../../data/lessons'
 import { db } from '../../config/firebase'
 import {
@@ -38,6 +39,12 @@ export async function getAllLessons(): Promise<Lesson[]> {
   }
 }
 
+export async function getLessonsForForm(form: FormLevel): Promise<Lesson[]> {
+  const availableLessons = await getAllLessons()
+
+  return availableLessons.filter((lesson) => lesson.form === form)
+}
+
 export async function getLessonById(lessonId: string): Promise<Lesson | null> {
   if (db) {
     try {
@@ -54,8 +61,10 @@ export async function getLessonById(lessonId: string): Promise<Lesson | null> {
   return getLocalLessons().find((lesson) => lesson.id === lessonId) ?? null
 }
 
-export async function getLessonNavigation(lessonId: string) {
-  const availableLessons = await getAllLessons()
+export async function getLessonNavigation(lessonId: string, form?: FormLevel) {
+  const availableLessons = form
+    ? await getLessonsForForm(form)
+    : await getAllLessons()
   const index = availableLessons.findIndex((lesson) => lesson.id === lessonId)
 
   if (index === -1) {

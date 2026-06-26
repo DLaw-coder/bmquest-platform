@@ -53,7 +53,7 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
 
   useEffect(() => {
     async function loadNavigation() {
-      const navigation = await getLessonNavigation(lesson.id)
+      const navigation = await getLessonNavigation(lesson.id, lesson.form)
       setNextLessonId(navigation.nextLesson?.id)
     }
 

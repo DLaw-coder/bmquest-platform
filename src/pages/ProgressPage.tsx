@@ -2,14 +2,18 @@ import { useAppData } from '../context/AppStateContext'
 
 function ProgressPage() {
   const { lessons, progress, achievements } = useAppData()
-  const completedLessons = new Set(progress.map((item) => item.lessonId)).size
-  const scores = progress.map((item) => item.scorePercent)
+  const lessonIds = new Set(lessons.map((lesson) => lesson.id))
+  const formProgress = progress.filter((item) => lessonIds.has(item.lessonId))
+  const completedLessons = new Set(
+    formProgress.map((item) => item.lessonId),
+  ).size
+  const scores = formProgress.map((item) => item.scorePercent)
   const bestScore = scores.length > 0 ? Math.max(...scores) : 0
   const averageScore =
     scores.length > 0
       ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
       : 0
-  const recentActivity = [...progress]
+  const recentActivity = [...formProgress]
     .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
     .slice(0, 5)
   const progressPercent = lessons.length > 0
@@ -62,7 +66,7 @@ function ProgressPage() {
         <span>Recent Activity</span>
         <div className="lesson-list">
           {recentActivity.length === 0 ? (
-            <p>No lesson attempts yet.</p>
+            <p>No lesson attempts for this form yet.</p>
           ) : (
             recentActivity.map((item) => (
               <div className="lesson-row" key={item.progressId ?? `${item.lessonId}-${item.completedAt}`}>

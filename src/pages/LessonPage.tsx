@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import LessonRenderer from '../engine/LessonRendererV2'
-import { getLessonById } from '../repositories/curriculum/lessonRepository'
 import type { Lesson } from '../domain'
+import { useAppData } from '../context/AppStateContext'
 
 function LessonPage() {
   const { lessonId } = useParams()
+  const { lessons } = useAppData()
   const [lesson, setLesson] = useState<Lesson | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -17,13 +18,13 @@ function LessonPage() {
         return
       }
 
-      const foundLesson = await getLessonById(lessonId)
+      const foundLesson = lessons.find((item) => item.id === lessonId) ?? null
       setLesson(foundLesson)
       setIsLoading(false)
     }
 
     loadLesson()
-  }, [lessonId])
+  }, [lessonId, lessons])
 
   if (isLoading) {
     return (
@@ -40,7 +41,9 @@ function LessonPage() {
       <section className="hero-card">
         <div className="brand-icon">🧭</div>
         <h1>Lesson Not Found</h1>
-        <p className="subtitle">This lesson is not available yet.</p>
+        <p className="subtitle">
+          This lesson is not available for the active learner&apos;s form yet.
+        </p>
       </section>
     )
   }

@@ -5,8 +5,13 @@ import { getNextRecommendedLessonFromProgress } from '../services/progress/progr
 
 function HomePage() {
   const { user, isGuest } = useAuth()
-  const { lessons, progress, achievements } = useAppData()
-  const completedLessonIds = new Set(progress.map((item) => item.lessonId))
+  const { learner, lessons, progress, achievements } = useAppData()
+  const lessonIds = new Set(lessons.map((lesson) => lesson.id))
+  const completedLessonIds = new Set(
+    progress
+      .filter((item) => lessonIds.has(item.lessonId))
+      .map((item) => item.lessonId),
+  )
   const completedLessons = completedLessonIds.size
   const readingProgress = lessons.length > 0
     ? Math.round((completedLessons / lessons.length) * 100)
@@ -21,7 +26,7 @@ function HomePage() {
     : 'None yet'
 
   const missionTitle = recommendedLesson?.title ?? 'Idea Utama'
-  const missionLink = recommendedLesson ? `/lesson/${recommendedLesson.id}` : '/lesson/idea-utama-001'
+  const activeForm = learner?.currentForm ?? 1
 
   return (
     <section className="dashboard">
@@ -46,16 +51,24 @@ function HomePage() {
       <div className="dashboard-grid">
         <article className="dashboard-card primary-card">
           <span>📖 Continue Learning</span>
-          <h2>{missionTitle}</h2>
-          <p>Form 1 · Reading Comprehension · 10 min</p>
-          <Link className="mission-button" to={missionLink}>
-            Continue →
-          </Link>
+          <h2>{recommendedLesson ? missionTitle : 'Coming Soon'}</h2>
+          <p>
+            {recommendedLesson
+              ? `Form ${recommendedLesson.form} · Reading Comprehension · ${recommendedLesson.estimatedMinutes} min`
+              : `Form ${activeForm} lessons are being prepared.`}
+          </p>
+          {recommendedLesson ? (
+            <Link className="mission-button" to={`/lesson/${recommendedLesson.id}`}>
+              Continue →
+            </Link>
+          ) : (
+            <p>No lessons available for this form yet.</p>
+          )}
         </article>
 
         <article className="dashboard-card">
           <span>Current Level</span>
-          <h2>Form 1</h2>
+          <h2>Form {activeForm}</h2>
           <p>KSSM Bahasa Melayu</p>
         </article>
 
