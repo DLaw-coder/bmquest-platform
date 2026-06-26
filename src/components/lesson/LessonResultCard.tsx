@@ -26,6 +26,11 @@ function LessonResultCard({
         Skor: {result.correctAnswers}/{result.totalQuestions} · {result.scorePercent}%
       </p>
 
+      <div className="reward-moment">
+        <strong>{result.reward.icon} {result.reward.label}</strong>
+        <small>{result.reward.message}</small>
+      </div>
+
       <small>{saveMessage}</small>
       {achievementMessage && <small>{achievementMessage}</small>}
 

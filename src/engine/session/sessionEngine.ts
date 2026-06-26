@@ -1,4 +1,6 @@
 import type { Lesson } from '../../domain'
+import type { ScoreReward } from '../../services/rewards/rewardService'
+import { getScoreReward } from '../../services/rewards/rewardService'
 
 export type SessionAnswer = {
   questionId: string
@@ -10,6 +12,7 @@ export type SessionResult = {
   totalQuestions: number
   correctAnswers: number
   scorePercent: number
+  reward: ScoreReward
   completedAt: string
 }
 
@@ -26,6 +29,9 @@ export function calculateSessionResult(
     totalQuestions: lesson.questions.length,
     correctAnswers,
     scorePercent: Math.round((correctAnswers / lesson.questions.length) * 100),
+    reward: getScoreReward(
+      Math.round((correctAnswers / lesson.questions.length) * 100),
+    ),
     completedAt: new Date().toISOString(),
   }
 }

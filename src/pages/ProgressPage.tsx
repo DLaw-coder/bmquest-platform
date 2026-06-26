@@ -102,7 +102,12 @@ function ProgressPage() {
               <div className="lesson-row" key={item.progressId ?? `${item.lessonId}-${item.completedAt}`}>
                 <div>
                   <strong>{getLessonTitle(item.lessonId)}</strong>
-                  <small>{new Date(item.completedAt).toLocaleString()}</small>
+                  <small>
+                    {new Date(item.completedAt).toLocaleString()}
+                    {item.rewardLabel
+                      ? ` · ${item.rewardIcon} ${item.rewardLabel}`
+                      : ''}
+                  </small>
                 </div>
                 <span>{item.scorePercent}%</span>
               </div>
