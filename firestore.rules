@@ -1,0 +1,115 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function learnerPath(learnerId) {
+      return /databases/$(database)/documents/learners/$(learnerId);
+    }
+
+    function learnerAfter(learnerId) {
+      return getAfter(learnerPath(learnerId));
+    }
+
+    function ownsLearner(learnerId) {
+      return isSignedIn()
+        && exists(learnerPath(learnerId))
+        && get(learnerPath(learnerId)).data.accountId == request.auth.uid;
+    }
+
+    function ownsLearnerAfter(learnerId) {
+      return isSignedIn()
+        && existsAfter(learnerPath(learnerId))
+        && learnerAfter(learnerId).data.accountId == request.auth.uid;
+    }
+
+    function isValidPublicContentWrite() {
+      return false;
+    }
+
+    match /accounts/{accountId} {
+      allow read, create, update: if isSignedIn() && request.auth.uid == accountId;
+      allow delete: if false;
+    }
+
+    match /learners/{learnerId} {
+      allow read: if ownsLearner(learnerId);
+      allow create: if isSignedIn()
+        && request.resource.data.learnerId == learnerId
+        && request.resource.data.accountId == request.auth.uid
+        && request.resource.data.nickname is string
+        && request.resource.data.nicknameKey is string;
+      allow update: if ownsLearner(learnerId)
+        && request.resource.data.accountId == resource.data.accountId
+        && request.resource.data.learnerId == resource.data.learnerId
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'nickname',
+          'nicknameKey',
+          'nicknameUpdatedAt',
+          'nicknameChangeCount',
+          'updatedAt',
+        ]);
+      allow delete: if false;
+    }
+
+    match /nicknames/{nicknameKey} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn()
+        && !exists(/databases/$(database)/documents/nicknames/$(nicknameKey))
+        && request.resource.data.learnerId is string
+        && request.resource.data.nickname is string
+        && ownsLearnerAfter(request.resource.data.learnerId)
+        && learnerAfter(request.resource.data.learnerId).data.nicknameKey == nicknameKey;
+      allow update: if isSignedIn()
+        && resource.data.learnerId == request.resource.data.learnerId
+        && ownsLearnerAfter(resource.data.learnerId)
+        && learnerAfter(resource.data.learnerId).data.nicknameKey == nicknameKey;
+      allow delete: if isSignedIn()
+        && resource.data.learnerId is string
+        && ownsLearnerAfter(resource.data.learnerId)
+        && learnerAfter(resource.data.learnerId).data.nicknameKey != nicknameKey;
+    }
+
+    match /progress/{progressId} {
+      allow read: if ownsLearner(resource.data.learnerId);
+      allow create: if ownsLearner(request.resource.data.learnerId);
+      allow update, delete: if false;
+    }
+
+    match /achievements/{achievementId} {
+      allow read: if ownsLearner(resource.data.learnerId);
+      allow create: if ownsLearner(request.resource.data.learnerId);
+      allow update, delete: if false;
+    }
+
+    match /arcadeScores/{scoreId} {
+      allow read: if true;
+      allow create: if ownsLearner(request.resource.data.learnerId)
+        && request.resource.data.displayName is string
+        && request.resource.data.score is number;
+      allow update, delete: if false;
+    }
+
+    match /lessons/{lessonId} {
+      allow read: if true;
+      allow write: if isValidPublicContentWrite();
+    }
+
+    match /curriculumStandards/{standardId} {
+      allow read: if true;
+      allow write: if isValidPublicContentWrite();
+    }
+
+    match /textbookReferences/{referenceId} {
+      allow read: if true;
+      allow write: if isValidPublicContentWrite();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

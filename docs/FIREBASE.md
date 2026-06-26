@@ -17,6 +17,55 @@ Do not commit `.env.local`.
 
 Sprint 2.0A only creates the Firebase foundation. Authentication UI will be added in a later sprint.
 
+## Public Launch Configuration
+
+BM Quest includes Firebase project configuration files:
+
+- `.firebaserc` points the default Firebase project to `bm-quest`.
+- `firebase.json` configures Firestore rules/indexes and Firebase Hosting.
+- `firestore.rules` locks down learner-owned data while keeping public lesson
+  and curriculum reference content readable.
+- `firestore.indexes.json` is currently empty because the active queries do
+  not require custom composite indexes.
+
+Deploy hosting after running a production build:
+
+```bash
+npm run build
+firebase deploy --only hosting
+```
+
+Deploy Firestore rules and indexes:
+
+```bash
+firebase deploy --only firestore:rules,firestore:indexes
+```
+
+Important: the seed scripts use the Firebase client SDK and are intentionally
+blocked by production security rules. Seed curriculum references and lessons
+before deploying locked-down public rules, or migrate the seed scripts to the
+Firebase Admin SDK for future production content publishing.
+
+## Security Rules Summary
+
+The current Firestore rules allow:
+
+- Users to read/write only their own `accounts/{uid}` document.
+- Users to read/create/update only their own learner profile.
+- Nickname reservations through `nicknames/{nicknameKey}` using Firestore
+  transactions, preventing duplicate public nicknames.
+- Users to create/read only progress and achievement records tied to their own
+  learner profile.
+- Anyone to read `lessons`, `curriculumStandards`, and `textbookReferences`.
+- Anyone to read arcade leaderboard scores, while only the owning learner can
+  create a score.
+
+The current rules block:
+
+- Public writes to lesson/curriculum content.
+- User deletes for learner, progress, achievement, and arcade score records.
+- Reads/writes to unknown collections.
+
 ## Curriculum Reference Seeding
 
 BM Quest keeps the canonical curriculum reference registry in source control at

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { appInfo } from '../config/appInfo'
 import { getLearnerPublicName } from '../domain'
 import { useAppData } from '../context/AppStateContext'
@@ -9,14 +9,9 @@ import { prepareLearnerNicknameUpdate } from '../services/learner/nicknameServic
 function SettingsPage() {
   const { user, isGuest, signOut } = useAuth()
   const { learner, refreshAppData } = useAppData()
-  const [nickname, setNickname] = useState('')
   const [saveMessage, setSaveMessage] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const publicName = getLearnerPublicName(learner, user?.displayName)
-
-  useEffect(() => {
-    setNickname(learner?.nickname ?? '')
-  }, [learner?.nickname])
 
   async function handleNicknameSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -31,7 +26,9 @@ function SettingsPage() {
 
     try {
       const now = new Date().toISOString()
-      const nicknameUpdates = await prepareLearnerNicknameUpdate(learner, nickname, now)
+      const formData = new FormData(event.currentTarget)
+      const nextNickname = String(formData.get('nickname') ?? '')
+      const nicknameUpdates = await prepareLearnerNicknameUpdate(learner, nextNickname, now)
 
       await updateLearnerProfile(learner.learnerId, nicknameUpdates)
 
@@ -94,11 +91,12 @@ function SettingsPage() {
             <label>
               Nickname
               <input
+                key={learner?.learnerId}
+                name="nickname"
+                defaultValue={learner?.nickname ?? ''}
                 maxLength={32}
                 minLength={3}
                 required
-                value={nickname}
-                onChange={(event) => setNickname(event.target.value)}
                 placeholder="e.g. BM Hero"
               />
               <small>
