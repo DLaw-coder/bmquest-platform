@@ -3,17 +3,24 @@ import { evaluateLessonAchievements } from '../../engine/achievements/achievemen
 import { calculateSessionResult } from '../../engine/session/sessionEngine'
 import { saveNewAchievements } from '../../repositories/achievements/achievementRepository'
 import { saveLessonProgress } from '../../repositories/progress/progressRepository'
+import type { PracticeMode } from './adaptiveLessonService'
 
 export async function completeLessonSession({
   learnerId,
   isGuest,
   lesson,
   answers,
+  attemptNumber,
+  practiceMode = 'review',
+  variantLevel = 1,
 }: {
   learnerId?: string
   isGuest: boolean
   lesson: Lesson
   answers: Record<string, string>
+  attemptNumber?: number
+  practiceMode?: PracticeMode
+  variantLevel?: number
 }) {
   const result = calculateSessionResult(lesson, answers)
 
@@ -36,6 +43,9 @@ export async function completeLessonSession({
   await saveLessonProgress({
     learnerId,
     lessonId: lesson.id,
+    attemptNumber,
+    practiceMode,
+    variantLevel,
     correctAnswers: result.correctAnswers,
     totalQuestions: result.totalQuestions,
     scorePercent: result.scorePercent,

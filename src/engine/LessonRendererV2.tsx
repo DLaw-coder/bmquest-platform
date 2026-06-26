@@ -13,6 +13,13 @@ import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
 import { getLessonNavigation } from '../repositories/curriculum/lessonRepository'
 import { completeLessonSession } from '../services/lesson/lessonSessionService'
+import {
+  createPracticeLesson,
+  getLessonAttempts,
+  getNextAttemptNumber,
+  getNextVariantLevel,
+  type PracticeMode,
+} from '../services/lesson/adaptiveLessonService'
 import { getLessonProgressStateFromProgress } from '../services/progress/progressService'
 
 type LessonRendererProps = {
@@ -29,6 +36,21 @@ type UnitLesson = {
 function LessonRendererV2({ lesson }: LessonRendererProps) {
   const { isGuest } = useAuth()
   const { learner, lessons, progress } = useAppData()
+  const attempts = getLessonAttempts(progress, lesson.id)
+  const hasCompletedLesson = attempts.length > 0
+  const nextAttemptNumber = getNextAttemptNumber(attempts)
+  const nextVariantLevel = getNextVariantLevel(attempts)
+  const [practiceMode, setPracticeMode] = useState<PracticeMode>(
+    hasCompletedLesson ? 'challenge' : 'review',
+  )
+  const activeVariantLevel = practiceMode === 'challenge' && hasCompletedLesson
+    ? nextVariantLevel
+    : 1
+  const activeLesson = createPracticeLesson(
+    lesson,
+    practiceMode,
+    activeVariantLevel,
+  )
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [result, setResult] = useState<SessionResult | null>(null)
   const [isSaving, setIsSaving] = useState(false)
@@ -38,8 +60,8 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
   const unitLessons: UnitLesson[] = isGuest
     ? [
         {
-          id: lesson.id,
-          title: lesson.title,
+          id: activeLesson.id,
+          title: activeLesson.title,
           completed: Boolean(result),
           current: true,
         },
@@ -47,9 +69,17 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     : getLessonProgressStateFromProgress(
         progress,
         lessons,
-        lesson.id,
+        activeLesson.id,
         result?.lessonId,
       )
+
+  useEffect(() => {
+    setPracticeMode(hasCompletedLesson ? 'challenge' : 'review')
+    setAnswers({})
+    setResult(null)
+    setSaveMessage('')
+    setAchievementMessage('')
+  }, [lesson.id, hasCompletedLesson])
 
   useEffect(() => {
     async function loadNavigation() {
@@ -59,6 +89,14 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
 
     loadNavigation()
   }, [lesson.id])
+
+  function handlePracticeModeChange(nextMode: PracticeMode) {
+    setPracticeMode(nextMode)
+    setAnswers({})
+    setResult(null)
+    setSaveMessage('')
+    setAchievementMessage('')
+  }
 
   function handleAnswer(questionId: string, optionId: string) {
     setAnswers((current) => ({
@@ -73,8 +111,11 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     const session = await completeLessonSession({
       learnerId: learner?.learnerId,
       isGuest,
-      lesson,
+      lesson: activeLesson,
       answers,
+      attemptNumber: nextAttemptNumber,
+      practiceMode,
+      variantLevel: activeVariantLevel,
     })
 
     setResult(session.result)
@@ -85,18 +126,45 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
 
   return (
     <section className="lesson">
-      <LessonHero lesson={lesson} />
+      <LessonHero lesson={activeLesson} />
 
       <UnitProgress lessons={unitLessons} />
 
-      <LessonMetaCard lesson={lesson} />
-      <ReadingTipCard lesson={lesson} />
-      <PassageCard lesson={lesson} />
-      <VocabularyCard lesson={lesson} />
+      {hasCompletedLesson && (
+        <article className="dashboard-card practice-card">
+          <span>Repeat Practice</span>
+          <h2>Attempt {nextAttemptNumber}</h2>
+          <p>
+            Choose whether to review the completed exercise or try a new
+            challenge for the same skill.
+          </p>
+          <div className="practice-actions">
+            <button
+              className={practiceMode === 'challenge' ? 'practice-action active' : 'practice-action'}
+              onClick={() => handlePracticeModeChange('challenge')}
+              type="button"
+            >
+              Next Challenge
+            </button>
+            <button
+              className={practiceMode === 'review' ? 'practice-action active' : 'practice-action'}
+              onClick={() => handlePracticeModeChange('review')}
+              type="button"
+            >
+              Review Completed
+            </button>
+          </div>
+        </article>
+      )}
+
+      <LessonMetaCard lesson={activeLesson} />
+      <ReadingTipCard lesson={activeLesson} />
+      <PassageCard lesson={activeLesson} />
+      <VocabularyCard lesson={activeLesson} />
 
       <article className="dashboard-card">
         <QuestionsCard
-          lesson={lesson}
+          lesson={activeLesson}
           answers={answers}
           hasResult={Boolean(result)}
           onAnswer={handleAnswer}
@@ -108,7 +176,7 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
 
         {result && (
           <LessonResultCard
-            lesson={lesson}
+            lesson={activeLesson}
             result={result}
             saveMessage={saveMessage}
             achievementMessage={achievementMessage}

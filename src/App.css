@@ -497,6 +497,35 @@ h1 {
   font-weight: 900;
 }
 
+.practice-card {
+  text-align: center;
+}
+
+.practice-card h2 {
+  margin: 6px 0;
+}
+
+.practice-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.practice-action {
+  min-height: 48px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 900;
+}
+
+.practice-action.active {
+  background: var(--color-primary);
+  color: white;
+}
+
 .lesson-link {
   text-decoration: none;
   cursor: pointer;
