@@ -1,5 +1,6 @@
 import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
+import { appInfo } from '../config/appInfo'
 import { getLearnerPublicName } from '../domain'
 
 type AppHeaderProps = {
@@ -37,7 +38,7 @@ function AppHeader({ theme, onThemeToggle }: AppHeaderProps) {
             Sign Out
           </button>
         ) : (
-          <div className="app-header-badge">Alpha</div>
+          <div className="app-header-badge">{appInfo.version}</div>
         )}
       </div>
     </header>

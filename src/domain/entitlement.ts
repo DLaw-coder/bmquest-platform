@@ -18,7 +18,7 @@ export function getEntitlement(plan?: AccountPlan): Entitlement {
 
   return {
     plan: activePlan,
-    label: activePlan === 'premium' ? 'Premium' : 'Free Alpha',
+    label: activePlan === 'premium' ? 'Premium' : 'Free',
     isPremium: activePlan === 'premium',
   }
 }
