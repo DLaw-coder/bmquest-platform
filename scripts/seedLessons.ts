@@ -7,9 +7,16 @@ import {
   setDoc,
 } from 'firebase/firestore'
 import { ideaUtama001 } from '../src/data/lessons/ideaUtama001.ts'
+import { ideaSampingan001 } from '../src/data/lessons/ideaSampingan001.ts'
 import { isiTersurat001 } from '../src/data/lessons/isiTersurat001.ts'
+import { luncuranImbasan001 } from '../src/data/lessons/luncuranImbasan001.ts'
 
-const lessons = [ideaUtama001, isiTersurat001]
+const lessons = [
+  ideaUtama001,
+  isiTersurat001,
+  ideaSampingan001,
+  luncuranImbasan001,
+]
 
 function validateLessonsForSeed() {
   const lessonIds = new Set<string>()
