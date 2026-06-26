@@ -10,10 +10,11 @@ type AppHeaderProps = {
 }
 
 function AppHeader({ theme, onThemeToggle }: AppHeaderProps) {
-  const { user, signOut } = useAuth()
+  const { user, isGuest, signOut } = useAuth()
   const { learner } = useAppData()
   const { language, toggleLanguage, t } = useLanguage()
   const publicName = getLearnerPublicName(learner, user?.displayName)
+  const headerName = isGuest ? t('home.guestLearner') : publicName
 
   return (
     <header className="app-header">
@@ -21,7 +22,7 @@ function AppHeader({ theme, onThemeToggle }: AppHeaderProps) {
         <div className="app-logo">📘</div>
         <div>
           <strong>BM Quest</strong>
-          <span>{user ? publicName : t('app.platform')}</span>
+          <span>{user ? headerName : t('app.platform')}</span>
         </div>
       </div>
 
