@@ -6,7 +6,7 @@ export const pemahamanF4Starter001: Lesson = {
   title: 'Pemahaman Petikan',
   form: 4,
   strand: 'Membaca',
-  skill: 'Memahami idea keseluruhan',
+  skill: 'Mengulas pandangan penulis',
   learningObjective:
     'Murid dapat memahami idea keseluruhan dan mengenal pasti hujah utama dalam petikan.',
   readingTip:
@@ -20,18 +20,16 @@ export const pemahamanF4Starter001: Lesson = {
     unit: 'Latihan Pemahaman Starter',
     learningArea: 'Membaca',
     contentStandard: {
-      code: '2.2',
-      description:
-        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
+      code: '2.3',
+      description: 'Membaca untuk memproses maklumat daripada pelbagai bahan.',
     },
     learningStandard: {
-      code: '2.2.3',
-      description:
-        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat.',
+      code: '2.3.5',
+      description: 'Membaca dan mengulas pandangan penulis secara rasional.',
     },
   },
   curriculumReferences: {
-    standardIds: ['kssm-bm-f4-2.2.3'],
+    standardIds: ['kssm-bm-f4-2.3.5'],
     textbookReferenceIds: [],
   },
   passageTitle: 'Usahawan Muda di Sekolah',

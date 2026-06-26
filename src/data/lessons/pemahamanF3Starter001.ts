@@ -6,9 +6,9 @@ export const pemahamanF3Starter001: Lesson = {
   title: 'Pemahaman Petikan',
   form: 3,
   strand: 'Membaca',
-  skill: 'Memahami idea keseluruhan',
+  skill: 'Membuat ulasan keseluruhan',
   learningObjective:
-    'Murid dapat mengenal pasti idea keseluruhan dan membuat kesimpulan ringkas berdasarkan petikan.',
+    'Murid dapat mengenal pasti idea keseluruhan dan membuat ulasan ringkas berdasarkan bahan.',
   readingTip:
     'Perhatikan hubungan antara peristiwa, sebab dan kesan supaya maksud keseluruhan petikan lebih jelas.',
   estimatedMinutes: 10,
@@ -22,21 +22,21 @@ export const pemahamanF3Starter001: Lesson = {
     contentStandard: {
       code: '2.2',
       description:
-        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
+        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, serta ungkapan dan ayat dalam pelbagai bahan.',
     },
     learningStandard: {
       code: '2.2.3',
       description:
-        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat.',
+        'Membaca dan memahami serta membuat ulasan keseluruhan maksud sesuatu bahan grafik.',
     },
   },
   curriculumReferences: {
     standardIds: ['kssm-bm-f3-2.2.3'],
     textbookReferenceIds: [],
   },
-  passageTitle: 'Kempen Penggunaan Aplikasi Perpustakaan',
+  passageTitle: 'Infografik Aplikasi Perpustakaan',
   passage:
-    'Perpustakaan sekolah melancarkan aplikasi mudah alih untuk memudahkan murid mencari bahan bacaan. Melalui aplikasi itu, murid boleh menyemak ketersediaan buku, membuat tempahan dan membaca ringkasan buku. Kempen ini berjaya meningkatkan minat murid untuk meminjam buku kerana proses pencarian menjadi lebih cepat dan teratur.',
+    'Infografik perpustakaan sekolah memaparkan tiga fungsi utama aplikasi mudah alih, iaitu menyemak ketersediaan buku, membuat tempahan dan membaca ringkasan buku. Pada bahagian bawah infografik, terdapat mesej “Cari buku dengan cepat, baca dengan lebih bijak”. Secara keseluruhannya, bahan grafik ini menunjukkan bahawa teknologi dapat memudahkan murid mengurus bahan bacaan.',
   vocabulary: [
     {
       word: 'aplikasi',
@@ -59,13 +59,13 @@ export const pemahamanF3Starter001: Lesson = {
       id: 'q1',
       prompt: 'Apakah idea keseluruhan petikan ini?',
       options: [
-        { id: 'a', text: 'Aplikasi perpustakaan memudahkan murid mencari bahan bacaan.' },
+        { id: 'a', text: 'Infografik menunjukkan aplikasi perpustakaan memudahkan murid mengurus bahan bacaan.' },
         { id: 'b', text: 'Murid dilarang meminjam buku di perpustakaan.' },
         { id: 'c', text: 'Perpustakaan sekolah ditutup sepanjang minggu.' },
       ],
       correctOptionId: 'a',
       explanation:
-        'Petikan menerangkan fungsi aplikasi perpustakaan dan kesannya terhadap minat membaca.',
+        'Bahan grafik itu menerangkan fungsi aplikasi perpustakaan dan manfaatnya kepada murid.',
     },
     {
       id: 'q2',
@@ -81,15 +81,15 @@ export const pemahamanF3Starter001: Lesson = {
     },
     {
       id: 'q3',
-      prompt: 'Mengapakah minat murid untuk meminjam buku meningkat?',
+      prompt: 'Apakah ulasan keseluruhan yang sesuai tentang bahan grafik itu?',
       options: [
-        { id: 'a', text: 'Proses pencarian menjadi lebih cepat dan teratur.' },
-        { id: 'b', text: 'Semua buku diberikan secara percuma.' },
-        { id: 'c', text: 'Murid tidak perlu membaca ringkasan buku.' },
+        { id: 'a', text: 'Teknologi membantu murid mencari dan mengurus bahan bacaan dengan lebih mudah.' },
+        { id: 'b', text: 'Aplikasi itu hanya sesuai digunakan oleh guru perpustakaan.' },
+        { id: 'c', text: 'Murid tidak lagi perlu membaca buku.' },
       ],
       correctOptionId: 'a',
       explanation:
-        'Ayat terakhir menjelaskan sebab minat murid meningkat.',
+        'Ulasan ini merumuskan maksud keseluruhan infografik secara tepat.',
     },
   ],
   summary: [

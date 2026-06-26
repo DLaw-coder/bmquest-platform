@@ -6,9 +6,9 @@ export const pemahamanF5Starter001: Lesson = {
   title: 'Pemahaman Petikan',
   form: 5,
   strand: 'Membaca',
-  skill: 'Memahami idea keseluruhan',
+  skill: 'Membuat inferens',
   learningObjective:
-    'Murid dapat memahami idea keseluruhan dan menilai maklumat penting dalam petikan.',
+    'Murid dapat memahami maklumat penting dan membuat inferens berdasarkan petikan.',
   readingTip:
     'Baca secara kritis dengan membezakan fakta, pendapat dan kesan sesuatu isu yang dibincangkan.',
   estimatedMinutes: 10,
@@ -20,18 +20,17 @@ export const pemahamanF5Starter001: Lesson = {
     unit: 'Latihan Pemahaman Starter',
     learningArea: 'Membaca',
     contentStandard: {
-      code: '2.2',
-      description:
-        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
+      code: '2.3',
+      description: 'Membaca untuk memproses maklumat daripada pelbagai bahan.',
     },
     learningStandard: {
-      code: '2.2.3',
+      code: '2.3.3',
       description:
-        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat.',
+        'Membaca untuk membuat inferens daripada pelbagai bahan dengan betul menggunakan teknik bacaan yang sesuai.',
     },
   },
   curriculumReferences: {
-    standardIds: ['kssm-bm-f5-2.2.3'],
+    standardIds: ['kssm-bm-f5-2.3.3'],
     textbookReferenceIds: [],
   },
   passageTitle: 'Sukarelawan Komuniti',
@@ -81,7 +80,7 @@ export const pemahamanF5Starter001: Lesson = {
     },
     {
       id: 'q3',
-      prompt: 'Apakah kesan pengalaman sukarelawan kepada remaja?',
+      prompt: 'Apakah inferens yang boleh dibuat tentang pengalaman sukarelawan kepada remaja?',
       options: [
         { id: 'a', text: 'Mereka lebih peka dan berani mengambil tanggungjawab sosial.' },
         { id: 'b', text: 'Mereka mengabaikan masalah masyarakat.' },

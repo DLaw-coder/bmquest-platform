@@ -58,16 +58,19 @@ export const curriculumStandards: CurriculumStandardReference[] = [
     contentStandard: {
       code: '2.2',
       description:
-        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
+        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, serta maksud ungkapan dan ayat dalam pelbagai bahan.',
     },
     learningStandard: {
       code: '2.2.3',
       description:
-        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat.',
+        'Membaca secara luncuran dan imbasan untuk memahami serta meneroka maksud keseluruhan daripada pelbagai bahan.',
     },
     dskpVersion: 'KSSM Bahasa Melayu Tingkatan 2',
     sourceTitle: 'Dokumen Standard Kurikulum dan Pentaksiran Bahasa Melayu Tingkatan 2',
-    verificationStatus: 'needs-review',
+    sourcePage: 36,
+    sourceUrl:
+      'https://drive.google.com/open?id=1GeyoTUb7jruowYV7RSFI75iqXzktZaRJ',
+    verificationStatus: 'verified',
   },
   {
     standardId: 'kssm-bm-f3-2.2.3',
@@ -78,56 +81,62 @@ export const curriculumStandards: CurriculumStandardReference[] = [
     contentStandard: {
       code: '2.2',
       description:
-        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
+        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, serta ungkapan dan ayat dalam pelbagai bahan.',
     },
     learningStandard: {
       code: '2.2.3',
       description:
-        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat.',
+        'Membaca dan memahami serta membuat ulasan keseluruhan maksud sesuatu bahan grafik.',
     },
     dskpVersion: 'KSSM Bahasa Melayu Tingkatan 3',
     sourceTitle: 'Dokumen Standard Kurikulum dan Pentaksiran Bahasa Melayu Tingkatan 3',
-    verificationStatus: 'needs-review',
+    sourcePage: 33,
+    sourceUrl:
+      'https://drive.google.com/open?id=143P45IGw0l1lwVG1s6EPH6IgryquTXN7',
+    verificationStatus: 'verified',
   },
   {
-    standardId: 'kssm-bm-f4-2.2.3',
+    standardId: 'kssm-bm-f4-2.3.5',
     curriculum: 'KSSM',
     subject: 'Bahasa Melayu',
     form: 4,
     learningArea: 'Membaca',
     contentStandard: {
-      code: '2.2',
-      description:
-        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
+      code: '2.3',
+      description: 'Membaca untuk memproses maklumat daripada pelbagai bahan.',
     },
     learningStandard: {
-      code: '2.2.3',
-      description:
-        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat.',
+      code: '2.3.5',
+      description: 'Membaca dan mengulas pandangan penulis secara rasional.',
     },
     dskpVersion: 'KSSM Bahasa Melayu Tingkatan 4',
-    sourceTitle: 'Dokumen Standard Kurikulum dan Pentaksiran Bahasa Melayu Tingkatan 4',
-    verificationStatus: 'needs-review',
+    sourceTitle: 'Dokumen Standard Kurikulum dan Pentaksiran Bahasa Melayu Tingkatan 4 dan 5',
+    sourcePage: 39,
+    sourceUrl:
+      'https://drive.google.com/open?id=1z0JvuMC2fty8NpC7GXr-kkdMINomzfsk',
+    verificationStatus: 'verified',
   },
   {
-    standardId: 'kssm-bm-f5-2.2.3',
+    standardId: 'kssm-bm-f5-2.3.3',
     curriculum: 'KSSM',
     subject: 'Bahasa Melayu',
     form: 5,
     learningArea: 'Membaca',
     contentStandard: {
-      code: '2.2',
-      description:
-        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
+      code: '2.3',
+      description: 'Membaca untuk memproses maklumat daripada pelbagai bahan.',
     },
     learningStandard: {
-      code: '2.2.3',
+      code: '2.3.3',
       description:
-        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat.',
+        'Membaca untuk membuat inferens daripada pelbagai bahan dengan betul menggunakan teknik bacaan yang sesuai.',
     },
     dskpVersion: 'KSSM Bahasa Melayu Tingkatan 5',
-    sourceTitle: 'Dokumen Standard Kurikulum dan Pentaksiran Bahasa Melayu Tingkatan 5',
-    verificationStatus: 'needs-review',
+    sourceTitle: 'Dokumen Standard Kurikulum dan Pentaksiran Bahasa Melayu Tingkatan 4 dan 5',
+    sourcePage: 52,
+    sourceUrl:
+      'https://drive.google.com/open?id=1z0JvuMC2fty8NpC7GXr-kkdMINomzfsk',
+    verificationStatus: 'verified',
   },
 ]
 

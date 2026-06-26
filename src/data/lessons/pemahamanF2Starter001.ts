@@ -22,12 +22,12 @@ export const pemahamanF2Starter001: Lesson = {
     contentStandard: {
       code: '2.2',
       description:
-        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
+        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, serta maksud ungkapan dan ayat dalam pelbagai bahan.',
     },
     learningStandard: {
       code: '2.2.3',
       description:
-        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat.',
+        'Membaca secara luncuran dan imbasan untuk memahami serta meneroka maksud keseluruhan daripada pelbagai bahan.',
     },
   },
   curriculumReferences: {
