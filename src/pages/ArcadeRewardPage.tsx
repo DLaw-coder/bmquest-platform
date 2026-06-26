@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useAppData } from '../context/AppStateContext'
+import { useLanguage } from '../context/LanguageContext'
 import { useAuth } from '../hooks/useAuth'
 import type { ArcadeGameMode, ArcadeScore } from '../domain/arcade'
 import { getLearnerPublicName } from '../domain'
@@ -47,6 +48,7 @@ function ArcadeRewardPage() {
   const [searchParams] = useSearchParams()
   const { user, isGuest } = useAuth()
   const { learner } = useAppData()
+  const { t } = useLanguage()
   const rewardTier = searchParams.get('tier') ?? 'bronze'
   const rewardIcon = rewardTier === 'gold' ? '🌟' : '⭐'
   const rewardLabel = rewardTier === 'gold' ? 'Mastery Star' : 'BM Star'
@@ -269,19 +271,19 @@ function ArcadeRewardPage() {
 
       <div className="dashboard-grid">
         <article className="dashboard-card">
-          <span>Time Left</span>
+          <span>{t('arcade.timeLeft')}</span>
           <h2>{minutes}:{seconds}</h2>
           <p>Reward play ends automatically after 3 minutes.</p>
         </article>
 
         <article className="dashboard-card">
-          <span>Arcade Score</span>
+          <span>{t('arcade.score')}</span>
           <h2>{score}</h2>
           <p>{target.label} is worth {target.points} points.</p>
         </article>
 
         <article className="dashboard-card">
-          <span>Sound Effects</span>
+          <span>{t('arcade.soundEffects')}</span>
           <h2>{isSoundOn ? 'On' : 'Muted'}</h2>
           <p>{soundMessage}</p>
           <button
@@ -300,7 +302,7 @@ function ArcadeRewardPage() {
             <strong>⏱️ Time!</strong>
             <p>You scored {score} points. {saveMessage}</p>
             <Link className="mission-button" to="/">
-              Return Dashboard
+              {t('arcade.returnDashboard')}
             </Link>
           </div>
         ) : (
@@ -316,7 +318,7 @@ function ArcadeRewardPage() {
       </article>
 
       <article className="dashboard-card">
-        <span>Top Arcade Scores</span>
+        <span>{t('arcade.topScores')}</span>
         <div className="lesson-list">
           {leaderboard.length === 0 ? (
             <p>No scores yet. Be the first on the board!</p>

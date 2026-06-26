@@ -1,8 +1,10 @@
 import { useAppData } from '../context/AppStateContext'
+import { useLanguage } from '../context/LanguageContext'
 import { getLessonMasterySummaries } from '../services/progress/progressService'
 
 function ProgressPage() {
   const { lessons, progress, achievements } = useAppData()
+  const { t } = useLanguage()
   const lessonIds = new Set(lessons.map((lesson) => lesson.id))
   const formProgress = progress.filter((item) => lessonIds.has(item.lessonId))
   const masterySummaries = getLessonMasterySummaries(lessons, formProgress)
@@ -33,56 +35,56 @@ function ProgressPage() {
     <section className="dashboard">
       <div className="dashboard-hero">
         <div>
-          <p className="eyebrow">Learning Passport</p>
-          <h1>My Progress</h1>
-          <p className="subtitle">Track your Bahasa Melayu learning journey.</p>
+          <p className="eyebrow">{t('progress.eyebrow')}</p>
+          <h1>{t('progress.title')}</h1>
+          <p className="subtitle">{t('progress.subtitle')}</p>
         </div>
         <div className="dashboard-icon">📈</div>
       </div>
 
       <div className="dashboard-grid">
         <article className="dashboard-card primary-card">
-          <span>Overall Progress</span>
+          <span>{t('progress.overall')}</span>
           <h2>{progressPercent}%</h2>
-          <p>{completedLessons} / {lessons.length} lessons completed</p>
+          <p>{completedLessons} / {lessons.length} {t('progress.completed')}</p>
         </article>
 
         <article className="dashboard-card">
-          <span>Average Score</span>
+          <span>{t('progress.averageScore')}</span>
           <h2>{averageScore}%</h2>
-          <p>Across completed attempts.</p>
+          <p>{t('progress.acrossAttempts')}</p>
         </article>
 
         <article className="dashboard-card">
-          <span>Mastered</span>
+          <span>{t('progress.mastered')}</span>
           <h2>{masteredLessons}</h2>
-          <p>Lessons mastered through challenge practice.</p>
+          <p>{t('progress.masteredSubtitle')}</p>
         </article>
 
         <article className="dashboard-card">
-          <span>Achievements</span>
+          <span>{t('home.achievements')}</span>
           <h2>{achievements.length}</h2>
-          <p>Unlocked learning badges.</p>
-          <a className="inline-link" href="/achievements">View Gallery →</a>
+          <p>{t('progress.unlockedBadges')}</p>
+          <a className="inline-link" href="/achievements">{t('progress.viewGallery')} →</a>
         </article>
       </div>
 
       <article className="dashboard-card">
-        <span>Lesson Mastery</span>
+        <span>{t('progress.lessonMastery')}</span>
         <div className="lesson-list">
           {masterySummaries.length === 0 ? (
-            <p>No lessons available for this form yet.</p>
+            <p>{t('progress.noLessons')}</p>
           ) : (
             masterySummaries.map((item) => (
               <div className="lesson-row" key={item.lesson.id}>
                 <div>
                   <strong>{item.lesson.title}</strong>
                   <small>
-                    {item.attemptCount} attempt{item.attemptCount === 1 ? '' : 's'}
+                    {item.attemptCount} {item.attemptCount === 1 ? t('progress.attempt') : t('progress.attempts')}
                     {' · '}
-                    Best {item.bestScore}%
+                    {t('progress.best')} {item.bestScore}%
                     {' · '}
-                    Latest {item.latestScore}%
+                    {t('progress.latest')} {item.latestScore}%
                   </small>
                 </div>
                 <span>{item.status}</span>
@@ -93,10 +95,10 @@ function ProgressPage() {
       </article>
 
       <article className="dashboard-card">
-        <span>Recent Activity</span>
+        <span>{t('progress.recentActivity')}</span>
         <div className="lesson-list">
           {recentActivity.length === 0 ? (
-            <p>No lesson attempts for this form yet.</p>
+            <p>{t('progress.noAttempts')}</p>
           ) : (
             recentActivity.map((item) => (
               <div className="lesson-row" key={item.progressId ?? `${item.lessonId}-${item.completedAt}`}>
@@ -117,9 +119,9 @@ function ProgressPage() {
       </article>
 
       <article className="dashboard-card">
-        <span>Best Score</span>
+        <span>{t('progress.bestScore')}</span>
         <h2>{bestScore}%</h2>
-        <p>Your highest attempt score for this form.</p>
+        <p>{t('progress.bestScoreSubtitle')}</p>
       </article>
 
     </section>

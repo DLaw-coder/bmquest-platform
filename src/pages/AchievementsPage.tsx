@@ -1,4 +1,5 @@
 import { useAppData } from '../context/AppStateContext'
+import { useLanguage } from '../context/LanguageContext'
 
 const plannedAchievements = [
   {
@@ -29,15 +30,16 @@ const plannedAchievements = [
 
 function AchievementsPage() {
   const { achievements } = useAppData()
+  const { t } = useLanguage()
   const unlockedCodes = new Set(achievements.map((achievement) => achievement.code))
 
   return (
     <section className="dashboard">
       <div className="dashboard-hero">
         <div>
-          <p className="eyebrow">Achievement Gallery</p>
-          <h1>My Badges</h1>
-          <p className="subtitle">Celebrate your BM Quest learning milestones.</p>
+          <p className="eyebrow">{t('badges.eyebrow')}</p>
+          <h1>{t('badges.title')}</h1>
+          <p className="subtitle">{t('badges.subtitle')}</p>
         </div>
         <div className="dashboard-icon">🏆</div>
       </div>
@@ -52,7 +54,7 @@ function AchievementsPage() {
               key={achievement.code}
             >
               <div className="achievement-icon">{unlocked ? achievement.icon : '🔒'}</div>
-              <span>{unlocked ? 'Unlocked' : 'Locked'}</span>
+              <span>{unlocked ? t('badges.unlocked') : t('badges.locked')}</span>
               <h2>{achievement.title}</h2>
               <p>{achievement.description}</p>
             </article>

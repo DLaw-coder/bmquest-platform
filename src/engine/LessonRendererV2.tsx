@@ -11,6 +11,7 @@ import LessonResultCard from '../components/lesson/LessonResultCard'
 import UnitProgress from '../components/progress/UnitProgress'
 import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
+import { useLanguage } from '../context/LanguageContext'
 import { getLessonNavigation } from '../repositories/curriculum/lessonRepository'
 import { completeLessonSession } from '../services/lesson/lessonSessionService'
 import {
@@ -37,6 +38,7 @@ type UnitLesson = {
 function LessonRendererV2({ lesson }: LessonRendererProps) {
   const { isGuest } = useAuth()
   const { learner, lessons, progress } = useAppData()
+  const { t } = useLanguage()
   const attempts = getLessonAttempts(progress, lesson.id)
   const hasCompletedLesson = attempts.length > 0
   const nextAttemptNumber = getNextAttemptNumber(attempts)
@@ -134,8 +136,8 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
 
       {hasCompletedLesson && (
         <article className="dashboard-card practice-card">
-          <span>Repeat Practice</span>
-          <h2>Attempt {nextAttemptNumber}</h2>
+          <span>{t('lesson.repeatPractice')}</span>
+          <h2>{t('lesson.attempt')} {nextAttemptNumber}</h2>
           <p>
             {practiceMode === 'challenge'
               ? `Next challenge: ${activeChallengeTemplate.label} · ${activeChallengeTemplate.focus}.`
@@ -147,14 +149,14 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
               onClick={() => handlePracticeModeChange('challenge')}
               type="button"
             >
-              Next Challenge
+              {t('lesson.nextChallenge')}
             </button>
             <button
               className={practiceMode === 'review' ? 'practice-action active' : 'practice-action'}
               onClick={() => handlePracticeModeChange('review')}
               type="button"
             >
-              Review Completed
+              {t('lesson.reviewCompleted')}
             </button>
           </div>
         </article>
@@ -174,7 +176,7 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
         />
 
         <button className="lesson-submit" onClick={handleSubmit} disabled={isSaving}>
-          {isSaving ? 'Saving...' : 'Semak Jawapan'}
+          {isSaving ? t('lesson.saving') : t('lesson.checkAnswers')}
         </button>
 
         {result && (

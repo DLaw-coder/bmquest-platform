@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 import { createLearner } from '../repositories/learner/learnerRepository'
 import type { FormLevel } from '../domain'
 import { prepareNewLearnerNickname } from '../services/learner/nicknameService'
+import { useLanguage } from '../context/LanguageContext'
 
 type LearnerOnboardingPageProps = {
   onCreated: () => void
@@ -10,9 +11,10 @@ type LearnerOnboardingPageProps = {
 
 function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
   const { user } = useAuth()
+  const { language, t } = useLanguage()
   const [nickname, setNickname] = useState('')
   const [currentForm, setCurrentForm] = useState<FormLevel>(1)
-  const [preferredLanguage, setPreferredLanguage] = useState<'en' | 'ms'>('en')
+  const [preferredLanguage, setPreferredLanguage] = useState<'en' | 'ms'>(language)
   const [isSaving, setIsSaving] = useState(false)
   const [saveMessage, setSaveMessage] = useState('')
 
@@ -54,15 +56,15 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
     <section className="hero-card">
       <div className="brand-icon">🌱</div>
 
-      <h1>Create Learner</h1>
+      <h1>{t('onboarding.title')}</h1>
 
       <p className="subtitle">
-        Set up the learner profile BM Quest will follow from Form 1 to Form 5.
+        {t('onboarding.subtitle')}
       </p>
 
       <form className="form-stack" onSubmit={handleSubmit}>
         <label>
-          BM Quest nickname
+          {t('onboarding.nickname')}
           <input
             maxLength={32}
             minLength={3}
@@ -71,11 +73,11 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
             onChange={(event) => setNickname(event.target.value)}
             placeholder="e.g. BM Hero"
           />
-          <small>Use 3–32 characters. Nicknames must be unique and classroom-safe.</small>
+          <small>{t('onboarding.nicknameHelp')}</small>
         </label>
 
         <label>
-          Current Form
+          {t('onboarding.currentForm')}
           <select
             value={currentForm}
             onChange={(event) => setCurrentForm(Number(event.target.value) as FormLevel)}
@@ -89,24 +91,23 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
         </label>
 
         <label>
-          Preferred language
+          {t('onboarding.preferredLanguage')}
           <select
             value={preferredLanguage}
             onChange={(event) => setPreferredLanguage(event.target.value as 'en' | 'ms')}
           >
-            <option value="en">English interface</option>
-            <option value="ms">Bahasa Melayu interface</option>
+            <option value="en">{t('onboarding.englishInterface')}</option>
+            <option value="ms">{t('onboarding.malayInterface')}</option>
           </select>
         </label>
 
         <button className="menu-button student" disabled={isSaving}>
-          {isSaving ? 'Saving...' : 'Create Learner'}
+          {isSaving ? t('onboarding.saving') : t('onboarding.create')}
         </button>
       </form>
 
       {saveMessage && <p className="settings-message">{saveMessage}</p>}
 
-      <p className="footer-text">Sprint 2.3 · Learner Onboarding</p>
     </section>
   )
 }

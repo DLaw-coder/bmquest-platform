@@ -1,29 +1,30 @@
 import { useAuth } from '../hooks/useAuth'
+import { useLanguage } from '../context/LanguageContext'
 
 function WelcomePage() {
   const { continueAsGuest, signInWithGoogle } = useAuth()
+  const { t } = useLanguage()
 
   return (
     <section className="hero-card">
       <div className="brand-icon">📘</div>
 
-      <h1>Welcome</h1>
+      <h1>{t('welcome.title')}</h1>
 
       <p className="subtitle">
-        Sign in to sync BM Quest across devices, or continue as a guest for now.
+        {t('welcome.subtitle')}
       </p>
 
       <div className="menu-grid">
         <button className="menu-button student" onClick={signInWithGoogle}>
-          🔐 Continue with Google
+          🔐 {t('welcome.google')}
         </button>
 
         <button className="menu-button progress" onClick={continueAsGuest}>
-          🌱 Continue as Guest
+          🌱 {t('welcome.guest')}
         </button>
       </div>
 
-      <p className="footer-text">Sprint 2.0C · Real Google Sign-In</p>
     </section>
   )
 }

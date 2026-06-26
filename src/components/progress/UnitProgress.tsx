@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useLanguage } from '../../context/LanguageContext'
 
 type LessonStep = {
   id: string
@@ -12,11 +13,13 @@ type UnitProgressProps = {
 }
 
 function UnitProgress({ lessons }: UnitProgressProps) {
+  const { t } = useLanguage()
+
   return (
     <article className="dashboard-card">
-      <h2>📍 Unit Progress</h2>
+      <h2>📍 {t('unit.progress')}</h2>
       <p className="subtitle">
-        Follow your learning journey through this unit.
+        {t('unit.subtitle')}
       </p>
 
       <div className="unit-progress">

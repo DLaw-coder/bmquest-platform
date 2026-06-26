@@ -2,6 +2,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './App.css'
 import AuthProvider from './context/AuthContext'
 import { AppStateProvider, useAppData } from './context/AppStateContext'
+import { LanguageProvider, useLanguage } from './context/LanguageContext'
 import { useAuth } from './hooks/useAuth'
 import AppLayout from './layouts/AppLayout'
 import WelcomePage from './pages/WelcomePage'
@@ -11,14 +12,15 @@ import AppRoutes from './router/AppRoutes'
 function AppContent() {
   const { user, isGuest, isLoading } = useAuth()
   const { learner, isAppDataLoading, refreshAppData } = useAppData()
+  const { t } = useLanguage()
 
   if (isLoading || (user && !isGuest && isAppDataLoading)) {
     return (
       <AppLayout>
         <section className="hero-card">
           <div className="brand-icon">📘</div>
-          <h1>Loading</h1>
-          <p className="subtitle">Preparing BM Quest...</p>
+          <h1>{t('app.loading')}</h1>
+          <p className="subtitle">{t('app.loadingSubtitle')}</p>
         </section>
       </AppLayout>
     )
@@ -50,11 +52,13 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <AppStateProvider>
-          <AppContent />
-        </AppStateProvider>
-      </AuthProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <AppStateProvider>
+            <AppContent />
+          </AppStateProvider>
+        </AuthProvider>
+      </LanguageProvider>
     </BrowserRouter>
   )
 }

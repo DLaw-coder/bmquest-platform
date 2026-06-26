@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
+import { useLanguage } from '../context/LanguageContext'
 import { getRecommendedLesson } from '../services/progress/progressService'
 import { getLearnerPublicName } from '../domain'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
   const { entitlement, learner, lessons, progress, achievements } = useAppData()
+  const { language, t } = useLanguage()
   const lessonIds = new Set(lessons.map((lesson) => lesson.id))
   const formProgress = progress.filter((item) => lessonIds.has(item.lessonId))
   const completedLessonIds = new Set(
@@ -39,7 +41,7 @@ function HomePage() {
       : completedLessons >= 3
         ? 'Explorer'
         : 'Explorer'
-  const todayLabel = new Intl.DateTimeFormat('en-MY', {
+  const localizedTodayLabel = new Intl.DateTimeFormat(language === 'ms' ? 'ms-MY' : 'en-MY', {
     weekday: 'long',
   }).format(new Date())
 
@@ -51,61 +53,61 @@ function HomePage() {
     <section className="quest-home">
       <div className="quest-home-heading">
         <div>
-          <h1>BM Reading Quest</h1>
+          <h1>{t('home.title')}</h1>
           <p>
             {entitlement.label} · Form {activeForm} ·{' '}
-            {isGuest ? 'Guest Learner' : publicName}
+            {isGuest ? t('home.guestLearner') : publicName}
           </p>
         </div>
       </div>
 
       <article className="focus-card">
-        <p className="focus-eyebrow">Today&apos;s Focus</p>
-        <h2>🎯 {recommendedLesson ? missionTitle : 'Mixed + Vocabulary'}</h2>
+        <p className="focus-eyebrow">{t('home.todayFocus')}</p>
+        <h2>🎯 {recommendedLesson ? missionTitle : t('home.defaultFocus')}</h2>
         <p>
-          Core mission: {recommendedLesson?.estimatedMinutes ?? 10} minutes.
-          Optional booster if motivated.
+          {t('home.coreMission')}: {recommendedLesson?.estimatedMinutes ?? 10} minutes.
+          {' '}{t('home.optionalBooster')}
         </p>
 
         {recommendedLesson ? (
           <Link className="focus-action" to={`/lesson/${recommendedLesson.id}`}>
-            Start {recommendedLesson.estimatedMinutes}-min Mission
+            {t('home.startMission')} {recommendedLesson.estimatedMinutes}-min Mission
           </Link>
         ) : (
-          <div className="focus-action disabled">Mission Coming Soon</div>
+          <div className="focus-action disabled">{t('home.missionComingSoon')}</div>
         )}
 
         <Link className="focus-action secondary" to="/student">
-          🚗 Car Ride Mode
+          🚗 {t('home.carRideMode')}
         </Link>
       </article>
 
       <div className="quest-stat-grid">
         <article className="quest-stat">
-          <span>🔥 Streak</span>
-          <strong>{completedLessons} lesson{completedLessons === 1 ? '' : 's'}</strong>
+          <span>🔥 {t('home.streak')}</span>
+          <strong>{completedLessons} {completedLessons === 1 ? t('home.lesson') : t('home.lessons')}</strong>
         </article>
 
         <article className="quest-stat">
-          <span>⭐ Average</span>
+          <span>⭐ {t('home.average')}</span>
           <strong>{averageScore}%</strong>
         </article>
       </div>
 
       <article className="quest-panel">
-        <h2>Reading Rank</h2>
+        <h2>{t('home.readingRank')}</h2>
         <div className="rank-box">
           <strong>{readingRank}</strong>
-          <span>{completedLessons} sessions completed</span>
+          <span>{completedLessons} {t('home.sessionsCompleted')}</span>
         </div>
       </article>
 
       <article className="quest-panel">
-        <h2>Weekly Goals</h2>
+        <h2>{t('home.weeklyGoals')}</h2>
         <div className="goal-box">
           <div>
-            <strong>{todayLabel}</strong>
-            <span>{weeklyGoal} / 5 missions completed this week</span>
+            <strong>{localizedTodayLabel}</strong>
+            <span>{weeklyGoal} / 5 {t('home.weeklyMissionsCompleted')}</span>
           </div>
           <div className="goal-meter" aria-label={`${weeklyGoal} of 5 weekly missions completed`}>
             {Array.from({ length: 5 }).map((_, index) => (
@@ -117,29 +119,29 @@ function HomePage() {
 
       <div className="dashboard-grid quest-secondary-grid">
         <article className="dashboard-card">
-          <span>Recommendation</span>
-          <h2>{recommendation?.title ?? 'Continue Learning'}</h2>
+          <span>{t('home.recommendation')}</span>
+          <h2>{recommendation?.title ?? t('home.continueLearning')}</h2>
           <p>
             {recommendedLesson
               ? recommendation?.description
-              : `Form ${activeForm} lessons are being prepared.`}
+              : `Form ${activeForm} ${t('home.lessonsPreparing')}`}
           </p>
         </article>
 
         <article className="dashboard-card">
-          <span>Current Level</span>
+          <span>{t('home.currentLevel')}</span>
           <h2>Form {activeForm}</h2>
           <p>KSSM Bahasa Melayu</p>
         </article>
 
         <article className="dashboard-card">
-          <span>Reading Progress</span>
+          <span>{t('home.readingProgress')}</span>
           <h2>{readingProgress}%</h2>
-          <p>{completedLessons} / {lessons.length} lesson completed.</p>
+          <p>{completedLessons} / {lessons.length} {t('progress.completed')}</p>
         </article>
 
         <article className="dashboard-card">
-          <span>Achievements</span>
+          <span>{t('home.achievements')}</span>
           <h2>{achievements.length}</h2>
           <p>{latestAchievementLabel}</p>
         </article>

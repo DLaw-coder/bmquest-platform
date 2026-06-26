@@ -86,7 +86,8 @@ button {
   gap: 10px;
 }
 
-.theme-toggle {
+.theme-toggle,
+.language-toggle {
   width: 58px;
   min-height: 54px;
   display: grid;
@@ -103,6 +104,13 @@ button {
 
 .theme-toggle span {
   font-size: 24px;
+}
+
+.language-toggle {
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
 }
 
 .page-container {

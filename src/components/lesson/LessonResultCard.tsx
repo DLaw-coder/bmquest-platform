@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { Lesson } from '../../domain'
 import type { SessionResult } from '../../engine/session/sessionEngine'
+import { useLanguage } from '../../context/LanguageContext'
 import SectionHeader from '../SectionHeader'
 
 type LessonResultCardProps = {
@@ -18,9 +19,11 @@ function LessonResultCard({
   achievementMessage,
   nextLessonId,
 }: LessonResultCardProps) {
+  const { t } = useLanguage()
+
   return (
     <div className="result-card">
-      <strong>🎉 Lesson Complete</strong>
+      <strong>🎉 {t('lesson.complete')}</strong>
 
       <p>
         Skor: {result.correctAnswers}/{result.totalQuestions} · {result.scorePercent}%
@@ -34,7 +37,7 @@ function LessonResultCard({
       <small>{saveMessage}</small>
       {achievementMessage && <small>{achievementMessage}</small>}
 
-      <SectionHeader malay="RUMUSAN" english="Lesson Summary" />
+      <SectionHeader malay="RUMUSAN" english={t('lesson.summary')} />
 
       <ul className="summary-list">
         {lesson.summary.map((item) => (
@@ -48,22 +51,22 @@ function LessonResultCard({
             to={`/arcade-reward?tier=${result.reward.tier}`}
             className="result-action primary-action"
           >
-            Play 3-Min Reward Game
+            {t('lesson.playReward')}
           </Link>
         )}
 
         {nextLessonId ? (
           <Link to={`/lesson/${nextLessonId}`} className="result-action primary-action">
-            Continue Next Lesson
+            {t('lesson.continueNext')}
           </Link>
         ) : (
           <Link to="/" className="result-action primary-action">
-            Return Dashboard
+            {t('lesson.returnDashboard')}
           </Link>
         )}
 
         <Link to="/curriculum" className="result-action">
-          Browse Curriculum
+          {t('lesson.browseCurriculum')}
         </Link>
       </div>
     </div>

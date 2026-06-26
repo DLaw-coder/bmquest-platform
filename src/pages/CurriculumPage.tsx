@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { appInfo } from '../config/appInfo'
 import { useAppData } from '../context/AppStateContext'
+import { useLanguage } from '../context/LanguageContext'
 import type { Lesson } from '../domain'
 
 type LessonUnit = {
@@ -44,6 +45,7 @@ function groupLessonsByUnit(lessons: Lesson[]): LessonUnit[] {
 
 function CurriculumPage() {
   const { learner, lessons, isAppDataLoading } = useAppData()
+  const { t } = useLanguage()
   const activeForm = learner?.currentForm ?? 1
   const units = groupLessonsByUnit(lessons)
 
@@ -51,10 +53,10 @@ function CurriculumPage() {
     <section className="dashboard">
       <div className="dashboard-hero">
         <div>
-          <p className="eyebrow">Curriculum Browser</p>
-          <h1>Bahasa Melayu Form {activeForm}</h1>
+          <p className="eyebrow">{t('curriculum.eyebrow')}</p>
+          <h1>{t('curriculum.title')} {activeForm}</h1>
           <p className="subtitle">
-            Browse KSSM-aligned Bahasa Melayu learning paths.
+            {t('curriculum.subtitle')}
           </p>
         </div>
         <div className="dashboard-icon">📚</div>
@@ -63,7 +65,7 @@ function CurriculumPage() {
       <div className="dashboard-grid">
         {units.map((unit) => (
           <article className="dashboard-card" key={unit.title}>
-            <span>Unit</span>
+            <span>{t('curriculum.unit')}</span>
             <h2>{getUnitDisplayTitle(unit.title)}</h2>
             <p>{unit.description}</p>
 
@@ -74,7 +76,7 @@ function CurriculumPage() {
                     <strong>📖 {lesson.title}</strong>
                     <small>{lesson.estimatedMinutes} min</small>
                   </div>
-                  <span>Start →</span>
+                  <span>{t('curriculum.start')} →</span>
                 </Link>
               ))}
             </div>
@@ -83,9 +85,9 @@ function CurriculumPage() {
 
         {!isAppDataLoading && units.length === 0 ? (
           <article className="dashboard-card">
-            <span>Lessons</span>
-            <h2>No lessons available</h2>
-            <p>Lessons for this learner&apos;s form could not be loaded yet.</p>
+            <span>{t('curriculum.lessons')}</span>
+            <h2>{t('curriculum.noLessons')}</h2>
+            <p>{t('curriculum.noLessonsSubtitle')}</p>
           </article>
         ) : null}
       </div>

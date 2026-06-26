@@ -1,16 +1,19 @@
 import { Link } from 'react-router-dom'
+import { useLanguage } from '../context/LanguageContext'
 
 function StudentPage() {
+  const { t } = useLanguage()
+
   return (
     <section className="hero-card">
       <div className="brand-icon">📖</div>
-      <h1>Learning</h1>
+      <h1>{t('student.title')}</h1>
       <p className="subtitle">
-        Reading lessons, vocabulary practice and missions will be launched from here.
+        {t('student.subtitle')}
       </p>
 
       <Link className="menu-button student" to="/curriculum">
-        📚 Browse Curriculum
+        📚 {t('student.browseCurriculum')}
       </Link>
     </section>
   )
