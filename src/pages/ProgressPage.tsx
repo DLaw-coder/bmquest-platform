@@ -1,12 +1,17 @@
 import { useAppData } from '../context/AppStateContext'
+import { getLessonMasterySummaries } from '../services/progress/progressService'
 
 function ProgressPage() {
   const { lessons, progress, achievements } = useAppData()
   const lessonIds = new Set(lessons.map((lesson) => lesson.id))
   const formProgress = progress.filter((item) => lessonIds.has(item.lessonId))
+  const masterySummaries = getLessonMasterySummaries(lessons, formProgress)
   const completedLessons = new Set(
     formProgress.map((item) => item.lessonId),
   ).size
+  const masteredLessons = masterySummaries.filter(
+    (item) => item.status === 'Mastered',
+  ).length
   const scores = formProgress.map((item) => item.scorePercent)
   const bestScore = scores.length > 0 ? Math.max(...scores) : 0
   const averageScore =
@@ -49,9 +54,9 @@ function ProgressPage() {
         </article>
 
         <article className="dashboard-card">
-          <span>Best Score</span>
-          <h2>{bestScore}%</h2>
-          <p>Your highest lesson score.</p>
+          <span>Mastered</span>
+          <h2>{masteredLessons}</h2>
+          <p>Lessons mastered through challenge practice.</p>
         </article>
 
         <article className="dashboard-card">
@@ -61,6 +66,31 @@ function ProgressPage() {
           <a className="inline-link" href="/achievements">View Gallery →</a>
         </article>
       </div>
+
+      <article className="dashboard-card">
+        <span>Lesson Mastery</span>
+        <div className="lesson-list">
+          {masterySummaries.length === 0 ? (
+            <p>No lessons available for this form yet.</p>
+          ) : (
+            masterySummaries.map((item) => (
+              <div className="lesson-row" key={item.lesson.id}>
+                <div>
+                  <strong>{item.lesson.title}</strong>
+                  <small>
+                    {item.attemptCount} attempt{item.attemptCount === 1 ? '' : 's'}
+                    {' · '}
+                    Best {item.bestScore}%
+                    {' · '}
+                    Latest {item.latestScore}%
+                  </small>
+                </div>
+                <span>{item.status}</span>
+              </div>
+            ))
+          )}
+        </div>
+      </article>
 
       <article className="dashboard-card">
         <span>Recent Activity</span>
@@ -79,6 +109,12 @@ function ProgressPage() {
             ))
           )}
         </div>
+      </article>
+
+      <article className="dashboard-card">
+        <span>Best Score</span>
+        <h2>{bestScore}%</h2>
+        <p>Your highest attempt score for this form.</p>
       </article>
 
     </section>

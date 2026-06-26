@@ -57,8 +57,31 @@ function DeveloperPage() {
       </div>
 
       <div className="version-card">
+        <span>Verified Standards</span>
+        <strong>{referenceDiagnostics.verifiedStandardCount}</strong>
+      </div>
+
+      <div className="version-card">
         <span>Textbook References</span>
         <strong>{referenceDiagnostics.textbookReferenceCount}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Lessons Per Form</span>
+        <strong>
+          {referenceDiagnostics.lessonsPerForm
+            .map((item) => `F${item.form}:${item.count}`)
+            .join(' · ')}
+        </strong>
+      </div>
+
+      <div className="version-card">
+        <span>Standard Coverage</span>
+        <strong>
+          {referenceDiagnostics.lessonsPerStandard
+            .map((item) => `${item.standardId}:${item.count}`)
+            .join(' · ')}
+        </strong>
       </div>
 
       <div className="version-card">
@@ -104,6 +127,16 @@ function DeveloperPage() {
       <div className="version-card">
         <span>Lessons Without Questions</span>
         <strong>{referenceDiagnostics.lessonsWithoutQuestions}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Weak Vocabulary Coverage</span>
+        <strong>{referenceDiagnostics.lessonsWithWeakVocabulary}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Repeated Question Patterns</span>
+        <strong>{referenceDiagnostics.lessonsWithRepeatedQuestionCount}</strong>
       </div>
 
       <div className="version-card">

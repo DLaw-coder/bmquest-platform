@@ -89,10 +89,33 @@ export function getCurriculumReferenceDiagnostics(lessons: Lesson[]) {
   const lessonsWithoutQuestions = lessons.filter(
     (lesson) => lesson.questions.length === 0,
   ).length
+  const lessonsWithWeakVocabulary = lessons.filter(
+    (lesson) => lesson.vocabulary.length < 3,
+  ).length
+  const lessonsWithRepeatedQuestionCount = lessons.filter(
+    (lesson) => new Set(lesson.questions.map((question) => question.prompt)).size <
+      lesson.questions.length,
+  ).length
+  const verifiedStandardCount = curriculumStandards.filter(
+    (standard) => standard.verificationStatus === 'verified',
+  ).length
+  const lessonsPerForm = [1, 2, 3, 4, 5].map((form) => ({
+    form,
+    count: lessons.filter((lesson) => lesson.form === form).length,
+  }))
+  const lessonsPerStandard = curriculumStandards.map((standard) => ({
+    standardId: standard.standardId,
+    count: lessons.filter((lesson) =>
+      lesson.curriculumReferences.standardIds.includes(standard.standardId),
+    ).length,
+  }))
 
   return {
     standardCount: curriculumStandards.length,
+    verifiedStandardCount,
     textbookReferenceCount: textbookReferences.length,
+    lessonsPerForm,
+    lessonsPerStandard,
     duplicateLessonIdCount: duplicateLessonIds.size,
     duplicateLessonSortOrderCount: duplicateLessonSortOrders.size,
     missingLinkCount:
@@ -103,5 +126,7 @@ export function getCurriculumReferenceDiagnostics(lessons: Lesson[]) {
     lessonsWithoutTextbookReferences,
     lessonsWithoutSortOrder,
     lessonsWithoutQuestions,
+    lessonsWithWeakVocabulary,
+    lessonsWithRepeatedQuestionCount,
   }
 }
