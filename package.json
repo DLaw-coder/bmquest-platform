@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "generate:pwa-icons": "node scripts/generatePwaIcons.mjs",
     "seed:curriculum": "node --experimental-strip-types scripts/seedCurriculumReferences.ts",
     "seed:lessons": "node --experimental-strip-types scripts/seedLessons.ts"
   },

@@ -1,0 +1,43 @@
+{
+  "name": "BM Quest",
+  "short_name": "BM Quest",
+  "description": "KSSM-aligned Bahasa Melayu learning quests for secondary school students.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1d4ed8",
+  "background_color": "#f8fbff",
+  "categories": [
+    "education",
+    "games"
+  ],
+  "lang": "en-MY",
+  "icons": [
+    {
+      "src": "/icons/bmquest-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/bmquest-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/bmquest-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/bmquest-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
