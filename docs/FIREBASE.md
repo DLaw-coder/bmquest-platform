@@ -70,4 +70,5 @@ navigation order as the local registry.
 
 The lesson seed validates the current lesson registry before writing. It blocks
 uploads when a lesson has duplicate IDs, duplicate or missing `sortOrder`, no
-curriculum standard links, no textbook links, or no questions.
+curriculum standard links, or no questions. Textbook links are tracked in
+developer diagnostics but are not required for starter coverage lessons.

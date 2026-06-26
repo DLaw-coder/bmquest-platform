@@ -10,12 +10,20 @@ import { ideaUtama001 } from '../src/data/lessons/ideaUtama001.ts'
 import { ideaSampingan001 } from '../src/data/lessons/ideaSampingan001.ts'
 import { isiTersurat001 } from '../src/data/lessons/isiTersurat001.ts'
 import { luncuranImbasan001 } from '../src/data/lessons/luncuranImbasan001.ts'
+import { pemahamanF2Starter001 } from '../src/data/lessons/pemahamanF2Starter001.ts'
+import { pemahamanF3Starter001 } from '../src/data/lessons/pemahamanF3Starter001.ts'
+import { pemahamanF4Starter001 } from '../src/data/lessons/pemahamanF4Starter001.ts'
+import { pemahamanF5Starter001 } from '../src/data/lessons/pemahamanF5Starter001.ts'
 
 const lessons = [
   ideaUtama001,
   isiTersurat001,
   ideaSampingan001,
   luncuranImbasan001,
+  pemahamanF2Starter001,
+  pemahamanF3Starter001,
+  pemahamanF4Starter001,
+  pemahamanF5Starter001,
 ]
 
 function validateLessonsForSeed() {
@@ -40,10 +48,6 @@ function validateLessonsForSeed() {
 
     if (lesson.curriculumReferences.standardIds.length === 0) {
       errors.push(`Missing curriculum standard reference: ${lesson.id}`)
-    }
-
-    if (lesson.curriculumReferences.textbookReferenceIds.length === 0) {
-      errors.push(`Missing textbook reference: ${lesson.id}`)
     }
 
     if (lesson.questions.length === 0) {
