@@ -82,11 +82,11 @@ function LearnerOnboardingPage({ onCreated }: LearnerOnboardingPageProps) {
             value={currentForm}
             onChange={(event) => setCurrentForm(Number(event.target.value) as FormLevel)}
           >
-            <option value={1}>Form 1</option>
-            <option value={2}>Form 2</option>
-            <option value={3}>Form 3</option>
-            <option value={4}>Form 4</option>
-            <option value={5}>Form 5</option>
+            <option value={1}>{t('common.form')} 1</option>
+            <option value={2}>{t('common.form')} 2</option>
+            <option value={3}>{t('common.form')} 3</option>
+            <option value={4}>{t('common.form')} 4</option>
+            <option value={5}>{t('common.form')} 5</option>
           </select>
         </label>
 

@@ -327,7 +327,7 @@ function ArcadeRewardPage() {
               <div className="lesson-row" key={item.scoreId ?? `${item.learnerId}-${item.playedAt}`}>
                 <div>
                   <strong>{index + 1}. {item.displayName}</strong>
-                  <small>Form {item.form} · {modeCopy[item.gameMode].title}</small>
+                  <small>{t('common.form')} {item.form} · {modeCopy[item.gameMode].title}</small>
                 </div>
                 <span>{item.score}</span>
               </div>

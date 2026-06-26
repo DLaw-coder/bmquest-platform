@@ -66,7 +66,7 @@ function SettingsPage() {
 
         <article className="dashboard-card">
           <span>{t('settings.learningProfile')}</span>
-          <h2>Form {learner?.currentForm ?? 1}</h2>
+          <h2>{t('common.form')} {learner?.currentForm ?? 1}</h2>
           <p>KSSM Bahasa Melayu</p>
         </article>
 

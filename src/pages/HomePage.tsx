@@ -58,7 +58,7 @@ function HomePage() {
         <div>
           <h1>{t('home.title')}</h1>
           <p>
-            {planLabel} · Form {activeForm} ·{' '}
+            {planLabel} · {t('common.form')} {activeForm} ·{' '}
             {isGuest ? t('home.guestLearner') : publicName}
           </p>
         </div>
@@ -127,13 +127,13 @@ function HomePage() {
           <p>
             {recommendedLesson
               ? recommendation?.description
-              : `Form ${activeForm} ${t('home.lessonsPreparing')}`}
+              : `${t('common.form')} ${activeForm} ${t('home.lessonsPreparing')}`}
           </p>
         </article>
 
         <article className="dashboard-card">
           <span>{t('home.currentLevel')}</span>
-          <h2>Form {activeForm}</h2>
+          <h2>{t('common.form')} {activeForm}</h2>
           <p>KSSM Bahasa Melayu</p>
         </article>
 

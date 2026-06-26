@@ -30,6 +30,7 @@ type TranslationKey =
   | 'onboarding.nickname'
   | 'onboarding.nicknameHelp'
   | 'onboarding.currentForm'
+  | 'common.form'
   | 'onboarding.preferredLanguage'
   | 'onboarding.englishInterface'
   | 'onboarding.malayInterface'
@@ -162,6 +163,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'onboarding.nickname': 'BM Quest nickname',
     'onboarding.nicknameHelp': 'Use 3–32 characters. Nicknames must be unique and classroom-safe.',
     'onboarding.currentForm': 'Current Form',
+    'common.form': 'Form',
     'onboarding.preferredLanguage': 'Preferred language',
     'onboarding.englishInterface': 'English interface',
     'onboarding.malayInterface': 'Bahasa Melayu interface',
@@ -293,6 +295,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'onboarding.nickname': 'Nama panggilan BM Quest',
     'onboarding.nicknameHelp': 'Gunakan 3–32 aksara. Nama panggilan mesti unik dan sesuai untuk kelas.',
     'onboarding.currentForm': 'Tingkatan Semasa',
+    'common.form': 'Tingkatan',
     'onboarding.preferredLanguage': 'Bahasa pilihan',
     'onboarding.englishInterface': 'Antara muka English',
     'onboarding.malayInterface': 'Antara muka Bahasa Melayu',
