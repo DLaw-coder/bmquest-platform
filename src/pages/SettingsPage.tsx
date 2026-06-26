@@ -14,6 +14,9 @@ function SettingsPage() {
   const [saveMessage, setSaveMessage] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const publicName = getLearnerPublicName(learner, user?.displayName)
+  const planLabel = entitlement.isPremium
+    ? t('settings.premiumPlan')
+    : t('settings.freePlan')
 
   async function handleNicknameSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -69,7 +72,7 @@ function SettingsPage() {
 
         <article className="dashboard-card">
           <span>{t('settings.plan')}</span>
-          <h2>{entitlement.label}</h2>
+          <h2>{planLabel}</h2>
           <p>
             {entitlement.isPremium
               ? t('settings.premiumActive')

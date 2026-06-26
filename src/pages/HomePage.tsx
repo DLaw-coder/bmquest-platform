@@ -48,6 +48,9 @@ function HomePage() {
   const missionTitle = recommendedLesson?.title ?? 'Idea Utama'
   const activeForm = learner?.currentForm ?? 1
   const publicName = getLearnerPublicName(learner, user?.displayName)
+  const planLabel = entitlement.isPremium
+    ? t('settings.premiumPlan')
+    : t('settings.freePlan')
 
   return (
     <section className="quest-home">
@@ -55,7 +58,7 @@ function HomePage() {
         <div>
           <h1>{t('home.title')}</h1>
           <p>
-            {entitlement.label} · Form {activeForm} ·{' '}
+            {planLabel} · Form {activeForm} ·{' '}
             {isGuest ? t('home.guestLearner') : publicName}
           </p>
         </div>

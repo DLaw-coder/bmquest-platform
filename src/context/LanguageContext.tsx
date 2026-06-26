@@ -103,6 +103,8 @@ type TranslationKey =
   | 'settings.googleActive'
   | 'settings.learningProfile'
   | 'settings.plan'
+  | 'settings.freePlan'
+  | 'settings.premiumPlan'
   | 'settings.premiumActive'
   | 'settings.premiumLater'
   | 'settings.appearance'
@@ -233,6 +235,8 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'settings.googleActive': 'Google sign-in active.',
     'settings.learningProfile': 'Learning Profile',
     'settings.plan': 'Plan',
+    'settings.freePlan': 'Free',
+    'settings.premiumPlan': 'Premium',
     'settings.premiumActive': 'Premium learning features are active.',
     'settings.premiumLater': 'Premium upgrades will be introduced later.',
     'settings.appearance': 'Appearance',
@@ -362,6 +366,8 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'settings.googleActive': 'Log masuk Google aktif.',
     'settings.learningProfile': 'Profil Pembelajaran',
     'settings.plan': 'Pelan',
+    'settings.freePlan': 'Percuma',
+    'settings.premiumPlan': 'Premium',
     'settings.premiumActive': 'Ciri pembelajaran premium sedang aktif.',
     'settings.premiumLater': 'Naik taraf premium akan diperkenalkan kemudian.',
     'settings.appearance': 'Paparan',
