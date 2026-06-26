@@ -1,6 +1,23 @@
 import { useAppData } from '../context/AppStateContext'
 import { useLanguage } from '../context/LanguageContext'
-import { getLessonMasterySummaries } from '../services/progress/progressService'
+import {
+  getLessonMasterySummaries,
+  type MasteryStatus,
+} from '../services/progress/progressService'
+
+function getMasteryStatusLabel(status: MasteryStatus, t: ReturnType<typeof useLanguage>['t']) {
+  switch (status) {
+    case 'Learning':
+      return t('mastery.learning')
+    case 'Improving':
+      return t('mastery.improving')
+    case 'Mastered':
+      return t('mastery.mastered')
+    case 'Not Started':
+    default:
+      return t('mastery.notStarted')
+  }
+}
 
 function ProgressPage() {
   const { lessons, progress, achievements } = useAppData()
@@ -87,7 +104,7 @@ function ProgressPage() {
                     {t('progress.latest')} {item.latestScore}%
                   </small>
                 </div>
-                <span>{item.status}</span>
+                <span>{getMasteryStatusLabel(item.status, t)}</span>
               </div>
             ))
           )}

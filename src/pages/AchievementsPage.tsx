@@ -4,29 +4,29 @@ import { useLanguage } from '../context/LanguageContext'
 const plannedAchievements = [
   {
     code: 'first_lesson',
-    title: 'First Lesson',
-    description: 'Completed your first BM Quest lesson.',
+    titleKey: 'badges.firstLessonTitle',
+    descriptionKey: 'badges.firstLessonDescription',
     icon: '🏆',
   },
   {
     code: 'perfect_score',
-    title: 'Perfect Score',
-    description: 'Answered every question correctly.',
+    titleKey: 'badges.perfectScoreTitle',
+    descriptionKey: 'badges.perfectScoreDescription',
     icon: '💯',
   },
   {
     code: 'reading_explorer',
-    title: 'Reading Explorer',
-    description: 'Complete 3 reading lessons.',
+    titleKey: 'badges.readingExplorerTitle',
+    descriptionKey: 'badges.readingExplorerDescription',
     icon: '📚',
   },
   {
     code: 'five_day_streak',
-    title: '5-Day Streak',
-    description: 'Learn for 5 days in a row.',
+    titleKey: 'badges.fiveDayStreakTitle',
+    descriptionKey: 'badges.fiveDayStreakDescription',
     icon: '🔥',
   },
-]
+] as const
 
 function AchievementsPage() {
   const { achievements } = useAppData()
@@ -55,8 +55,8 @@ function AchievementsPage() {
             >
               <div className="achievement-icon">{unlocked ? achievement.icon : '🔒'}</div>
               <span>{unlocked ? t('badges.unlocked') : t('badges.locked')}</span>
-              <h2>{achievement.title}</h2>
-              <p>{achievement.description}</p>
+              <h2>{t(achievement.titleKey)}</h2>
+              <p>{t(achievement.descriptionKey)}</p>
             </article>
           )
         })}

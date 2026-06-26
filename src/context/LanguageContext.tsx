@@ -91,11 +91,23 @@ type TranslationKey =
   | 'progress.noAttempts'
   | 'progress.bestScore'
   | 'progress.bestScoreSubtitle'
+  | 'mastery.notStarted'
+  | 'mastery.learning'
+  | 'mastery.improving'
+  | 'mastery.mastered'
   | 'badges.eyebrow'
   | 'badges.title'
   | 'badges.subtitle'
   | 'badges.unlocked'
   | 'badges.locked'
+  | 'badges.firstLessonTitle'
+  | 'badges.firstLessonDescription'
+  | 'badges.perfectScoreTitle'
+  | 'badges.perfectScoreDescription'
+  | 'badges.readingExplorerTitle'
+  | 'badges.readingExplorerDescription'
+  | 'badges.fiveDayStreakTitle'
+  | 'badges.fiveDayStreakDescription'
   | 'settings.eyebrow'
   | 'settings.title'
   | 'settings.subtitle'
@@ -224,11 +236,23 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'progress.noAttempts': 'No lesson attempts for this form yet.',
     'progress.bestScore': 'Best Score',
     'progress.bestScoreSubtitle': 'Your highest attempt score for this form.',
+    'mastery.notStarted': 'Not Started',
+    'mastery.learning': 'Learning',
+    'mastery.improving': 'Improving',
+    'mastery.mastered': 'Mastered',
     'badges.eyebrow': 'Achievement Gallery',
     'badges.title': 'My Badges',
     'badges.subtitle': 'Celebrate your BM Quest learning milestones.',
     'badges.unlocked': 'Unlocked',
     'badges.locked': 'Locked',
+    'badges.firstLessonTitle': 'First Lesson',
+    'badges.firstLessonDescription': 'Completed your first BM Quest lesson.',
+    'badges.perfectScoreTitle': 'Perfect Score',
+    'badges.perfectScoreDescription': 'Answered every question correctly.',
+    'badges.readingExplorerTitle': 'Reading Explorer',
+    'badges.readingExplorerDescription': 'Complete 3 reading lessons.',
+    'badges.fiveDayStreakTitle': '5-Day Streak',
+    'badges.fiveDayStreakDescription': 'Learn for 5 days in a row.',
     'settings.eyebrow': 'Profile & Settings',
     'settings.title': 'Settings',
     'settings.subtitle': 'Manage your BM Quest account and app preferences.',
@@ -356,11 +380,23 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'progress.noAttempts': 'Tiada percubaan pelajaran untuk tingkatan ini.',
     'progress.bestScore': 'Skor Terbaik',
     'progress.bestScoreSubtitle': 'Skor percubaan tertinggi anda untuk tingkatan ini.',
+    'mastery.notStarted': 'Belum Bermula',
+    'mastery.learning': 'Sedang Belajar',
+    'mastery.improving': 'Semakin Maju',
+    'mastery.mastered': 'Dikuasai',
     'badges.eyebrow': 'Galeri Pencapaian',
     'badges.title': 'Lencana Saya',
     'badges.subtitle': 'Raikan pencapaian pembelajaran anda dalam BM Quest.',
     'badges.unlocked': 'Dibuka',
     'badges.locked': 'Terkunci',
+    'badges.firstLessonTitle': 'Pelajaran Pertama',
+    'badges.firstLessonDescription': 'Selesaikan pelajaran BM Quest pertama anda.',
+    'badges.perfectScoreTitle': 'Skor Sempurna',
+    'badges.perfectScoreDescription': 'Jawab semua soalan dengan betul.',
+    'badges.readingExplorerTitle': 'Penjelajah Membaca',
+    'badges.readingExplorerDescription': 'Selesaikan 3 pelajaran membaca.',
+    'badges.fiveDayStreakTitle': 'Rentetan 5 Hari',
+    'badges.fiveDayStreakDescription': 'Belajar selama 5 hari berturut-turut.',
     'settings.eyebrow': 'Profil & Tetapan',
     'settings.title': 'Tetapan',
     'settings.subtitle': 'Urus akaun BM Quest dan pilihan aplikasi anda.',
