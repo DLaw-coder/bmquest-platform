@@ -499,6 +499,51 @@ h1 {
   color: var(--color-primary);
 }
 
+.arcade-page {
+  width: 100%;
+  max-width: 620px;
+  display: grid;
+  gap: 18px;
+}
+
+.arcade-board {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.65), transparent 32%),
+    linear-gradient(135deg, #1d4ed8, #7c3aed);
+  box-shadow: var(--shadow-card);
+}
+
+.arcade-star {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.24);
+  font-size: 34px;
+}
+
+.arcade-finished {
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 14px;
+  padding: 30px;
+  text-align: center;
+  color: white;
+}
+
+.arcade-finished strong {
+  font-size: 34px;
+}
+
 .lesson-submit {
   width: 100%;
   min-height: 54px;

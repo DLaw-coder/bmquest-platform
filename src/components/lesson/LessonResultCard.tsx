@@ -43,6 +43,15 @@ function LessonResultCard({
       </ul>
 
       <div className="result-actions">
+        {result.reward.tier !== 'none' && (
+          <Link
+            to={`/arcade-reward?tier=${result.reward.tier}`}
+            className="result-action primary-action"
+          >
+            Play 3-Min Reward Game
+          </Link>
+        )}
+
         {nextLessonId ? (
           <Link to={`/lesson/${nextLessonId}`} className="result-action primary-action">
             Continue Next Lesson
