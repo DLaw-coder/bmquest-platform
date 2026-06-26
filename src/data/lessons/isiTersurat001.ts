@@ -17,7 +17,7 @@ export const isiTersurat001: Lesson = {
     curriculum: 'KSSM',
     form: 1,
     theme: 'Amalan Baik Dalam Kehidupan',
-    unit: 'Kemahiran Membaca Foundation',
+    unit: 'Kemahiran Membaca Asas',
     learningArea: 'Membaca',
     contentStandard: {
       code: '2.2',

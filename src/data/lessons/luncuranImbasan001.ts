@@ -17,7 +17,7 @@ export const luncuranImbasan001: Lesson = {
     curriculum: 'KSSM',
     form: 1,
     theme: 'Kesihatan dan Kebersihan',
-    unit: 'Kemahiran Membaca Foundation',
+    unit: 'Kemahiran Membaca Asas',
     learningArea: 'Membaca',
     contentStandard: {
       code: '2.2',

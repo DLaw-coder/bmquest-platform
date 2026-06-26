@@ -9,6 +9,18 @@ type LessonUnit = {
   lessons: Lesson[]
 }
 
+function getUnitDisplayTitle(title: string) {
+  if (title === 'Kemahiran Membaca Foundation') {
+    return 'Kemahiran Membaca Asas'
+  }
+
+  if (title === 'Latihan Membaca Depth Set') {
+    return 'Latihan Membaca Lanjutan'
+  }
+
+  return title
+}
+
 function groupLessonsByUnit(lessons: Lesson[]): LessonUnit[] {
   const units = new Map<string, LessonUnit>()
 
@@ -52,7 +64,7 @@ function CurriculumPage() {
         {units.map((unit) => (
           <article className="dashboard-card" key={unit.title}>
             <span>Unit</span>
-            <h2>{unit.title}</h2>
+            <h2>{getUnitDisplayTitle(unit.title)}</h2>
             <p>{unit.description}</p>
 
             <div className="lesson-list">

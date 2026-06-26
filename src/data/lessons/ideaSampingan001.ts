@@ -17,7 +17,7 @@ export const ideaSampingan001: Lesson = {
     curriculum: 'KSSM',
     form: 1,
     theme: 'Alam Sekitar dan Kelestarian',
-    unit: 'Kemahiran Membaca Foundation',
+    unit: 'Kemahiran Membaca Asas',
     learningArea: 'Membaca',
     contentStandard: {
       code: '2.3',

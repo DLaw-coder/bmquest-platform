@@ -545,7 +545,7 @@ function createDepthLesson(seed: DepthLessonSeed): Lesson {
       curriculum: 'KSSM',
       form: seed.form,
       theme: seed.theme,
-      unit: 'Latihan Membaca Depth Set',
+      unit: 'Latihan Membaca Lanjutan',
       learningArea: 'Membaca',
       contentStandard: meta.contentStandard,
       learningStandard: meta.learningStandard,
