@@ -66,6 +66,24 @@ The current rules block:
 - User deletes for learner, progress, achievement, and arcade score records.
 - Reads/writes to unknown collections.
 
+## Premium Entitlement Foundation
+
+BM Quest currently launches as a free app. The account model includes an
+optional `plan` field so the app can later support premium access without
+changing the Google Play download price.
+
+Current behavior:
+
+- New accounts default to `plan: "free"`.
+- Current launch lessons are seeded with `accessTier: "free"`.
+- Premium billing is not active yet.
+- Sign-in preserves an existing account plan so future premium accounts are not
+  downgraded back to free.
+
+Future billing behavior should update `accounts/{uid}.plan` through a trusted
+server-side process after Google Play Billing or another approved payment flow
+confirms entitlement.
+
 ## Curriculum Reference Seeding
 
 BM Quest keeps the canonical curriculum reference registry in source control at

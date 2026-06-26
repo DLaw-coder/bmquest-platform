@@ -37,13 +37,15 @@ function AuthProvider({ children }: AuthProviderProps) {
       if (firebaseUser) {
         const now = new Date().toISOString()
 
-        await upsertAccount({
+        const account = await upsertAccount({
           uid: firebaseUser.uid,
           displayName: firebaseUser.displayName ?? 'BM Quest User',
           email: firebaseUser.email ?? undefined,
           photoURL: firebaseUser.photoURL ?? undefined,
           role: 'parent',
           provider: 'google',
+          plan: 'free',
+          planUpdatedAt: now,
           createdAt: now,
           updatedAt: now,
         })
@@ -53,6 +55,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           displayName: firebaseUser.displayName ?? 'BM Quest User',
           email: firebaseUser.email ?? undefined,
           role: 'parent',
+          plan: account.plan ?? 'free',
           createdAt: now,
         })
       } else {
@@ -75,6 +78,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           uid: 'guest',
           displayName: 'Guest Learner',
           role: 'guest',
+          plan: 'free',
           createdAt: new Date().toISOString(),
         })
       },

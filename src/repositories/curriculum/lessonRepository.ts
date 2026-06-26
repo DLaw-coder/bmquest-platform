@@ -1,4 +1,4 @@
-import type { Lesson } from '../../domain'
+import { withDefaultLessonAccess, type Lesson } from '../../domain'
 import type { FormLevel } from '../../domain/learner'
 import { lessons } from '../../data/lessons'
 import { db } from '../../config/firebase'
@@ -18,7 +18,7 @@ function sortLessonsByOrder(first: Lesson, second: Lesson) {
 }
 
 function getLocalLessons() {
-  return [...lessons].sort(sortLessonsByOrder)
+  return lessons.map(withDefaultLessonAccess).sort(sortLessonsByOrder)
 }
 
 export async function getAllLessons(): Promise<Lesson[]> {
@@ -30,7 +30,9 @@ export async function getAllLessons(): Promise<Lesson[]> {
     const snapshot = await getDocs(
       query(collection(db, 'lessons'), orderBy('sortOrder')),
     )
-    const firestoreLessons = snapshot.docs.map((item) => item.data() as Lesson)
+    const firestoreLessons = snapshot.docs.map((item) =>
+      withDefaultLessonAccess(item.data() as Lesson),
+    )
 
     return firestoreLessons.length > 0 ? firestoreLessons : getLocalLessons()
   } catch (error) {
@@ -51,7 +53,7 @@ export async function getLessonById(lessonId: string): Promise<Lesson | null> {
       const snapshot = await getDoc(doc(db, 'lessons', lessonId))
 
       if (snapshot.exists()) {
-        return snapshot.data() as Lesson
+        return withDefaultLessonAccess(snapshot.data() as Lesson)
       }
     } catch (error) {
       console.warn('Falling back to local lesson lookup.', error)

@@ -8,7 +8,7 @@ import { prepareLearnerNicknameUpdate } from '../services/learner/nicknameServic
 
 function SettingsPage() {
   const { user, isGuest, signOut } = useAuth()
-  const { learner, refreshAppData } = useAppData()
+  const { entitlement, learner, refreshAppData } = useAppData()
   const [saveMessage, setSaveMessage] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const publicName = getLearnerPublicName(learner, user?.displayName)
@@ -63,6 +63,16 @@ function SettingsPage() {
           <span>Learning Profile</span>
           <h2>Form {learner?.currentForm ?? 1}</h2>
           <p>KSSM Bahasa Melayu</p>
+        </article>
+
+        <article className="dashboard-card">
+          <span>Plan</span>
+          <h2>{entitlement.label}</h2>
+          <p>
+            {entitlement.isPremium
+              ? 'Premium learning features are active.'
+              : 'Premium upgrades will be introduced later.'}
+          </p>
         </article>
 
         <article className="dashboard-card">

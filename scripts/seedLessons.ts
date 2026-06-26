@@ -27,6 +27,7 @@ import { pemahamanF4Starter001 } from '../src/data/lessons/pemahamanF4Starter001
 import { pemahamanF5Starter001 } from '../src/data/lessons/pemahamanF5Starter001.ts'
 import { teknologiF2Expansion001 } from '../src/data/lessons/teknologiF2Expansion001.ts'
 import { warisanF4Expansion001 } from '../src/data/lessons/warisanF4Expansion001.ts'
+import { withDefaultLessonAccess } from '../src/domain/entitlement.ts'
 
 const lessons = [
   ideaUtama001,
@@ -50,7 +51,7 @@ const lessons = [
   ekonomiF5Expansion001,
   masyarakatF5Expansion001,
   ...launchDepthLessons,
-]
+].map(withDefaultLessonAccess)
 
 function validateLessonsForSeed() {
   const lessonIds = new Set<string>()

@@ -1,3 +1,5 @@
+import type { AccountPlan } from '../domain'
+
 export type UserRole = 'guest' | 'student' | 'parent'
 
 export type BMQuestUser = {
@@ -5,5 +7,6 @@ export type BMQuestUser = {
   displayName: string
   email?: string
   role: UserRole
+  plan?: AccountPlan
   createdAt: string
 }

@@ -7,7 +7,7 @@ import { getRecommendedLesson } from '../services/progress/progressService'
 
 function DeveloperPage() {
   const { user, isGuest } = useAuth()
-  const { learner, lessons, progress, achievements } = useAppData()
+  const { entitlement, learner, lessons, progress, achievements } = useAppData()
   const lessonCount = isGuest ? 0 : lessons.length
   const progressCount = isGuest ? 0 : progress.length
   const achievementCount = isGuest ? 0 : achievements.length
@@ -45,6 +45,11 @@ function DeveloperPage() {
       <div className="version-card">
         <span>Nickname</span>
         <strong>{learner?.nickname || '-'}</strong>
+      </div>
+
+      <div className="version-card">
+        <span>Plan</span>
+        <strong>{entitlement.label}</strong>
       </div>
 
       <div className="version-card">

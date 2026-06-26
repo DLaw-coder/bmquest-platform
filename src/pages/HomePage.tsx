@@ -6,7 +6,7 @@ import { getLearnerPublicName } from '../domain'
 
 function HomePage() {
   const { user, isGuest } = useAuth()
-  const { learner, lessons, progress, achievements } = useAppData()
+  const { entitlement, learner, lessons, progress, achievements } = useAppData()
   const lessonIds = new Set(lessons.map((lesson) => lesson.id))
   const formProgress = progress.filter((item) => lessonIds.has(item.lessonId))
   const completedLessonIds = new Set(
@@ -94,6 +94,16 @@ function HomePage() {
           <span>Achievements</span>
           <h2>{achievements.length}</h2>
           <p>{latestAchievementLabel}</p>
+        </article>
+
+        <article className="dashboard-card">
+          <span>Plan</span>
+          <h2>{entitlement.label}</h2>
+          <p>
+            {entitlement.isPremium
+              ? 'Premium learning access is active.'
+              : 'All launch lessons remain available during public alpha.'}
+          </p>
         </article>
       </div>
 

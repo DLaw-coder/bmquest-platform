@@ -9,7 +9,8 @@ import {
 } from 'react'
 import type { Achievement } from '../domain/achievement'
 import type { LessonProgress } from '../domain/progress'
-import type { Learner, Lesson } from '../domain'
+import type { Entitlement, Learner, Lesson } from '../domain'
+import { canAccessLesson, getEntitlement } from '../domain'
 import { useAuth } from '../hooks/useAuth'
 import { getLearnersForAccount } from '../repositories/learner/learnerRepository'
 import { subscribeToProgressForLearner } from '../repositories/progress/progressRepository'
@@ -21,6 +22,7 @@ type AppData = {
   lessons: Lesson[]
   progress: LessonProgress[]
   achievements: Achievement[]
+  entitlement: Entitlement
   isAppDataLoading: boolean
   refreshAppData: () => void
 }
@@ -44,7 +46,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setLearner(null)
       setProgress([])
       setAchievements([])
-      getLessonsForForm(1).then(setLessons)
+      getLessonsForForm(1).then((availableLessons) => {
+        setLessons(availableLessons.filter((lesson) => canAccessLesson(user?.plan, lesson)))
+      })
       return
     }
 
@@ -62,7 +66,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       const availableLessons = activeLearner
         ? await getLessonsForForm(activeLearner.currentForm)
         : []
-      setLessons(availableLessons)
+      setLessons(availableLessons.filter((lesson) => canAccessLesson(user?.plan, lesson)))
 
       if (activeLearner) {
         unsubscribeProgress = subscribeToProgressForLearner(
@@ -93,10 +97,19 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       lessons,
       progress,
       achievements,
+      entitlement: getEntitlement(user?.plan),
       isAppDataLoading,
       refreshAppData,
     }),
-    [learner, lessons, progress, achievements, isAppDataLoading, refreshAppData],
+    [
+      learner,
+      lessons,
+      progress,
+      achievements,
+      user?.plan,
+      isAppDataLoading,
+      refreshAppData,
+    ],
   )
 
   return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>

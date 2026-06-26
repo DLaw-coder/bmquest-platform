@@ -1,3 +1,5 @@
+import type { AccountPlan } from './entitlement'
+
 export type AccountRole = 'parent' | 'student'
 
 export type Account = {
@@ -7,6 +9,8 @@ export type Account = {
   photoURL?: string
   role: AccountRole
   provider: 'google'
+  plan?: AccountPlan
+  planUpdatedAt?: string
   createdAt: string
   updatedAt: string
 }

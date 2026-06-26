@@ -1,5 +1,6 @@
 import type { CurriculumLessonMeta } from './curriculum'
 import type { LessonCurriculumReferences } from './curriculumReference'
+import type { AccessTier } from './entitlement'
 
 export type QuestionOption = {
   id: string
@@ -23,6 +24,7 @@ export type VocabularyItem = {
 export type Lesson = {
   id: string
   sortOrder?: number
+  accessTier?: AccessTier
   title: string
   form: 1 | 2 | 3 | 4 | 5
   strand: 'Membaca'
