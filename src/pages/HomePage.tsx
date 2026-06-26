@@ -2,8 +2,48 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
 import { useLanguage } from '../context/LanguageContext'
-import { getRecommendedLesson } from '../services/progress/progressService'
+import {
+  getRecommendedLesson,
+  type LessonRecommendation,
+} from '../services/progress/progressService'
 import { getLearnerPublicName } from '../domain'
+
+function getRecommendationTitle(
+  recommendation: LessonRecommendation | null,
+  t: ReturnType<typeof useLanguage>['t'],
+) {
+  switch (recommendation?.reason) {
+    case 'review':
+      return t('recommendation.reviewTitle')
+    case 'challenge':
+      return t('recommendation.challengeTitle')
+    case 'new':
+      return t('recommendation.newTitle')
+    case 'mastery':
+      return t('recommendation.masteryTitle')
+    default:
+      return t('home.continueLearning')
+  }
+}
+
+function getRecommendationDescription(
+  recommendation: LessonRecommendation | null,
+  activeForm: number,
+  t: ReturnType<typeof useLanguage>['t'],
+) {
+  switch (recommendation?.reason) {
+    case 'review':
+      return t('recommendation.reviewDescription')
+    case 'challenge':
+      return t('recommendation.challengeDescription')
+    case 'new':
+      return t('recommendation.newDescription')
+    case 'mastery':
+      return t('recommendation.masteryDescription')
+    default:
+      return `${t('common.form')} ${activeForm} ${t('home.lessonsPreparing')}`
+  }
+}
 
 function HomePage() {
   const { user, isGuest } = useAuth()
@@ -51,6 +91,12 @@ function HomePage() {
   const planLabel = entitlement.isPremium
     ? t('settings.premiumPlan')
     : t('settings.freePlan')
+  const recommendationTitle = getRecommendationTitle(recommendation, t)
+  const recommendationDescription = getRecommendationDescription(
+    recommendation,
+    activeForm,
+    t,
+  )
 
   return (
     <section className="quest-home">
@@ -123,12 +169,8 @@ function HomePage() {
       <div className="dashboard-grid quest-secondary-grid">
         <article className="dashboard-card">
           <span>{t('home.recommendation')}</span>
-          <h2>{recommendation?.title ?? t('home.continueLearning')}</h2>
-          <p>
-            {recommendedLesson
-              ? recommendation?.description
-              : `${t('common.form')} ${activeForm} ${t('home.lessonsPreparing')}`}
-          </p>
+          <h2>{recommendationTitle}</h2>
+          <p>{recommendationDescription}</p>
         </article>
 
         <article className="dashboard-card">

@@ -56,6 +56,14 @@ type TranslationKey =
   | 'home.recommendation'
   | 'home.continueLearning'
   | 'home.lessonsPreparing'
+  | 'recommendation.reviewTitle'
+  | 'recommendation.reviewDescription'
+  | 'recommendation.challengeTitle'
+  | 'recommendation.challengeDescription'
+  | 'recommendation.newTitle'
+  | 'recommendation.newDescription'
+  | 'recommendation.masteryTitle'
+  | 'recommendation.masteryDescription'
   | 'home.currentLevel'
   | 'home.readingProgress'
   | 'home.achievements'
@@ -201,6 +209,14 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'home.recommendation': 'Recommendation',
     'home.continueLearning': 'Continue Learning',
     'home.lessonsPreparing': 'lessons are being prepared.',
+    'recommendation.reviewTitle': 'Review weak skill',
+    'recommendation.reviewDescription': 'Review this lesson before moving on.',
+    'recommendation.challengeTitle': 'Try next challenge',
+    'recommendation.challengeDescription': 'Complete another challenge to move toward mastery.',
+    'recommendation.newTitle': 'Start a new lesson',
+    'recommendation.newDescription': 'Continue building coverage with the next unread lesson.',
+    'recommendation.masteryTitle': 'Mastery refresh',
+    'recommendation.masteryDescription': 'All lessons are completed. Keep skills sharp with a fresh challenge.',
     'home.currentLevel': 'Current Level',
     'home.readingProgress': 'Reading Progress',
     'home.achievements': 'Achievements',
@@ -345,6 +361,14 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'home.recommendation': 'Cadangan',
     'home.continueLearning': 'Teruskan Pembelajaran',
     'home.lessonsPreparing': 'pelajaran sedang disediakan.',
+    'recommendation.reviewTitle': 'Ulang kaji kemahiran lemah',
+    'recommendation.reviewDescription': 'Ulang kaji pelajaran ini sebelum meneruskan pembelajaran.',
+    'recommendation.challengeTitle': 'Cuba cabaran seterusnya',
+    'recommendation.challengeDescription': 'Selesaikan satu lagi cabaran untuk menuju penguasaan.',
+    'recommendation.newTitle': 'Mulakan pelajaran baharu',
+    'recommendation.newDescription': 'Teruskan liputan pembelajaran dengan pelajaran seterusnya yang belum dibaca.',
+    'recommendation.masteryTitle': 'Segarkan penguasaan',
+    'recommendation.masteryDescription': 'Semua pelajaran telah selesai. Kekalkan kemahiran dengan cabaran baharu.',
     'home.currentLevel': 'Tahap Semasa',
     'home.readingProgress': 'Kemajuan Membaca',
     'home.achievements': 'Pencapaian',
