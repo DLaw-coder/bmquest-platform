@@ -14,7 +14,8 @@ export const primaryNavigation: NavigationItem[] = [
 
 export const bottomNavigation = [
   { label: 'Home', icon: '🏠', path: '/' },
-  { label: 'Student', icon: '📖', path: '/student' },
+  { label: 'Read', icon: '📖', path: '/student' },
+  { label: 'Badges', icon: '🏆', path: '/achievements' },
   { label: 'Progress', icon: '📊', path: '/progress' },
   { label: 'Settings', icon: '⚙️', path: '/settings' },
 ]

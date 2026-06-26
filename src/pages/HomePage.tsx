@@ -25,57 +25,106 @@ function HomePage() {
   const latestAchievementLabel = latestAchievement
     ? `${latestAchievement.icon} ${latestAchievement.title}`
     : 'None yet'
+  const averageScore = formProgress.length > 0
+    ? Math.round(
+        formProgress.reduce((total, item) => total + item.scorePercent, 0) /
+          formProgress.length,
+      )
+    : 0
+  const weeklyGoal = Math.min(completedLessons, 5)
+  const readingRank = completedLessons >= 12
+    ? 'Champion'
+    : completedLessons >= 6
+      ? 'Pathfinder'
+      : completedLessons >= 3
+        ? 'Explorer'
+        : 'Explorer'
+  const todayLabel = new Intl.DateTimeFormat('en-MY', {
+    weekday: 'long',
+  }).format(new Date())
 
   const missionTitle = recommendedLesson?.title ?? 'Idea Utama'
   const activeForm = learner?.currentForm ?? 1
   const publicName = getLearnerPublicName(learner, user?.displayName)
 
   return (
-    <section className="dashboard">
-      <div className="dashboard-hero dashboard-welcome-hero">
-        <div className="dashboard-welcome-copy">
-          <p className="eyebrow">Student Dashboard</p>
-          <h1>
-            Welcome back,
-            <span className="dashboard-user-name">
-              {isGuest ? 'Guest Learner' : publicName}
-            </span>
-          </h1>
-          <p className="subtitle">
-            {isGuest
-              ? 'Guest mode is active. Sign in later to sync progress.'
-              : 'Your BM Quest learning space is ready.'}
+    <section className="quest-home">
+      <div className="quest-home-heading">
+        <div>
+          <h1>BM Reading Quest</h1>
+          <p>
+            {entitlement.label} · Form {activeForm} ·{' '}
+            {isGuest ? 'Guest Learner' : publicName}
           </p>
         </div>
-        <div className="dashboard-icon">📘</div>
+        <div className="quest-theme-pill" aria-label="Theme preview">◐</div>
       </div>
 
-      <div className="dashboard-grid">
-        <article className="dashboard-card primary-card">
-          <span>📖 {recommendation?.title ?? 'Continue Learning'}</span>
-          <h2>{recommendedLesson ? missionTitle : 'Coming Soon'}</h2>
+      <article className="focus-card">
+        <p className="focus-eyebrow">Today&apos;s Focus</p>
+        <h2>🎯 {recommendedLesson ? missionTitle : 'Mixed + Vocabulary'}</h2>
+        <p>
+          Core mission: {recommendedLesson?.estimatedMinutes ?? 10} minutes.
+          Optional booster if motivated.
+        </p>
+
+        {recommendedLesson ? (
+          <Link className="focus-action" to={`/lesson/${recommendedLesson.id}`}>
+            Start {recommendedLesson.estimatedMinutes}-min Mission
+          </Link>
+        ) : (
+          <div className="focus-action disabled">Mission Coming Soon</div>
+        )}
+
+        <Link className="focus-action secondary" to="/student">
+          🚗 Car Ride Mode
+        </Link>
+      </article>
+
+      <div className="quest-stat-grid">
+        <article className="quest-stat">
+          <span>🔥 Streak</span>
+          <strong>{completedLessons} lesson{completedLessons === 1 ? '' : 's'}</strong>
+        </article>
+
+        <article className="quest-stat">
+          <span>⭐ Average</span>
+          <strong>{averageScore}%</strong>
+        </article>
+      </div>
+
+      <article className="quest-panel">
+        <h2>Reading Rank</h2>
+        <div className="rank-box">
+          <strong>{readingRank}</strong>
+          <span>{completedLessons} sessions completed</span>
+        </div>
+      </article>
+
+      <article className="quest-panel">
+        <h2>Weekly Goals</h2>
+        <div className="goal-box">
+          <div>
+            <strong>{todayLabel}</strong>
+            <span>{weeklyGoal} / 5 missions completed this week</span>
+          </div>
+          <div className="goal-meter" aria-label={`${weeklyGoal} of 5 weekly missions completed`}>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <span className={index < weeklyGoal ? 'active' : ''} key={index} />
+            ))}
+          </div>
+        </div>
+      </article>
+
+      <div className="dashboard-grid quest-secondary-grid">
+        <article className="dashboard-card">
+          <span>Recommendation</span>
+          <h2>{recommendation?.title ?? 'Continue Learning'}</h2>
           <p>
             {recommendedLesson
               ? recommendation?.description
               : `Form ${activeForm} lessons are being prepared.`}
           </p>
-          {recommendedLesson && (
-            <p>
-              Form {recommendedLesson.form} · Reading Comprehension ·{' '}
-              {recommendedLesson.estimatedMinutes} min
-            </p>
-          )}
-          {recommendedLesson ? (
-            <Link className="mission-button" to={`/lesson/${recommendedLesson.id}`}>
-              {recommendation?.reason === 'review'
-                ? 'Review →'
-                : recommendation?.reason === 'challenge'
-                  ? 'Challenge →'
-                  : 'Continue →'}
-            </Link>
-          ) : (
-            <p>No lessons available for this form yet.</p>
-          )}
         </article>
 
         <article className="dashboard-card">
@@ -95,18 +144,7 @@ function HomePage() {
           <h2>{achievements.length}</h2>
           <p>{latestAchievementLabel}</p>
         </article>
-
-        <article className="dashboard-card">
-          <span>Plan</span>
-          <h2>{entitlement.label}</h2>
-          <p>
-            {entitlement.isPremium
-              ? 'Premium learning access is active.'
-              : 'All launch lessons remain available during public alpha.'}
-          </p>
-        </article>
       </div>
-
     </section>
   )
 }
