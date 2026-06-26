@@ -21,7 +21,10 @@ export const curriculumStandards: CurriculumStandardReference[] = [
     },
     dskpVersion: 'KSSM Bahasa Melayu Tingkatan 1',
     sourceTitle: 'Dokumen Standard Kurikulum dan Pentaksiran Bahasa Melayu Tingkatan 1',
-    verificationStatus: 'needs-review',
+    sourcePage: 37,
+    sourceUrl:
+      'https://drive.google.com/open?id=1R7F-tGyNLyGY2Qwq0UndteBODgqllbog',
+    verificationStatus: 'verified',
   },
   {
     standardId: 'kssm-bm-f1-2.2.3',
@@ -31,16 +34,20 @@ export const curriculumStandards: CurriculumStandardReference[] = [
     learningArea: 'Membaca',
     contentStandard: {
       code: '2.2',
-      description: 'Membaca untuk memahami makna perkataan, rangkai kata dan maklumat.',
+      description:
+        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
     },
     learningStandard: {
       code: '2.2.3',
       description:
-        'Membaca untuk memahami dan menjawab soalan pemahaman berdasarkan bahan prosa.',
+        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat secara luncuran dan imbasan.',
     },
     dskpVersion: 'KSSM Bahasa Melayu Tingkatan 1',
     sourceTitle: 'Dokumen Standard Kurikulum dan Pentaksiran Bahasa Melayu Tingkatan 1',
-    verificationStatus: 'needs-review',
+    sourcePage: 37,
+    sourceUrl:
+      'https://drive.google.com/open?id=1R7F-tGyNLyGY2Qwq0UndteBODgqllbog',
+    verificationStatus: 'verified',
   },
 ]
 

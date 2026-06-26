@@ -19,6 +19,7 @@ export type CurriculumStandardReference = {
   learningStandard: LearningStandard
   dskpVersion: string
   sourceTitle: string
+  sourcePage?: number
   sourceUrl?: string
   verificationStatus: ReferenceVerificationStatus
 }

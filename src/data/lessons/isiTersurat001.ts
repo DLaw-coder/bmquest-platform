@@ -20,12 +20,13 @@ export const isiTersurat001: Lesson = {
     learningArea: 'Membaca',
     contentStandard: {
       code: '2.2',
-      description: 'Membaca untuk memahami makna perkataan, rangkai kata dan maklumat.',
+      description:
+        'Membaca untuk memahami makna perkataan, rangkai kata, istilah, ungkapan, ayat, maklumat dan maksud keseluruhan daripada pelbagai bahan.',
     },
     learningStandard: {
       code: '2.2.3',
       description:
-        'Membaca untuk memahami dan menjawab soalan pemahaman berdasarkan bahan prosa.',
+        'Membaca untuk memahami idea keseluruhan dalam pelbagai bahan prosa dengan betul dan tepat secara luncuran dan imbasan.',
     },
   },
   curriculumReferences: {
