@@ -17,6 +17,7 @@ import { kerjayaF3Expansion001 } from '../src/data/lessons/kerjayaF3Expansion001
 import { keselamatanF3Expansion001 } from '../src/data/lessons/keselamatanF3Expansion001.ts'
 import { kesihatanF2Expansion001 } from '../src/data/lessons/kesihatanF2Expansion001.ts'
 import { komunitiF2Expansion001 } from '../src/data/lessons/komunitiF2Expansion001.ts'
+import { launchDepthLessons } from '../src/data/lessons/launchDepthLessons.ts'
 import { luncuranImbasan001 } from '../src/data/lessons/luncuranImbasan001.ts'
 import { masyarakatF5Expansion001 } from '../src/data/lessons/masyarakatF5Expansion001.ts'
 import { mediaF4Expansion001 } from '../src/data/lessons/mediaF4Expansion001.ts'
@@ -48,6 +49,7 @@ const lessons = [
   isuF5Expansion001,
   ekonomiF5Expansion001,
   masyarakatF5Expansion001,
+  ...launchDepthLessons,
 ]
 
 function validateLessonsForSeed() {

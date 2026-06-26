@@ -9,6 +9,7 @@ import { kerjayaF3Expansion001 } from './kerjayaF3Expansion001'
 import { keselamatanF3Expansion001 } from './keselamatanF3Expansion001'
 import { kesihatanF2Expansion001 } from './kesihatanF2Expansion001'
 import { komunitiF2Expansion001 } from './komunitiF2Expansion001'
+import { launchDepthLessons } from './launchDepthLessons'
 import { luncuranImbasan001 } from './luncuranImbasan001'
 import { masyarakatF5Expansion001 } from './masyarakatF5Expansion001'
 import { mediaF4Expansion001 } from './mediaF4Expansion001'
@@ -40,4 +41,5 @@ export const lessons = [
   isuF5Expansion001,
   ekonomiF5Expansion001,
   masyarakatF5Expansion001,
+  ...launchDepthLessons,
 ]
