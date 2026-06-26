@@ -15,6 +15,7 @@ import { getLessonNavigation } from '../repositories/curriculum/lessonRepository
 import { completeLessonSession } from '../services/lesson/lessonSessionService'
 import {
   createPracticeLesson,
+  getChallengeTemplate,
   getLessonAttempts,
   getNextAttemptNumber,
   getNextVariantLevel,
@@ -51,6 +52,7 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     practiceMode,
     activeVariantLevel,
   )
+  const activeChallengeTemplate = getChallengeTemplate(activeVariantLevel)
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [result, setResult] = useState<SessionResult | null>(null)
   const [isSaving, setIsSaving] = useState(false)
@@ -135,8 +137,9 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
           <span>Repeat Practice</span>
           <h2>Attempt {nextAttemptNumber}</h2>
           <p>
-            Choose whether to review the completed exercise or try a new
-            challenge for the same skill.
+            {practiceMode === 'challenge'
+              ? `Next challenge: ${activeChallengeTemplate.label} · ${activeChallengeTemplate.focus}.`
+              : 'Review the completed exercise with the original questions.'}
           </p>
           <div className="practice-actions">
             <button
