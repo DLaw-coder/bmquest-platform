@@ -6,7 +6,7 @@ function AboutPage() {
       <div className="brand-icon">📘</div>
       <h1>About</h1>
       <p className="subtitle">
-        BM Quest is a KSSM-aligned learning platform designed to grow with Malaysian students.
+        BM Quest KSSM is a KSSM-aligned learning platform designed to grow with Malaysian students.
       </p>
 
       <div className="version-card">

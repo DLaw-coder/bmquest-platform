@@ -1,6 +1,6 @@
-# BM Quest Architecture
+# BM Quest KSSM Architecture
 
-BM Quest uses a layered React + Firebase architecture.
+BM Quest KSSM uses a layered React + Firebase architecture.
 
 ## Layers
 

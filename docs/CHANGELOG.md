@@ -1,8 +1,9 @@
-# BM Quest Changelog
+# BM Quest KSSM Changelog
 
 ## v1.0
 
-- Prepared BM Quest for its free public release
+- Prepared BM Quest KSSM for its free public release
+- Renamed the public product from BM Quest to BM Quest KSSM
 - Added privacy-first engagement analytics
 - Reduced normal lesson-loading reads for Spark quota efficiency
 - Added active-practice arcade reward integrity

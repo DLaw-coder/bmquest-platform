@@ -1,4 +1,4 @@
-# BM Quest Domain Model
+# BM Quest KSSM Domain Model
 
 ## Core Concepts
 
@@ -24,7 +24,7 @@ The curriculum remains KSSM.
 
 ### Curriculum
 
-BM Quest follows KSSM Bahasa Melayu from Form 1 to Form 5.
+BM Quest KSSM follows KSSM Bahasa Melayu from Form 1 to Form 5.
 
 ## Key Design Principle
 

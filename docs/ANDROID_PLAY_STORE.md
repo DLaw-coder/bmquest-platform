@@ -1,6 +1,6 @@
-# Android Play Store Packaging
+# BM Quest KSSM Android Play Store Packaging
 
-BM Quest should be packaged for Google Play as a Trusted Web Activity (TWA)
+BM Quest KSSM should be packaged for Google Play as a Trusted Web Activity (TWA)
 around the live Firebase Hosting app:
 
 ```text
@@ -8,7 +8,7 @@ https://bm-quest.web.app
 ```
 
 This keeps Google login, Firestore-backed content, and future web deployments
-working consistently while still allowing BM Quest to appear as an Android app
+working consistently while still allowing BM Quest KSSM to appear as an Android app
 in Google Play.
 
 ## Recommended Android identity
@@ -28,14 +28,14 @@ versionCode: 1
 
 ## Play Store pricing direction
 
-BM Quest should be published as:
+BM Quest KSSM should be published as:
 
 ```text
 Free app download
 + optional premium plan later
 ```
 
-Do not publish BM Quest as a paid download if the future plan is to start free.
+Do not publish BM Quest KSSM as a paid download if the future plan is to start free.
 Google Play does not allow an app that has been offered for free to later become
 a paid download. Premium access should be handled later through entitlements and
 Google Play Billing.
@@ -132,7 +132,7 @@ should only be deployed once the real Play signing fingerprint is known.
 
 Prepare these before review:
 
-- App name: `BM Quest`
+- App name: `BM Quest KSSM`
 - Short description
 - Full description
 - App icon
@@ -146,5 +146,5 @@ Prepare these before review:
 - Target audience declaration
 - Internal testing release
 
-Because BM Quest is education software for students, complete the privacy,
+Because BM Quest KSSM is education software for students, complete the privacy,
 student data, and target-audience declarations carefully.

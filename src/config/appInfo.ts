@@ -1,5 +1,5 @@
 export const appInfo = {
-  name: 'BM Quest',
+  name: 'BM Quest KSSM',
   version: '1.0',
-  copyright: 'BM Quest © Danny Law, Effectuate Biz Productions',
+  copyright: 'BM Quest KSSM © Danny Law, Effectuate Biz Productions',
 }

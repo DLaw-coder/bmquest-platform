@@ -21,7 +21,7 @@ function AppHeader({ theme, onThemeToggle }: AppHeaderProps) {
       <div className="app-brand">
         <div className="app-logo">📘</div>
         <div>
-          <strong>BM Quest</strong>
+          <strong>{appInfo.name}</strong>
           <span>{user ? headerName : t('app.platform')}</span>
         </div>
       </div>

@@ -39,7 +39,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
         const account = await upsertAccount({
           uid: firebaseUser.uid,
-          displayName: firebaseUser.displayName ?? 'BM Quest User',
+          displayName: firebaseUser.displayName ?? 'BM Quest KSSM User',
           email: firebaseUser.email ?? undefined,
           photoURL: firebaseUser.photoURL ?? undefined,
           role: 'parent',
@@ -52,7 +52,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
         setUser({
           uid: firebaseUser.uid,
-          displayName: firebaseUser.displayName ?? 'BM Quest User',
+          displayName: firebaseUser.displayName ?? 'BM Quest KSSM User',
           email: firebaseUser.email ?? undefined,
           role: 'parent',
           plan: account.plan ?? 'free',

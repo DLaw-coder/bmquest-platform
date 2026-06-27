@@ -1,6 +1,6 @@
 # Spark Quota Strategy
 
-BM Quest version 1.0 is designed to launch on Firebase's no-cost Spark plan.
+BM Quest KSSM version 1.0 is designed to launch on Firebase's no-cost Spark plan.
 
 ## Read optimisations
 

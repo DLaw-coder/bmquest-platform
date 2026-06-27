@@ -1,8 +1,8 @@
-# BM Quest Style Guide
+# BM Quest KSSM Style Guide
 
 ## Learning Language
 
-BM Quest follows this principle:
+BM Quest KSSM follows this principle:
 
 Malay first. English as a learning aid.
 

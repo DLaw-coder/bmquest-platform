@@ -11,7 +11,7 @@ export function evaluateLessonAchievements(
       learnerId,
       code: 'first_lesson',
       title: 'First Lesson',
-      description: 'Completed your first BM Quest lesson.',
+      description: 'Completed your first BM Quest KSSM lesson.',
       icon: '🏆',
       unlockedAt,
     },

@@ -52,7 +52,7 @@ export async function logEngagementEventOnce(
     sessionStorage.setItem(storageKey, 'logged')
   } catch (error) {
     sessionStorage.removeItem(storageKey)
-    console.warn('BM Quest engagement event was not recorded.', error)
+    console.warn('BM Quest KSSM engagement event was not recorded.', error)
   }
 }
 

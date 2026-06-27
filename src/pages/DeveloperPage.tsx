@@ -24,7 +24,7 @@ function DeveloperPage() {
       <h1>Developer</h1>
 
       <p className="subtitle">
-        Internal diagnostics for BM Quest development.
+        Internal diagnostics for BM Quest KSSM development.
       </p>
 
       <div className="version-card">

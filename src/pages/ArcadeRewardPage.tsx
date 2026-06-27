@@ -338,7 +338,7 @@ function ArcadeRewardPage() {
         </article>
       </div>
 
-      <article className={`arcade-board ${gameMode}`} aria-label="BM Quest reward arcade">
+      <article className={`arcade-board ${gameMode}`} aria-label="BM Quest KSSM reward arcade">
         {isGameOver ? (
           <div className="arcade-finished">
             <strong>⏱️ Time!</strong>
