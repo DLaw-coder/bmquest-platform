@@ -6,6 +6,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { useAuth } from '../hooks/useAuth'
 import { updateLearnerProfile } from '../repositories/learner/learnerRepository'
 import { prepareLearnerNicknameUpdate } from '../services/learner/nicknameService'
+import { Link } from 'react-router-dom'
 
 function SettingsPage() {
   const { user, isGuest, signOut } = useAuth()
@@ -131,6 +132,9 @@ function SettingsPage() {
         <p>{appInfo.version}</p>
         <p>{appInfo.copyright}</p>
         <p>{t('settings.builtWith')}</p>
+        <Link className="inline-link" to="/privacy">
+          {t('privacy.link')}
+        </Link>
       </article>
 
       <button className="lesson-submit" onClick={signOut}>

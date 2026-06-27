@@ -25,6 +25,7 @@ type TranslationKey =
   | 'welcome.subtitle'
   | 'welcome.google'
   | 'welcome.guest'
+  | 'privacy.link'
   | 'onboarding.title'
   | 'onboarding.subtitle'
   | 'onboarding.nickname'
@@ -178,6 +179,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'welcome.subtitle': 'Sign in to sync BM Quest KSSM across devices, or continue as a guest for now.',
     'welcome.google': 'Continue with Google',
     'welcome.guest': 'Continue as Guest',
+    'privacy.link': 'Privacy Policy',
     'onboarding.title': 'Create Learner',
     'onboarding.subtitle': 'Set up the learner profile BM Quest KSSM will follow from Form 1 to Form 5.',
     'onboarding.nickname': 'BM Quest KSSM nickname',
@@ -330,6 +332,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     'welcome.subtitle': 'Log masuk untuk menyelaraskan BM Quest KSSM pada semua peranti, atau teruskan sebagai tetamu buat masa ini.',
     'welcome.google': 'Teruskan dengan Google',
     'welcome.guest': 'Teruskan sebagai Tetamu',
+    'privacy.link': 'Dasar Privasi',
     'onboarding.title': 'Cipta Profil Murid',
     'onboarding.subtitle': 'Sediakan profil murid yang akan diikuti BM Quest KSSM dari Tingkatan 1 hingga Tingkatan 5.',
     'onboarding.nickname': 'Nama panggilan BM Quest KSSM',

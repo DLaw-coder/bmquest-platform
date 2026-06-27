@@ -5,6 +5,7 @@
 - Prepared BM Quest KSSM for its free public release
 - Renamed the public product from BM Quest to BM Quest KSSM
 - Added privacy-first engagement analytics
+- Added a public bilingual privacy policy and Firebase App Check integration
 - Reduced normal lesson-loading reads for Spark quota efficiency
 - Added active-practice arcade reward integrity
 - Added bilingual interface and light/dark themes

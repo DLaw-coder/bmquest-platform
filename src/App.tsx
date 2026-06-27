@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
 import './App.css'
 import AuthProvider from './context/AuthContext'
 import { AppStateProvider, useAppData } from './context/AppStateContext'
@@ -9,11 +9,21 @@ import WelcomePage from './pages/WelcomePage'
 import LearnerOnboardingPage from './pages/LearnerOnboardingPage'
 import AppRoutes from './router/AppRoutes'
 import EngagementTracker from './components/EngagementTracker'
+import PrivacyPage from './pages/PrivacyPage'
 
 function AppContent() {
+  const location = useLocation()
   const { user, isGuest, isLoading } = useAuth()
   const { learner, isAppDataLoading, refreshAppData } = useAppData()
   const { t } = useLanguage()
+
+  if (location.pathname === '/privacy') {
+    return (
+      <AppLayout showNavigation={false}>
+        <PrivacyPage />
+      </AppLayout>
+    )
+  }
 
   if (isLoading || (user && !isGuest && isAppDataLoading)) {
     return (

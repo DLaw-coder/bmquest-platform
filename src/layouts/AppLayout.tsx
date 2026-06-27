@@ -5,11 +5,12 @@ import PageContainer from '../components/PageContainer'
 
 type AppLayoutProps = {
   children: React.ReactNode
+  showNavigation?: boolean
 }
 
 type ThemeMode = 'light' | 'dark'
 
-function AppLayout({ children }: AppLayoutProps) {
+function AppLayout({ children, showNavigation = true }: AppLayoutProps) {
   const [theme, setTheme] = useState<ThemeMode>(() => {
     if (typeof window === 'undefined') {
       return 'light'
@@ -31,7 +32,7 @@ function AppLayout({ children }: AppLayoutProps) {
     <main className="app-shell" data-theme={theme}>
       <AppHeader onThemeToggle={handleThemeToggle} theme={theme} />
       <PageContainer>{children}</PageContainer>
-      <BottomNav />
+      {showNavigation && <BottomNav />}
     </main>
   )
 }

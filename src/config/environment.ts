@@ -7,6 +7,7 @@ export const environment = {
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ?? '',
     appId: import.meta.env.VITE_FIREBASE_APP_ID ?? '',
   },
+  appCheckSiteKey: import.meta.env.VITE_FIREBASE_APPCHECK_SITE_KEY ?? '',
 }
 
 export function isFirebaseConfigured() {

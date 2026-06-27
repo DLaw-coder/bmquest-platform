@@ -44,3 +44,5 @@
 - Premium entitlement foundation
 - Android packaging plan
 - Privacy-first engagement analytics
+- Public bilingual privacy policy
+- Firebase App Check client integration and monitor-first rollout guide

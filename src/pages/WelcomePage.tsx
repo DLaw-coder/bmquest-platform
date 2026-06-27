@@ -1,5 +1,6 @@
 import { useAuth } from '../hooks/useAuth'
 import { useLanguage } from '../context/LanguageContext'
+import { Link } from 'react-router-dom'
 
 function WelcomePage() {
   const { continueAsGuest, signInWithGoogle } = useAuth()
@@ -25,6 +26,9 @@ function WelcomePage() {
         </button>
       </div>
 
+      <Link className="inline-link privacy-link" to="/privacy">
+        {t('privacy.link')}
+      </Link>
     </section>
   )
 }
