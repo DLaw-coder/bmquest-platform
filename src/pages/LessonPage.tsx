@@ -48,7 +48,7 @@ function LessonPage() {
     )
   }
 
-  return <LessonRenderer lesson={lesson} />
+  return <LessonRenderer key={lesson.id} lesson={lesson} />
 }
 
 export default LessonPage

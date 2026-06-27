@@ -8,6 +8,8 @@ export type LessonProgress = {
   rewardTier?: 'none' | 'bronze' | 'gold'
   rewardLabel?: string
   rewardIcon?: string
+  activePracticeSeconds?: number
+  arcadeEligible?: boolean
   correctAnswers: number
   totalQuestions: number
   scorePercent: number

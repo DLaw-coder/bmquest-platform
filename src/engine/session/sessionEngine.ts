@@ -13,6 +13,8 @@ export type SessionResult = {
   correctAnswers: number
   scorePercent: number
   reward: ScoreReward
+  arcadeEligible?: boolean
+  arcadePracticeSecondsRemaining?: number
   completedAt: string
 }
 

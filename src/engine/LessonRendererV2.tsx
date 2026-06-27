@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Lesson } from '../domain'
 import type { SessionResult } from './session/sessionEngine'
 import LessonHero from '../components/lesson/LessonHero'
@@ -23,6 +23,7 @@ import {
   type PracticeMode,
 } from '../services/lesson/adaptiveLessonService'
 import { getLessonProgressStateFromProgress } from '../services/progress/progressService'
+import { issueArcadeGrant } from '../services/rewards/arcadeGrantService'
 
 type LessonRendererProps = {
   lesson: Lesson
@@ -60,7 +61,14 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
   const [isSaving, setIsSaving] = useState(false)
   const [saveMessage, setSaveMessage] = useState('')
   const [achievementMessage, setAchievementMessage] = useState('')
+  const [arcadeGrantToken, setArcadeGrantToken] = useState<string>()
   const [nextLessonId, setNextLessonId] = useState<string | undefined>()
+  const activePracticeSeconds = useRef(0)
+  const lastPracticeActivity = useRef(0)
+  const priorActivePracticeSeconds = attempts.reduce(
+    (total, attempt) => total + (attempt.activePracticeSeconds ?? 0),
+    0,
+  )
   const unitLessons: UnitLesson[] = isGuest
     ? [
         {
@@ -78,12 +86,38 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
       )
 
   useEffect(() => {
-    setPracticeMode(hasCompletedLesson ? 'challenge' : 'review')
-    setAnswers({})
-    setResult(null)
-    setSaveMessage('')
-    setAchievementMessage('')
-  }, [lesson.id, hasCompletedLesson])
+    const recordActivity = () => {
+      lastPracticeActivity.current = Date.now()
+    }
+    recordActivity()
+    const timer = window.setInterval(() => {
+      const isRecentlyActive =
+        Date.now() - lastPracticeActivity.current <= 2 * 60 * 1000
+
+      if (
+        document.visibilityState === 'visible'
+        && document.hasFocus()
+        && isRecentlyActive
+      ) {
+        activePracticeSeconds.current += 1
+      }
+    }, 1000)
+
+    window.addEventListener('pointerdown', recordActivity)
+    window.addEventListener('keydown', recordActivity)
+    window.addEventListener('scroll', recordActivity, { passive: true })
+    window.addEventListener('touchstart', recordActivity, { passive: true })
+    window.addEventListener('focus', recordActivity)
+
+    return () => {
+      window.clearInterval(timer)
+      window.removeEventListener('pointerdown', recordActivity)
+      window.removeEventListener('keydown', recordActivity)
+      window.removeEventListener('scroll', recordActivity)
+      window.removeEventListener('touchstart', recordActivity)
+      window.removeEventListener('focus', recordActivity)
+    }
+  }, [lesson.id, practiceMode])
 
   useEffect(() => {
     async function loadNavigation() {
@@ -92,7 +126,7 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     }
 
     loadNavigation()
-  }, [lesson.id])
+  }, [lesson.id, lesson.form])
 
   function handlePracticeModeChange(nextMode: PracticeMode) {
     setPracticeMode(nextMode)
@@ -100,6 +134,9 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     setResult(null)
     setSaveMessage('')
     setAchievementMessage('')
+    setArcadeGrantToken(undefined)
+    activePracticeSeconds.current = 0
+    lastPracticeActivity.current = Date.now()
   }
 
   function handleAnswer(questionId: string, optionId: string) {
@@ -120,11 +157,18 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
       attemptNumber: nextAttemptNumber,
       practiceMode,
       variantLevel: activeVariantLevel,
+      activePracticeSeconds: activePracticeSeconds.current,
+      priorActivePracticeSeconds,
     })
 
     setResult(session.result)
     setSaveMessage(session.saveMessage)
     setAchievementMessage(session.achievementMessage)
+    if (session.result.arcadeEligible && session.result.reward.tier !== 'none') {
+      setArcadeGrantToken(
+        issueArcadeGrant(session.result.reward.tier).token,
+      )
+    }
     setIsSaving(false)
   }
 
@@ -175,7 +219,11 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
           onAnswer={handleAnswer}
         />
 
-        <button className="lesson-submit" onClick={handleSubmit} disabled={isSaving}>
+        <button
+          className="lesson-submit"
+          onClick={handleSubmit}
+          disabled={isSaving || Boolean(result)}
+        >
           {isSaving ? t('lesson.saving') : t('lesson.checkAnswers')}
         </button>
 
@@ -186,6 +234,10 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
             saveMessage={saveMessage}
             achievementMessage={achievementMessage}
             nextLessonId={nextLessonId}
+            arcadeGrantToken={arcadeGrantToken}
+            arcadePracticeSecondsRemaining={
+              result.arcadePracticeSecondsRemaining
+            }
           />
         )}
       </article>

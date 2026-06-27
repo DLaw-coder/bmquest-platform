@@ -10,6 +10,8 @@ type LessonResultCardProps = {
   saveMessage: string
   achievementMessage: string
   nextLessonId?: string
+  arcadeGrantToken?: string
+  arcadePracticeSecondsRemaining?: number
 }
 
 function LessonResultCard({
@@ -18,8 +20,11 @@ function LessonResultCard({
   saveMessage,
   achievementMessage,
   nextLessonId,
+  arcadeGrantToken,
+  arcadePracticeSecondsRemaining = 0,
 }: LessonResultCardProps) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
+  const remainingMinutes = Math.ceil(arcadePracticeSecondsRemaining / 60)
 
   return (
     <div className="result-card">
@@ -36,6 +41,15 @@ function LessonResultCard({
 
       <small>{saveMessage}</small>
       {achievementMessage && <small>{achievementMessage}</small>}
+      {!arcadeGrantToken
+        && result.scorePercent >= 70
+        && remainingMinutes > 0 && (
+          <small>
+            {language === 'ms'
+              ? `Ganjaran arked akan dibuka selepas ${remainingMinutes} minit lagi latihan aktif.`
+              : `Arcade reward unlocks after ${remainingMinutes} more minutes of active practice.`}
+          </small>
+        )}
 
       <SectionHeader malay="RUMUSAN" english={t('lesson.summary')} />
 
@@ -46,9 +60,9 @@ function LessonResultCard({
       </ul>
 
       <div className="result-actions">
-        {result.reward.tier !== 'none' && (
+        {arcadeGrantToken && (
           <Link
-            to={`/arcade-reward?tier=${result.reward.tier}`}
+            to={`/arcade-reward?grant=${arcadeGrantToken}`}
             className="result-action primary-action"
           >
             {t('lesson.playReward')}

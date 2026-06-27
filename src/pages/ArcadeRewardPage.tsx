@@ -9,6 +9,7 @@ import {
   getTopArcadeScores,
   saveArcadeScore,
 } from '../repositories/arcade/arcadeScoreRepository'
+import { consumeArcadeGrant } from '../services/rewards/arcadeGrantService'
 
 const GAME_SECONDS = 180
 const GAME_MODES: ArcadeGameMode[] = ['catch-stars', 'word-burst', 'book-dash']
@@ -49,7 +50,11 @@ function ArcadeRewardPage() {
   const { user, isGuest } = useAuth()
   const { learner } = useAppData()
   const { t } = useLanguage()
-  const rewardTier = searchParams.get('tier') ?? 'bronze'
+  const [arcadeGrant] = useState(() =>
+    consumeArcadeGrant(searchParams.get('grant')),
+  )
+  const rewardTier = arcadeGrant?.rewardTier ?? 'bronze'
+  const isAuthorized = Boolean(arcadeGrant)
   const rewardIcon = rewardTier === 'gold' ? '🌟' : '⭐'
   const rewardLabel = rewardTier === 'gold' ? 'Mastery Star' : 'BM Star'
   const [timeLeft, setTimeLeft] = useState(GAME_SECONDS)
@@ -89,7 +94,7 @@ function ArcadeRewardPage() {
   }, [])
 
   useEffect(() => {
-    if (isGameOver) {
+    if (!isAuthorized || isGameOver) {
       return
     }
 
@@ -98,11 +103,11 @@ function ArcadeRewardPage() {
     }, 1000)
 
     return () => window.clearInterval(timer)
-  }, [isGameOver])
+  }, [isAuthorized, isGameOver])
 
   useEffect(() => {
     async function saveScore() {
-      if (!isGameOver || score <= 0 || hasSavedScore) {
+      if (!isAuthorized || !isGameOver || score <= 0 || hasSavedScore) {
         return
       }
 
@@ -128,7 +133,7 @@ function ArcadeRewardPage() {
     }
 
     saveScore()
-  }, [gameMode, hasSavedScore, isGameOver, isGuest, learner, rewardTier, score, user?.displayName])
+  }, [gameMode, hasSavedScore, isAuthorized, isGameOver, isGuest, learner, rewardTier, score, user?.displayName])
 
   useEffect(() => {
     if (!isSoundOn || isGameOver || timeLeft > 10 || timeLeft <= 0) {
@@ -255,6 +260,26 @@ function ArcadeRewardPage() {
   const minutes = Math.floor(timeLeft / 60)
   const seconds = String(timeLeft % 60).padStart(2, '0')
   const copy = modeCopy[gameMode]
+
+  if (!isAuthorized) {
+    return (
+      <section className="arcade-page">
+        <div className="dashboard-hero">
+          <div>
+            <p className="eyebrow">Reward Arcade</p>
+            <h1>Arcade Locked</h1>
+            <p className="subtitle">
+              Earn arcade time through a qualifying lesson attempt.
+            </p>
+          </div>
+          <div className="dashboard-icon">🔒</div>
+        </div>
+        <Link className="mission-button" to="/">
+          {t('arcade.returnDashboard')}
+        </Link>
+      </section>
+    )
+  }
 
   return (
     <section className="arcade-page">

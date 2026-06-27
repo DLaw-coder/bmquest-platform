@@ -32,6 +32,7 @@ function QuestionsCard({
                     value={option.id}
                     checked={answers[question.id] === option.id}
                     onChange={() => onAnswer(question.id, option.id)}
+                    disabled={hasResult}
                   />
                   {option.text}
                 </label>

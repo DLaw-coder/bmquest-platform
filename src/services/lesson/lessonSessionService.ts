@@ -13,6 +13,8 @@ export async function completeLessonSession({
   attemptNumber,
   practiceMode = 'review',
   variantLevel = 1,
+  activePracticeSeconds = 0,
+  priorActivePracticeSeconds = 0,
 }: {
   learnerId?: string
   isGuest: boolean
@@ -21,8 +23,24 @@ export async function completeLessonSession({
   attemptNumber?: number
   practiceMode?: PracticeMode
   variantLevel?: number
+  activePracticeSeconds?: number
+  priorActivePracticeSeconds?: number
 }) {
-  const result = calculateSessionResult(lesson, answers)
+  const calculatedResult = calculateSessionResult(lesson, answers)
+  const cumulativeActivePracticeSeconds =
+    priorActivePracticeSeconds + activePracticeSeconds
+  const arcadeEligible = calculatedResult.scorePercent >= 70
+    && (
+      (attemptNumber ?? 1) === 1
+      || cumulativeActivePracticeSeconds >= 20 * 60
+    )
+  const result = {
+    ...calculatedResult,
+    arcadeEligible,
+    arcadePracticeSecondsRemaining: arcadeEligible
+      ? 0
+      : Math.max(0, 20 * 60 - cumulativeActivePracticeSeconds),
+  }
 
   if (isGuest) {
     return {
@@ -49,6 +67,8 @@ export async function completeLessonSession({
     rewardTier: result.reward.tier,
     rewardLabel: result.reward.label,
     rewardIcon: result.reward.icon,
+    activePracticeSeconds,
+    arcadeEligible,
     correctAnswers: result.correctAnswers,
     totalQuestions: result.totalQuestions,
     scorePercent: result.scorePercent,
