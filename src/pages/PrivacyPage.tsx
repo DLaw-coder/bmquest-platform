@@ -7,7 +7,7 @@ const content = {
     eyebrow: 'Privacy & Safety',
     title: 'Privacy Policy',
     summary:
-      'BM Quest KSSM is a learning app for KSSM Bahasa Melayu students. This policy explains what information the app uses and how it is protected.',
+      'BM Quest KSSM is a learning app for KSSM Bahasa Malaysia students. This policy explains what information the app uses and how it is protected.',
     effective: 'Effective: 27 June 2026',
     sections: [
       {
@@ -60,7 +60,7 @@ const content = {
     eyebrow: 'Privasi & Keselamatan',
     title: 'Dasar Privasi',
     summary:
-      'BM Quest KSSM ialah aplikasi pembelajaran untuk murid Bahasa Melayu KSSM. Dasar ini menerangkan maklumat yang digunakan oleh aplikasi dan cara maklumat tersebut dilindungi.',
+      'BM Quest KSSM ialah aplikasi pembelajaran untuk murid Bahasa Malaysia KSSM. Dasar ini menerangkan maklumat yang digunakan oleh aplikasi dan cara maklumat tersebut dilindungi.',
     effective: 'Berkuat kuasa: 27 Jun 2026',
     sections: [
       {
