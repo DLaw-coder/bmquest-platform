@@ -769,6 +769,7 @@ h1 {
   padding: 16px;
   border-radius: 20px;
   background: var(--color-card-subtle);
+  text-align: left;
 }
 
 .answer-list label {
@@ -778,6 +779,7 @@ h1 {
   color: var(--color-text);
   font-weight: 700;
   line-height: 1.45;
+  text-align: left;
 }
 
 .feedback {
