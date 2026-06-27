@@ -39,7 +39,10 @@ do not provide a reliable installation event.
 ## Retention
 
 Every event includes an `expiresAt` timestamp 90 days after collection.
-Configure a Firestore TTL policy for:
+On the Spark plan this is retention metadata only; expired events must be
+removed manually because Firestore TTL deletion requires billing.
+
+If BM Quest later moves to Blaze, configure a Firestore TTL policy for:
 
 ```text
 Collection group: engagementEvents
@@ -47,7 +50,7 @@ Timestamp field: expiresAt
 ```
 
 Firestore TTL deletion is asynchronous. The field ensures records are eligible
-for deletion; the Firebase project must have the TTL policy enabled.
+for deletion after the Firebase project has billing and the TTL policy enabled.
 
 ## Security
 

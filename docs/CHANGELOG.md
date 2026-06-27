@@ -4,6 +4,7 @@
 
 - Prepared BM Quest for its free public release
 - Added privacy-first engagement analytics
+- Reduced normal lesson-loading reads for Spark quota efficiency
 - Added active-practice arcade reward integrity
 - Added bilingual interface and light/dark themes
 - Expanded KSSM-aligned lessons across Tingkatan 1–5

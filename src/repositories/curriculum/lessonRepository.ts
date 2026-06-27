@@ -10,6 +10,7 @@ import {
   orderBy,
   query,
   setDoc,
+  where,
 } from 'firebase/firestore'
 
 function sortLessonsByOrder(first: Lesson, second: Lesson) {
@@ -42,9 +43,34 @@ export async function getAllLessons(): Promise<Lesson[]> {
 }
 
 export async function getLessonsForForm(form: FormLevel): Promise<Lesson[]> {
-  const availableLessons = await getAllLessons()
+  const localLessonsForForm = getLocalLessons().filter(
+    (lesson) => lesson.form === form,
+  )
 
-  return availableLessons.filter((lesson) => lesson.form === form)
+  if (!db) {
+    return localLessonsForForm
+  }
+
+  try {
+    const snapshot = await getDocs(
+      query(collection(db, 'lessons'), where('form', '==', form)),
+    )
+    const firestoreLessons = snapshot.docs
+      .map((item) => withDefaultLessonAccess(item.data() as Lesson))
+      .sort(sortLessonsByOrder)
+    const mergedLessons = new Map(
+      localLessonsForForm.map((lesson) => [lesson.id, lesson]),
+    )
+
+    firestoreLessons.forEach((lesson) => {
+      mergedLessons.set(lesson.id, lesson)
+    })
+
+    return [...mergedLessons.values()].sort(sortLessonsByOrder)
+  } catch (error) {
+    console.warn(`Falling back to local Form ${form} lessons.`, error)
+    return localLessonsForForm
+  }
 }
 
 export async function getLessonById(lessonId: string): Promise<Lesson | null> {
@@ -61,25 +87,6 @@ export async function getLessonById(lessonId: string): Promise<Lesson | null> {
   }
 
   return getLocalLessons().find((lesson) => lesson.id === lessonId) ?? null
-}
-
-export async function getLessonNavigation(lessonId: string, form?: FormLevel) {
-  const availableLessons = form
-    ? await getLessonsForForm(form)
-    : await getAllLessons()
-  const index = availableLessons.findIndex((lesson) => lesson.id === lessonId)
-
-  if (index === -1) {
-    return {
-      previousLesson: null,
-      nextLesson: null,
-    }
-  }
-
-  return {
-    previousLesson: availableLessons[index - 1] ?? null,
-    nextLesson: availableLessons[index + 1] ?? null,
-  }
 }
 
 export async function saveLesson(lesson: Lesson) {

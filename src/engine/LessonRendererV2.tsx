@@ -12,7 +12,6 @@ import UnitProgress from '../components/progress/UnitProgress'
 import { useAuth } from '../hooks/useAuth'
 import { useAppData } from '../context/AppStateContext'
 import { useLanguage } from '../context/LanguageContext'
-import { getLessonNavigation } from '../repositories/curriculum/lessonRepository'
 import { completeLessonSession } from '../services/lesson/lessonSessionService'
 import {
   createPracticeLesson,
@@ -66,7 +65,6 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
   const [saveMessage, setSaveMessage] = useState('')
   const [achievementMessage, setAchievementMessage] = useState('')
   const [arcadeGrantToken, setArcadeGrantToken] = useState<string>()
-  const [nextLessonId, setNextLessonId] = useState<string | undefined>()
   const activePracticeSeconds = useRef(0)
   const lastPracticeActivity = useRef(0)
   const initialAttemptNumber = useRef(nextAttemptNumber)
@@ -74,6 +72,12 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     (total, attempt) => total + (attempt.activePracticeSeconds ?? 0),
     0,
   )
+  const currentLessonIndex = lessons.findIndex(
+    (availableLesson) => availableLesson.id === lesson.id,
+  )
+  const nextLessonId = currentLessonIndex >= 0
+    ? lessons[currentLessonIndex + 1]?.id
+    : undefined
   const unitLessons: UnitLesson[] = isGuest
     ? [
         {
@@ -137,15 +141,6 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
       window.removeEventListener('focus', recordActivity)
     }
   }, [lesson.id, practiceMode])
-
-  useEffect(() => {
-    async function loadNavigation() {
-      const navigation = await getLessonNavigation(lesson.id, lesson.form)
-      setNextLessonId(navigation.nextLesson?.id)
-    }
-
-    loadNavigation()
-  }, [lesson.id, lesson.form])
 
   function handlePracticeModeChange(nextMode: PracticeMode) {
     setPracticeMode(nextMode)

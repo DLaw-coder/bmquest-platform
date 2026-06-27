@@ -13,6 +13,15 @@ export async function upsertAccount(account: Account) {
 
   if (existing.exists()) {
     const existingAccount = existing.data() as Account
+    const hasProfileChanged =
+      existingAccount.displayName !== account.displayName
+      || existingAccount.email !== account.email
+      || existingAccount.photoURL !== account.photoURL
+
+    if (!hasProfileChanged) {
+      return existingAccount
+    }
+
     const updatedAccount = {
       ...existingAccount,
       displayName: account.displayName,
