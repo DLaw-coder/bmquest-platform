@@ -24,6 +24,10 @@ import {
 } from '../services/lesson/adaptiveLessonService'
 import { getLessonProgressStateFromProgress } from '../services/progress/progressService'
 import { issueArcadeGrant } from '../services/rewards/arcadeGrantService'
+import {
+  logEngagementEvent,
+  logEngagementEventOnce,
+} from '../repositories/engagement/engagementRepository'
 
 type LessonRendererProps = {
   lesson: Lesson
@@ -37,7 +41,7 @@ type UnitLesson = {
 }
 
 function LessonRendererV2({ lesson }: LessonRendererProps) {
-  const { isGuest } = useAuth()
+  const { user, isGuest } = useAuth()
   const { learner, lessons, progress } = useAppData()
   const { t } = useLanguage()
   const attempts = getLessonAttempts(progress, lesson.id)
@@ -65,6 +69,7 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
   const [nextLessonId, setNextLessonId] = useState<string | undefined>()
   const activePracticeSeconds = useRef(0)
   const lastPracticeActivity = useRef(0)
+  const initialAttemptNumber = useRef(nextAttemptNumber)
   const priorActivePracticeSeconds = attempts.reduce(
     (total, attempt) => total + (attempt.activePracticeSeconds ?? 0),
     0,
@@ -84,6 +89,20 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
         activeLesson.id,
         result?.lessonId,
       )
+
+  useEffect(() => {
+    logEngagementEventOnce(
+      `lesson-started:${lesson.id}:${initialAttemptNumber.current}`,
+      {
+        eventName: 'lesson_started',
+        audience: isGuest ? 'guest' : 'authenticated',
+        ...getEngagementIdentity(isGuest, user?.uid, learner?.learnerId),
+        form: lesson.form,
+        lessonId: lesson.id,
+        attemptNumber: initialAttemptNumber.current,
+      },
+    )
+  }, [isGuest, learner?.learnerId, lesson.form, lesson.id, user?.uid])
 
   useEffect(() => {
     const recordActivity = () => {
@@ -137,6 +156,18 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     setArcadeGrantToken(undefined)
     activePracticeSeconds.current = 0
     lastPracticeActivity.current = Date.now()
+
+    logEngagementEventOnce(
+      `lesson-started:${lesson.id}:${nextAttemptNumber}:${nextMode}`,
+      {
+        eventName: 'lesson_started',
+        audience: isGuest ? 'guest' : 'authenticated',
+        ...getEngagementIdentity(isGuest, user?.uid, learner?.learnerId),
+        form: lesson.form,
+        lessonId: lesson.id,
+        attemptNumber: nextAttemptNumber,
+      },
+    )
   }
 
   function handleAnswer(questionId: string, optionId: string) {
@@ -164,10 +195,33 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
     setResult(session.result)
     setSaveMessage(session.saveMessage)
     setAchievementMessage(session.achievementMessage)
+    logEngagementEvent({
+      eventName: 'lesson_completed',
+      audience: isGuest ? 'guest' : 'authenticated',
+      ...getEngagementIdentity(isGuest, user?.uid, learner?.learnerId),
+      form: lesson.form,
+      lessonId: lesson.id,
+      attemptNumber: nextAttemptNumber,
+      scorePercent: session.result.scorePercent,
+    }).catch((error) => {
+      console.warn('Lesson completion analytics were not recorded.', error)
+    })
+
     if (session.result.arcadeEligible && session.result.reward.tier !== 'none') {
       setArcadeGrantToken(
         issueArcadeGrant(session.result.reward.tier).token,
       )
+      logEngagementEvent({
+        eventName: 'arcade_unlocked',
+        audience: isGuest ? 'guest' : 'authenticated',
+        ...getEngagementIdentity(isGuest, user?.uid, learner?.learnerId),
+        form: lesson.form,
+        lessonId: lesson.id,
+        attemptNumber: nextAttemptNumber,
+        scorePercent: session.result.scorePercent,
+      }).catch((error) => {
+        console.warn('Arcade unlock analytics were not recorded.', error)
+      })
     }
     setIsSaving(false)
   }
@@ -243,6 +297,21 @@ function LessonRendererV2({ lesson }: LessonRendererProps) {
       </article>
     </section>
   )
+}
+
+function getEngagementIdentity(
+  isGuest: boolean,
+  accountId?: string,
+  learnerId?: string,
+) {
+  if (isGuest || !accountId) {
+    return {}
+  }
+
+  return {
+    accountId,
+    ...(learnerId ? { learnerId } : {}),
+  }
 }
 
 export default LessonRendererV2

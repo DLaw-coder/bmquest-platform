@@ -1,5 +1,13 @@
 # BM Quest Changelog
 
+## v1.0
+
+- Prepared BM Quest for its free public release
+- Added privacy-first engagement analytics
+- Added active-practice arcade reward integrity
+- Added bilingual interface and light/dark themes
+- Expanded KSSM-aligned lessons across Tingkatan 1–5
+
 ## v0.10.x
 
 - Added Settings & Profile page

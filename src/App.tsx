@@ -8,6 +8,7 @@ import AppLayout from './layouts/AppLayout'
 import WelcomePage from './pages/WelcomePage'
 import LearnerOnboardingPage from './pages/LearnerOnboardingPage'
 import AppRoutes from './router/AppRoutes'
+import EngagementTracker from './components/EngagementTracker'
 
 function AppContent() {
   const { user, isGuest, isLoading } = useAuth()
@@ -55,6 +56,7 @@ function App() {
       <LanguageProvider>
         <AuthProvider>
           <AppStateProvider>
+            <EngagementTracker />
             <AppContent />
           </AppStateProvider>
         </AuthProvider>

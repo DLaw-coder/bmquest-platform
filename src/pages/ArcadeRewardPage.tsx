@@ -10,6 +10,9 @@ import {
   saveArcadeScore,
 } from '../repositories/arcade/arcadeScoreRepository'
 import { consumeArcadeGrant } from '../services/rewards/arcadeGrantService'
+import {
+  logEngagementEventOnce,
+} from '../repositories/engagement/engagementRepository'
 
 const GAME_SECONDS = 180
 const GAME_MODES: ArcadeGameMode[] = ['catch-stars', 'word-burst', 'book-dash']
@@ -92,6 +95,20 @@ function ArcadeRewardPage() {
   useEffect(() => {
     getTopArcadeScores().then(setLeaderboard)
   }, [])
+
+  useEffect(() => {
+    if (!arcadeGrant) {
+      return
+    }
+
+    logEngagementEventOnce(`arcade-played:${arcadeGrant.token}`, {
+      eventName: 'arcade_played',
+      audience: isGuest ? 'guest' : 'authenticated',
+      ...(!isGuest && user ? { accountId: user.uid } : {}),
+      ...(!isGuest && learner ? { learnerId: learner.learnerId } : {}),
+      form: learner?.currentForm,
+    })
+  }, [arcadeGrant, isGuest, learner, user])
 
   useEffect(() => {
     if (!isAuthorized || isGameOver) {

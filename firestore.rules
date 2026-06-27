@@ -93,6 +93,11 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    match /engagementEvents/{eventId} {
+      allow read, update, delete: if false;
+      allow create: if isValidEngagementEvent();
+    }
+
     match /lessons/{lessonId} {
       allow read: if true;
       allow write: if isValidPublicContentWrite();
@@ -110,6 +115,78 @@ service cloud.firestore {
 
     match /{document=**} {
       allow read, write: if false;
+    }
+
+    function isValidEngagementEvent() {
+      let data = request.resource.data;
+      let validIdentity = data.audience == 'authenticated'
+        ? isSignedIn()
+          && data.accountId == request.auth.uid
+          && (!('learnerId' in data) || ownsLearner(data.learnerId))
+        : !isSignedIn()
+          && !('accountId' in data)
+          && !('learnerId' in data);
+
+      return data.keys().hasAll([
+          'eventName',
+          'audience',
+          'sessionId',
+          'platform',
+          'appVersion',
+          'occurredAt',
+          'expiresAt',
+        ])
+        && data.keys().hasOnly([
+          'eventName',
+          'audience',
+          'sessionId',
+          'platform',
+          'appVersion',
+          'occurredAt',
+          'expiresAt',
+          'accountId',
+          'learnerId',
+          'form',
+          'lessonId',
+          'attemptNumber',
+          'scorePercent',
+        ])
+        && data.eventName in [
+          'app_opened',
+          'return_visit',
+          'guest_session_started',
+          'sign_in_completed',
+          'pwa_installed',
+          'lesson_started',
+          'lesson_completed',
+          'arcade_unlocked',
+          'arcade_played'
+        ]
+        && data.audience in ['visitor', 'guest', 'authenticated']
+        && data.sessionId is string
+        && data.sessionId.size() <= 64
+        && data.platform in ['web', 'pwa']
+        && data.appVersion is string
+        && data.appVersion.size() <= 16
+        && data.occurredAt == request.time
+        && data.expiresAt is timestamp
+        && data.expiresAt > request.time
+        && data.expiresAt <= request.time + duration.value(91, 'd')
+        && (!('form' in data) || (
+          data.form is int && data.form >= 1 && data.form <= 5
+        ))
+        && (!('lessonId' in data) || (
+          data.lessonId is string && data.lessonId.size() <= 100
+        ))
+        && (!('attemptNumber' in data) || (
+          data.attemptNumber is int && data.attemptNumber >= 1
+        ))
+        && (!('scorePercent' in data) || (
+          data.scorePercent is int
+          && data.scorePercent >= 0
+          && data.scorePercent <= 100
+        ))
+        && validIdentity;
     }
   }
 }

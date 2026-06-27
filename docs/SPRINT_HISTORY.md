@@ -35,3 +35,12 @@
 - Smart Dashboard
 - Learning Passport
 - Achievement Gallery
+
+## Public Release Readiness
+- KSSM-aligned lesson depth across Tingkatan 1–5
+- Adaptive practice and recommendation engine
+- Arcade rewards with active-practice eligibility
+- Student nickname safety and uniqueness guardrails
+- Premium entitlement foundation
+- Android packaging plan
+- Privacy-first engagement analytics
